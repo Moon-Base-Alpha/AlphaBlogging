@@ -13,6 +13,6 @@ namespace AlphaBlogging.Models
 
         public string Body { get; set; }
         public DateTime Created { get; set; }
-        //public ApplicationUser Author { get; set; } // Todo?
+        public ApplicationUser Author { get; set; } 
     }
 }
