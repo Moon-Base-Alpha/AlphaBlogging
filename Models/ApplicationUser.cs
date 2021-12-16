@@ -7,8 +7,6 @@ namespace AlphaBlogging.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public override string Id { get; set; }
-
         [Required]
         [StringLength(32)]
         public string FirstName { get; set; }
