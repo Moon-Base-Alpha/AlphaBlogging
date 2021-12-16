@@ -1,5 +1,6 @@
 
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AlphaBlogging.Models
@@ -15,5 +16,7 @@ namespace AlphaBlogging.Models
         [Required]
         [StringLength(32)]
         public string LastName { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
