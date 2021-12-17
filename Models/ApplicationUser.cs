@@ -15,6 +15,9 @@ namespace AlphaBlogging.Models
         [StringLength(32)]
         public string LastName { get; set; }
 
+
+        public virtual ICollection<Blog> Blogs { get; set; }
+
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Blog> Blogs { get; set; }
 
@@ -23,12 +26,6 @@ namespace AlphaBlogging.Models
 
         }
 
-        public ApplicationUser(string firstName, string lastName, ICollection<Comment> comments, ICollection<Blog> blogs)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            Comments = comments;
-            Blogs = blogs;
-        }
+
     }
 }
