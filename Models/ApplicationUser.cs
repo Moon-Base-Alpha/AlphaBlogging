@@ -15,6 +15,6 @@ namespace AlphaBlogging.Models
         [StringLength(32)]
         public string LastName { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Blog> Blogs { get; set; }
     }
 }

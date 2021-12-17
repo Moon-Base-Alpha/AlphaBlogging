@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using static AlphaBlogging.Data.Repos.BlogRepos;
 
 namespace AlphaBlogging.Controllers
 {
@@ -21,6 +22,16 @@ namespace AlphaBlogging.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        public IActionResult BlogCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]  
+        public IActionResult BlogCreate(ApplicationUser newBlogger)
+        {
+            return View(CreateBlog(newBlogger));
         }
 
         public IActionResult Privacy()
