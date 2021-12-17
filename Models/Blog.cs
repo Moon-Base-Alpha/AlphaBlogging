@@ -28,14 +28,21 @@ namespace AlphaBlogging.Models
         {
 
         }
-        public Blog(int id, string title, string body, DateTime created, ApplicationUser author, ICollection<Post> posts, bool visible = true)
+        public Blog(string title, string body, ApplicationUser author, ICollection<Post> posts, bool visible = true)
         {
-            Id = id;
             Title = title;
             Body = body;
-            Created = created;
+            Created = DateTime.Today;
             Author = author;
             Posts = posts;
+            Visible = visible;
+        }
+        public Blog(string title, string body, ApplicationUser author, bool visible = true)
+        {
+            Title = title;
+            Body = body;
+            Created = DateTime.Today;
+            Author = author;
             Visible = visible;
         }
     }

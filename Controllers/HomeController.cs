@@ -1,4 +1,5 @@
-﻿using AlphaBlogging.Models;
+﻿using AlphaBlogging.Data;
+using AlphaBlogging.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,7 +23,8 @@ namespace AlphaBlogging.Controllers
         public IActionResult Index()
         {
             //return a linq list with all user's blogs by using a _db context call, from repos
-            return View();
+            BlogRepos.SeedVarious();
+            return View(BlogRepos.GetBlogs());
         }
         public IActionResult BlogCreate()
         {
