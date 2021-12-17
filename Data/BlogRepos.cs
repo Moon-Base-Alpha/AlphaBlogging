@@ -1,4 +1,5 @@
 ﻿using AlphaBlogging.Models;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,5 +19,21 @@ namespace AlphaBlogging.Data
 
             return blogs.ToList();
         }
+        //public static void SeedVarious() uncomment this later!!!
+        //{
+        //    UserManager<ApplicationUser> UMAU = new UserManager<ApplicationUser>();
+        //    UMAU.CreateAsync(,);
+
+
+        //    ApplicationUser testuser = new UserManager<ApplicationUser>();
+        //    _context.Users.Add(testuser);
+        //    ICollection<Post> posts = new List<Post>();
+
+        //    _context.Blogs.Add(new Blog("Blogtitle 1", "body string asdjifa", testuser, posts, true));
+        //    _context.Blogs.Add(new Blog("Blogtitle 2", "body string asdjifa", testuser, posts, true));
+        //    _context.Blogs.Add(new Blog("Blogtitle 3", "body string asdjifa", testuser, posts, true));
+
+
+        //}
     }
 }
