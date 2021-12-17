@@ -19,7 +19,6 @@ namespace AlphaBlogging.Models
         public virtual ICollection<Blog> Blogs { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Blog> Blogs { get; set; }
 
         public ApplicationUser()
         {
