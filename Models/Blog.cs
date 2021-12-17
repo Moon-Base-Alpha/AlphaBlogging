@@ -28,7 +28,7 @@ namespace AlphaBlogging.Models
         {
 
         }
-        public Blog(int id, string title, string body, DateTime created, ApplicationUser author, ICollection<Post> posts, bool visible)
+        public Blog(int id, string title, string body, DateTime created, ApplicationUser author, ICollection<Post> posts, bool visible = true)
         {
             Id = id;
             Title = title;
