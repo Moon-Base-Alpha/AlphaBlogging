@@ -30,7 +30,7 @@ namespace AlphaBlogging.Models
 
         }
 
-        public Post(int id, string title, string body, DateTime created, int views, ICollection<Comment> comments, ICollection<Tag> tags, bool visible)
+        public Post(int id, string title, string body, DateTime created, int views, ICollection<Comment> comments, ICollection<Tag> tags, bool visible = true)
         {
             Id = id;
             Title = title;
