@@ -1,4 +1,5 @@
 using AlphaBlogging.Data;
+using AlphaBlogging.Data.Repos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +36,7 @@ namespace AlphaBlogging
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            services.AddTransient<IRepos, Repos>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
