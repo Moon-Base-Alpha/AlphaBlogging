@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using static AlphaBlogging.Data.Repos.BlogRepos;
+using static AlphaBlogging.Data.Repos.BlogServices;
 
 namespace AlphaBlogging.Controllers
 {

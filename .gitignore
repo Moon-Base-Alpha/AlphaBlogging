@@ -5,7 +5,7 @@
 
 # Ignore migrations folder
  	Data/Migrations/
-
+    Migrations/
 # User-specific files
 *.rsuser
 *.suo
