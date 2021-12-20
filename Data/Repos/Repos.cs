@@ -25,7 +25,7 @@ namespace AlphaBlogging.Data.Repos
             _db.Posts.Remove(GetPost(id));
         }
 
-        public List<Post> GetAllPosts(int id)
+        public List<Post> GetAllPosts()
         {
             return _db.Posts.ToList();
 

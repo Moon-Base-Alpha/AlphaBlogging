@@ -1,7 +1,5 @@
-﻿using AlphaBlogging.Data;
-using AlphaBlogging.Data.Repos;
+﻿using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -14,9 +12,15 @@ namespace AlphaBlogging.Controllers
         {
             _repo = repo;
         }
-        public IActionResult Post() 
+        public IActionResult Postlist()
         {
-            return View(); 
+            var posts = _repo.GetAllPosts();
+            return View(posts);
+        }
+        public IActionResult Post(int id) 
+        {
+            var post = _repo.GetPost(id);
+            return View(post); 
         }
         [HttpGet]
         public IActionResult Create()
@@ -26,25 +30,47 @@ namespace AlphaBlogging.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Post post)
         {
-            _repo.Add(post);
-            await _repo.SaveChangesAsync();
-            return RedirectToAction("Index");
+            _repo.AddPost(post);
+            if (await _repo.SaveChangesAsync())
+                return RedirectToAction("Edit");
+            else
+                return View(post);
         }
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int? id)
         {
-            var query = _repo.Posts.Find(id);    
-            return View(query);
+            if (id == null)
+                return View(new Post());
+            else
+            {
+                var post = _repo.GetPost((int)id);
+                return View(post);
+            }           
         }
         [HttpPost]
         public async Task<IActionResult> Edit(Post post)
         {
-            _repo.AddPost(post);
+            if (post.Id > 0)
+                _repo.UpdatePost(post);
+            else
+            {
+                _repo.AddPost(post);
+            }
+           
             if (await _repo.SaveChangesAsync())
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit");
             else
                 return View(post);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Remove(int id)
+        {
+            _repo.DeletePost(id);
+            await _repo.SaveChangesAsync();
+            return RedirectToAction("Postlist");
+        }
+
         //// GET: PostController
         //public ActionResult Index()
         //{

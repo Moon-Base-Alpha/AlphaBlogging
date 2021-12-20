@@ -10,7 +10,7 @@ namespace AlphaBlogging.Data.Repos
     public interface IRepos
     {
         Post GetPost(int Id);
-        List<Post> GetAllPosts(int Id);
+        List<Post> GetAllPosts();
         void AddPost(Post post);
         void UpdatePost(Post post);
         void DeletePost(int Id);
