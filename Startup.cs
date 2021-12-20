@@ -1,8 +1,7 @@
 using AlphaBlogging.Data;
+using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models;
-
 using AlphaBlogging.Services;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -49,11 +48,10 @@ namespace AlphaBlogging
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
+            services.AddTransient<IRepos, Repos>();
             //Adding DbInitializer Service
             services.AddAsyncInitializer<DbInitializer>();
-
             services.AddRazorPages();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

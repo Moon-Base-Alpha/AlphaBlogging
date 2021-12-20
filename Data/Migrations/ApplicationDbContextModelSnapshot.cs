@@ -253,6 +253,10 @@ namespace AlphaBlogging.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -338,7 +342,6 @@ namespace AlphaBlogging.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
 
                     b.ToTable("AspNetRoles");
                 });
@@ -583,7 +586,6 @@ namespace AlphaBlogging.Migrations
                         .IsRequired();
                 });
 
-
             modelBuilder.Entity("AlphaBlogging.Models.Blog", b =>
                 {
                     b.Navigation("Posts");
@@ -594,14 +596,12 @@ namespace AlphaBlogging.Migrations
                     b.Navigation("Comments");
                 });
 
-
             modelBuilder.Entity("AlphaBlogging.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Blogs");
 
                     b.Navigation("Comments");
                 });
-
 #pragma warning restore 612, 618
         }
     }
