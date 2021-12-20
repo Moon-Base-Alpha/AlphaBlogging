@@ -1,9 +1,11 @@
 ﻿using AlphaBlogging.Data;
 using AlphaBlogging.Models;
+
 using Extensions.Hosting.AsyncInitialization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+
 using System.Threading.Tasks;
 namespace AlphaBlogging.Services
 {
@@ -13,6 +15,7 @@ namespace AlphaBlogging.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly bool InitializeDb = true;
+
 
         //What to add
         private readonly bool Add_Roles = true;
@@ -27,6 +30,7 @@ namespace AlphaBlogging.Services
             _userManager = userManager;
             _roleManager = roleManager;
         }
+
 
         #region CreateRole SeedUsers Method
         private async Task CreateRoleAsync(string roleName)
@@ -49,6 +53,7 @@ namespace AlphaBlogging.Services
             //if true, initializes the database with some sample data
             if (InitializeDb)
             {
+
                 if (Add_Roles)
                 {
                     await CreateRoleAsync("Admin");
@@ -187,6 +192,9 @@ namespace AlphaBlogging.Services
             }
         }
         #endregion
+
+
+        
 
     }
 }

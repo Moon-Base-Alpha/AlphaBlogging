@@ -1,6 +1,8 @@
 using AlphaBlogging.Data;
 using AlphaBlogging.Models;
+
 using AlphaBlogging.Services;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +36,7 @@ namespace AlphaBlogging
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -50,6 +53,7 @@ namespace AlphaBlogging
             services.AddAsyncInitializer<DbInitializer>();
 
             services.AddRazorPages();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
