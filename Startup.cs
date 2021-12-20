@@ -48,7 +48,7 @@ namespace AlphaBlogging
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
-            services.AddTransient<IRepos, Repos>();
+            services.AddTransient<IPostServices, PostServices>();
             //Adding DbInitializer Service
             services.AddAsyncInitializer<DbInitializer>();
             services.AddRazorPages();

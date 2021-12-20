@@ -7,8 +7,8 @@ namespace AlphaBlogging.Controllers
 {
     public class PostController : Controller
     {
-        private IRepos _repo;
-        public PostController(IRepos repo)
+        private IPostServices _repo;
+        public PostController(IPostServices repo)
         {
             _repo = repo;
         }
