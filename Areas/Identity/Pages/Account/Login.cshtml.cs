@@ -45,8 +45,8 @@ namespace AlphaBlogging.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
-            //[Display(Name = "Email / Username")]
+            //[EmailAddress]
+            [Display(Name = "Username / Email")]
             public string Email { get; set; }
 
             [Required]
@@ -57,26 +57,26 @@ namespace AlphaBlogging.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
-        //public bool IsValidEmail(string email)
-        //{
-        //    string Email;
-        //    try
-        //    {
-        //        MailAddress m = new MailAddress(email);
-        //        return true;
-        //    }
-        //    catch (FormatException)
-        //    {
-        //        return false;
-        //    }
-        //}
+        public bool IsValidEmail(string email)
+        {
+            string Email;
+            try
+            {
+                MailAddress m = new MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                Response.Redirect("/");
-            }
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    Response.Redirect("/");
+            //}
 
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -101,19 +101,19 @@ namespace AlphaBlogging.Areas.Identity.Pages.Account
         
             if (ModelState.IsValid)
             {
-                //var userName = Input.Email;
-                //if (IsValidEmail(Input.Email))
-                //{
-                //    var user = await _userManager.FindByEmailAsync(Input.Email);
-                //    if (user != null)
-                //    {
-                //        userName = user.UserName;
-                //    }
-                //}
+                var userName = Input.Email;
+                if (IsValidEmail(Input.Email))
+                {
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    if (user != null)
+                    {
+                        userName = user.UserName;
+                    }
+                }
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(userName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

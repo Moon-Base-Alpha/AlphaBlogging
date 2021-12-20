@@ -16,12 +16,6 @@ namespace AlphaBlogging.Services
 
         //What to add
         private readonly bool Add_Roles = true;
-        private readonly bool Add_Users = true;
-
-        //Roles
-        //private static readonly string Role1Name = "Admin";
-        //private static readonly string Role2Name = "User";
-
 
         public DbInitializer(
             ApplicationDbContext context,
@@ -34,7 +28,7 @@ namespace AlphaBlogging.Services
             _roleManager = roleManager;
         }
 
-        //CreateRole Method
+        #region CreateRole SeedUsers Method
         private async Task CreateRoleAsync(string roleName)
         {
             if (!await _roleManager.RoleExistsAsync(roleName))
@@ -46,23 +40,6 @@ namespace AlphaBlogging.Services
                 await _roleManager.CreateAsync(role);
             }
         }
-
-        ////Create Admin method
-        //private async Task CreateAdminAsync()
-        //{
-        //    if (await _userManager.FindByEmailAsync("admin@email.com") == null)
-        //    {
-        //        var user = new ApplicationUser
-        //        {
-        //            FirstName = "Chi",
-        //            LastName = "Larsson",
-        //            UserName = "admin",
-        //            Email = "admin@email.com",
-        //        };
-        //        await _userManager.CreateAsync(user, "123456");
-        //        await _userManager.AddToRoleAsync(user, "admin");
-        //    }
-        //}
 
         public async Task InitializeAsync()
         {
@@ -78,35 +55,138 @@ namespace AlphaBlogging.Services
                     await CreateRoleAsync("User");
                     //await CreateRoleAsync("SuperUser");
                 }
-
-                if (Add_Users)
+            }
+            if (_userManager.FindByEmailAsync("admin@email.com").Result == null)
+            {
+                var user = new ApplicationUser
                 {
-                    var User = new ApplicationUser
-                    {
-                        FirstName = "Chi",
-                        LastName = "Larsson",
-                        UserName = "admin",
-                        Email = "admin@email.com",
-                    };
-                    await _userManager.CreateAsync(User, "123456");
-                    await _userManager.AddToRoleAsync(User, "admin");
-                }
+                    FirstName = "Tony",
+                    LastName = "Stark",
+                    UserName = "admin",
+                    Email = "admin@email.com",
+                };
+                await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddToRoleAsync(user, "Admin");
+            }
 
-                //if (!_db.Users.Any(u => u.UserName == "admin"))
-                //{
-                //    var adminUser = new ApplicationUser
-                //    {
-                //        FirstName = "Chi",
-                //        LastName = "Larsson",
-                //        UserName = "admin",
-                //        Email = "admin@email.com",
-                //    };
-                //    await _userManager.CreateAsync(adminUser, "123456");
-                //    await _userManager.AddToRoleAsync(adminUser, "admin");
-                //}
+            if (_userManager.FindByEmailAsync("neo@email.com").Result == null)
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = "Neo",
+                    LastName = "Andersson",
+                    UserName = "Neo@Matrix",
+                    Email = "neo@email.com",
+                };
+                await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+
+            if (_userManager.FindByEmailAsync("mary@email.com").Result == null)
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = "Mary",
+                    LastName = "Watson",
+                    UserName = "MaryJ",
+                    Email = "mary@email.com",
+                };
+                await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+
+            if (_userManager.FindByEmailAsync("lisa@email.com").Result == null)
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = "Lisa",
+                    LastName = "Simpson",
+                    UserName = "Lisa",
+                    Email = "lisa@email.com",
+                };
+                await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+
+            if (_userManager.FindByEmailAsync("lisa@email.com").Result == null)
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = "Lisa",
+                    LastName = "Simpson",
+                    UserName = "Lisa",
+                    Email = "lisa@email.com",
+                };
+                await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+
+            if (_userManager.FindByEmailAsync("jack@email.com").Result == null)
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = "Jack",
+                    LastName = "Frost",
+                    UserName = "Jack",
+                    Email = "jack@email.com",
+                };
+                await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+
+            if (_userManager.FindByEmailAsync("peter@email.com").Result == null)
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = "Peter",
+                    LastName = "Parker",
+                    UserName = "Peter",
+                    Email = "peter@email.com",
+                };
+                await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+
+            if (_userManager.FindByEmailAsync("clark@email.com").Result == null)
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = "Clark",
+                    LastName = "Kent",
+                    UserName = "Clark",
+                    Email = "clark@email.com",
+                };
+                await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+
+            if (_userManager.FindByEmailAsync("diana@email.com").Result == null)
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = "Diana",
+                    LastName = "Prince",
+                    UserName = "Diana",
+                    Email = "diana@email.com",
+                };
+                await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddToRoleAsync(user, "User");
+            }
+
+            if (_userManager.FindByEmailAsync("bruce@email.com").Result == null)
+            {
+                var user = new ApplicationUser
+                {
+                    FirstName = "Bruce",
+                    LastName = "Wayne",
+                    UserName = "bruce",
+                    Email = "bruce@email.com",
+                };
+                await _userManager.CreateAsync(user, "123456");
+                await _userManager.AddToRoleAsync(user, "User");
             }
         }
+        #endregion
+
     }
-
-
 }
