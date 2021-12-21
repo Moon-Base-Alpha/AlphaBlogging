@@ -2,33 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace AlphaBlogging.Data.Repos
 {
     public class BlogRepos
-    { 
-        public static ApplicationUser CreateBlog(ApplicationUser newBlogger)
-        {   
-                ApplicationUser result = new ApplicationUser();
+    {
+        //private readonly ApplicationDbContext _db;
 
-                result.FirstName = newBlogger.FirstName;    
-                result.LastName = newBlogger.LastName;
-                result.Email = newBlogger.Email;    
-                result.Blogs = newBlogger.Blogs;
+        //public CreateBlogsService(ApplicationDbContext context)
+        //{
+        //    _db = context;
+        //}
 
-            return result;
-        }
-        private static ApplicationDbContext _context;
-        public BlogRepos(ApplicationDbContext aaa)
-        {
-            _context = aaa;
-        }
+        //public static void CreateBlog(Blog newBlog)
+        //{
+          
 
-        public static List<Blog> GetBlogs() // returns all blogs as a list
-        {
-            var blogs = from x in _context.Blogs select x;
+        //    Blog blog = new Blog(newBlog.Title,newBlog.Body,User);
+        //    //owner.Blogs.Add(blog);
 
-            return blogs.ToList();
-        }
+        //    _db.Blogs.Add(blog);
+        //    _db.SaveChanges(); 
+            
+        //    //ApplicationUser result = new ApplicationUser(newBlog.FirstName, newBlog.LastName, blog);
+
+               
+        //    //return result;
+        //}
+
+
+
+        //public static List<Blog> GetBlogs() // returns all blogs as a list
+        //{
+        //    var blogs = from x in _db.Blogs select x;
+
+        //    return blogs.ToList();
+        //}
         //public static void SeedVarious() uncomment this later!!!
         //{
         //    UserManager<ApplicationUser> UMAU = new UserManager<ApplicationUser>();

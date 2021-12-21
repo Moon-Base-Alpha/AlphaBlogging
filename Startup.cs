@@ -1,5 +1,6 @@
 using AlphaBlogging.Data;
 using AlphaBlogging.Models;
+using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,11 +34,15 @@ namespace AlphaBlogging
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
+            services.AddAutoMapper(typeof(Startup));
+            
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=AlphaBloggingDb;Trusted_Connection=True"));
+            //services.AddTransient<ICreateBlogsService, CreateBlogsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
