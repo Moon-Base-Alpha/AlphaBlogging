@@ -14,7 +14,7 @@ namespace AlphaBlogging.Services
         private readonly ApplicationDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly bool InitializeDb = false;
+        private readonly bool InitializeDb = true;
 
 
         //What to add
@@ -60,7 +60,7 @@ namespace AlphaBlogging.Services
                     await CreateRoleAsync("User");
                     //await CreateRoleAsync("SuperUser");
                 }
-            }
+            
             if (_userManager.FindByEmailAsync("admin@email.com").Result == null)
             {
                 var user = new ApplicationUser
@@ -189,6 +189,7 @@ namespace AlphaBlogging.Services
                 };
                 await _userManager.CreateAsync(user, "123456");
                 await _userManager.AddToRoleAsync(user, "User");
+            }
             }
         }
         #endregion
