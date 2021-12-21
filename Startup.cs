@@ -1,4 +1,5 @@
 using AlphaBlogging.Data;
+using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models;
 using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Builder;
@@ -34,15 +35,25 @@ namespace AlphaBlogging
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
-            services.AddAutoMapper(typeof(Startup));
-            
+            services.AddTransient<IPostServices, PostServices>();
+            //Adding DbInitializer Service
+            services.AddAsyncInitializer<DbInitializer>();
+            services.AddRazorPages();
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=AlphaBloggingDb;Trusted_Connection=True"));
-            //services.AddTransient<ICreateBlogsService, CreateBlogsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
