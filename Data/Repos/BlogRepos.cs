@@ -5,46 +5,72 @@ using System.Linq;
 namespace AlphaBlogging.Data.Repos
 {
     public class BlogRepos
-    { 
-        public static ApplicationUser CreateBlog(ApplicationUser newBlogger)
-        {   
-                ApplicationUser result = new ApplicationUser();
-
-                result.FirstName = newBlogger.FirstName;    
-                result.LastName = newBlogger.LastName;
-                result.Email = newBlogger.Email;    
-                result.Blogs = newBlogger.Blogs;
-
-            return result;
-        }
+    {
         private static ApplicationDbContext _context;
         public BlogRepos(ApplicationDbContext aaa)
         {
             _context = aaa;
         }
-
-        public static List<Blog> GetBlogs() // returns all blogs as a list
+        public static ApplicationUser CreateBlog(ApplicationUser newBlogger)
         {
-            var blogs = from x in _context.Blogs select x;
+            ApplicationUser result = new ApplicationUser();
 
-            return blogs.ToList();
+            result.FirstName = newBlogger.FirstName;
+            result.LastName = newBlogger.LastName;
+            result.Email = newBlogger.Email;
+            result.Blogs = newBlogger.Blogs;
+
+            return result;
         }
-        //public static void SeedVarious() uncomment this later!!!
-        //{
-        //    UserManager<ApplicationUser> UMAU = new UserManager<ApplicationUser>();
-        //    UMAU.CreateAsync(,);
 
+        public static List<Blog> GetBlogsFromUserID(string UserID) // returns all blogs as a list
+        {
+            List<Blog> resultList = new List<Blog>();
 
-        //    ApplicationUser testuser = new UserManager<ApplicationUser>();
-        //    _context.Users.Add(testuser);
-        //    ICollection<Post> posts = new List<Post>();
+            var temp = (from x in _context.Users
+                        where x.Id == UserID
+                        select x.Blogs).First();
 
-        //    _context.Blogs.Add(new Blog("Blogtitle 1", "body string asdjifa", testuser, posts, true));
-        //    _context.Blogs.Add(new Blog("Blogtitle 2", "body string asdjifa", testuser, posts, true));
-        //    _context.Blogs.Add(new Blog("Blogtitle 3", "body string asdjifa", testuser, posts, true));
+            if (temp != null)
+            {
+                resultList = temp.ToList();
+            }
 
+            return resultList;
+        }
+        public static List<Post> GetPostsFromBlogID(int BlogID) // returns all blogs as a list
+        {
+            List<Post> resultList = new List<Post>();
 
-        //}
+            var temp = (from x in _context.Blogs
+                        where x.Id == BlogID
+                        select x.Posts).First();
+
+            if (temp != null)
+            {
+                resultList = temp.ToList();
+            }
+
+            return resultList;
+        }
+        public static List<Comment> GetCommentsFromPostID(int PostID) // returns all blogs as a list
+        {
+            List<Comment> resultList = new List<Comment>();
+
+            var temp = (from x in _context.Posts
+                        where x.Id == PostID
+                        select x.Comments).First();
+
+            if (temp != null)
+            {
+                resultList = temp.ToList();
+            }
+
+            return resultList;
+        }
+    }
+        
+
 
     }
 }
