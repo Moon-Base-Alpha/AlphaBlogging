@@ -31,10 +31,10 @@ namespace AlphaBlogging.Controllers
             return View();
         }
 
-        [HttpPost]  
-        public IActionResult BlogCreate(ApplicationUser newBlogger)
+        [HttpPost]
+        public void BlogCreate(Blog newBlog)
         {
-            return View(CreateBlog(newBlogger));
+             RedirectToAction("Index","Home");
         }
 
         public IActionResult Privacy()

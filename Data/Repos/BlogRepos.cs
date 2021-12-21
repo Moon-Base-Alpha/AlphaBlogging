@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace AlphaBlogging.Data.Repos
 {
     public class BlogRepos
     {
+
         private static ApplicationDbContext _context;
         public BlogRepos(ApplicationDbContext aaa)
         {
@@ -50,6 +52,7 @@ namespace AlphaBlogging.Data.Repos
             {
                 resultList = temp.ToList();
             }
+
 
             return resultList;
         }

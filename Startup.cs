@@ -36,6 +36,7 @@ namespace AlphaBlogging
             services.AddDatabaseDeveloperPageExceptionFilter();
 
 
+
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -52,6 +53,7 @@ namespace AlphaBlogging
             //Adding DbInitializer Service
             services.AddAsyncInitializer<DbInitializer>();
             services.AddRazorPages();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
