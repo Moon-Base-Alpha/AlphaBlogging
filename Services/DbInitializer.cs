@@ -14,7 +14,7 @@ namespace AlphaBlogging.Services
         private readonly ApplicationDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly bool InitializeDb = false;
+        private readonly bool InitializeDb = true;
 
 
         //What to add
