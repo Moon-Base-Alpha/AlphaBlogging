@@ -18,7 +18,7 @@ namespace AlphaBlogging.Services
 
 
         //What to add
-        private readonly bool Add_Roles = true;
+        //private readonly bool Add_Roles = true;
         //private readonly bool Add_Blogs = true;
 
         public DbInitializer(
@@ -54,15 +54,11 @@ namespace AlphaBlogging.Services
             //if true, initializes the database with some sample data
             if (InitializeDb)
             {
-
-                if (Add_Roles)
-                {
                     await CreateRoleAsync("Admin");
                     await CreateRoleAsync("User");
                     await CreateRoleAsync("Author");
                     //await CreateRoleAsync("SuperUser");
-                }
-            }
+
 
             //Seed users
             if (_userManager.FindByEmailAsync("admin@email.com").Result == null)
@@ -180,6 +176,7 @@ namespace AlphaBlogging.Services
                 };
                 await _userManager.CreateAsync(user, "123456");
                 await _userManager.AddToRoleAsync(user, "User");
+            }
             }
             // End seed users //
 
