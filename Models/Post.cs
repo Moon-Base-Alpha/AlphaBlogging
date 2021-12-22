@@ -19,6 +19,10 @@ namespace AlphaBlogging.Models
         [Required]
         public DateTime Created { get; set; }
 
+        public int BlogId { get; set; }
+
+        public virtual Blog Blog { get; set; }
+
         public int Views { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }

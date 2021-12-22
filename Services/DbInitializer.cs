@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 
 namespace AlphaBlogging.Services
 {
@@ -14,7 +15,7 @@ namespace AlphaBlogging.Services
         private readonly ApplicationDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly bool InitializeDb = false;
+        private readonly bool InitializeDb = true;
 
 
         //What to add
@@ -61,7 +62,6 @@ namespace AlphaBlogging.Services
 
 
             //Seed users
-
             if (_userManager.FindByEmailAsync("admin@email.com").Result == null)
             {
                 var user = new ApplicationUser
@@ -181,10 +181,6 @@ namespace AlphaBlogging.Services
             }
             // End seed users //
 
-         
-       
-
-
 
             // Seed Blogs
             if (_db.Blogs.Any())
@@ -201,6 +197,7 @@ namespace AlphaBlogging.Services
                         "that there's something wrong with the world. You don't know what it is, but it's there, like " +
                         "a splinter in your mind, driving you mad.",
                         Created = DateTime.ParseExact("2021-11-21 00:00:21", "yyyy-MM-dd hh:mm:ss", null),
+                        Visible = true,
                     },
                     new Blog
                     {
@@ -211,6 +208,7 @@ namespace AlphaBlogging.Services
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-02 07:44:12", "yyyy-MM-dd hh:mm:ss", null),
+                        Visible = true,
                     },
                     new Blog
                     {
@@ -221,6 +219,7 @@ namespace AlphaBlogging.Services
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-10 12:44:12", "yyyy-MM-dd hh:mm:ss", null),
+                        Visible = true,
                     },
                     new Blog
                     {
@@ -230,6 +229,7 @@ namespace AlphaBlogging.Services
                         "that there's something wrong with the world. You don't know what it is, but it's there, like " +
                         "a splinter in your mind, driving you mad.",
                         Created = DateTime.ParseExact("2021-12-12 12:12:12", "yyyy-MM-dd hh:mm:ss", null),
+                        Visible = true,
                     },
                     new Blog
                     {
@@ -240,6 +240,7 @@ namespace AlphaBlogging.Services
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-14 11:22:00", "yyyy-MM-dd hh:mm:ss", null),
+                        Visible = true,
                     },
                     new Blog
                     {
@@ -250,6 +251,7 @@ namespace AlphaBlogging.Services
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-15 10:01:35", "yyyy-MM-dd hh:mm:ss", null),
+                        Visible = true,
                     },
                     new Blog
                     {
@@ -259,6 +261,7 @@ namespace AlphaBlogging.Services
                         "that there's something wrong with the world. You don't know what it is, but it's there, like " +
                         "a splinter in your mind, driving you mad.",
                         Created = DateTime.ParseExact("2021-12-16 00:00:00", "yyyy-MM-dd hh:mm:ss", null),
+                        Visible = true,
                     },
                     new Blog
                     {
@@ -269,6 +272,7 @@ namespace AlphaBlogging.Services
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-18 08:12:32", "yyyy-MM-dd hh:mm:ss", null),
+                        Visible = true,
                     },
                     new Blog
                     {
@@ -280,6 +284,7 @@ namespace AlphaBlogging.Services
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-20 03:22:33", "yyyy-MM-dd hh:mm:ss", null),
+                        Visible = true,
                     }
             };
             foreach (Blog b in Blogs)
@@ -287,8 +292,60 @@ namespace AlphaBlogging.Services
                 await _db.Blogs.AddAsync(b);
             }
             await _db.SaveChangesAsync();
-            }
+
+
         // End Seed Blogs
+        
+            //Seed Post
+            if (_db.Posts.Any())
+            {
+                return; // DB has been seeded
+            }
+            var posts = new List<Post>()
+            {
+                new Post
+                {
+                    Title = "Post title 1 here...",
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
+                    "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
+                    "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
+                    "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
+                    Created = DateTime.ParseExact("2021-12-01 07:23:12", "yyyy-MM-dd hh:mm:ss", null),
+                    Views = 14,
+                    Visible = true,
+                    BlogId = 2
+                },
+                new Post
+                {
+                    Title = "Post title 2 here...",
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
+                    "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
+                    "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
+                    "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
+                    Created = DateTime.ParseExact("2021-12-03 03:11:56", "yyyy-MM-dd hh:mm:ss", null),
+                    Views = 3,
+                    Visible = true,
+                    BlogId = 3
+                },
+                new Post
+                {
+                    Title = "Post title 3 here...",
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
+                    "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
+                    "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
+                    "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
+                    Created = DateTime.ParseExact("2021-12-05 11:33:12", "yyyy-MM-dd hh:mm:ss", null),
+                    Views = 5,
+                    Visible = true,
+                    BlogId = 6
+                },
+            };
+
+        await _db.Posts.AddRangeAsync(posts);
+
+        await _db.SaveChangesAsync();
+            // End Seed Posts
+        }
     }
 }
 

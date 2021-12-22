@@ -9,9 +9,6 @@ namespace AlphaBlogging.Models
         public int Id { get; set; }
 
         [Required]
-        public int PostTagId { get; set; }
-
-        [Required]
         public string HashTag { get; set; }
 
         [Required]
@@ -22,10 +19,9 @@ namespace AlphaBlogging.Models
                 
         }
 
-        public Tag(int id, int postTagId, string hashTag, ICollection<Post> posts)
+        public Tag(int id, string hashTag, ICollection<Post> posts)
         {
             Id = id;
-            PostTagId = postTagId;
             HashTag = hashTag;
             Posts = posts;
         }
