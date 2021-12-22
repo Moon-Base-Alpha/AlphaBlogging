@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace AlphaBlogging.Data.Repos
 {
-    public class BlogRepos
+    public class BlogServices
     {
-
-        private static ApplicationDbContext _context;
-        public BlogRepos(ApplicationDbContext aaa)
+        public BlogServices(ApplicationDbContext aaa)
         {
             _context = aaa;
         }
+
         public static ApplicationUser CreateBlog(ApplicationUser newBlogger)
         {
             ApplicationUser result = new ApplicationUser();
@@ -24,7 +22,15 @@ namespace AlphaBlogging.Data.Repos
 
             return result;
         }
+        private static ApplicationDbContext _context;
 
+
+        public static List<Blog> GetBlogs() // returns all blogs as a list
+        {
+            var blogs = from x in _context.Blogs select x;
+
+            return blogs.ToList();
+        }
         public static List<Blog> GetBlogsFromUserID(string UserID) // returns all blogs as a list
         {
             List<Blog> resultList = new List<Blog>();
@@ -53,7 +59,6 @@ namespace AlphaBlogging.Data.Repos
                 resultList = temp.ToList();
             }
 
-
             return resultList;
         }
         public static List<Comment> GetCommentsFromPostID(int PostID) // returns all blogs as a list
@@ -72,8 +77,8 @@ namespace AlphaBlogging.Data.Repos
             return resultList;
         }
     }
-        
 
 
-    }
+
+}
 

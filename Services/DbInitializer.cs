@@ -61,6 +61,7 @@ namespace AlphaBlogging.Services
 
 
             //Seed users
+
             if (_userManager.FindByEmailAsync("admin@email.com").Result == null)
             {
                 var user = new ApplicationUser
@@ -179,6 +180,11 @@ namespace AlphaBlogging.Services
             }
             }
             // End seed users //
+
+            }
+        }
+
+
 
             // Seed Blogs
             if (_db.Blogs.Any())
