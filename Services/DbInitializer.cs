@@ -181,8 +181,8 @@ namespace AlphaBlogging.Services
             }
             // End seed users //
 
-            }
-        }
+         
+       
 
 
 
@@ -288,6 +288,7 @@ namespace AlphaBlogging.Services
             }
             await _db.SaveChangesAsync();
             }
-            // End Seed Blogs
+        // End Seed Blogs
     }
 }
+
