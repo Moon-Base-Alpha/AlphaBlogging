@@ -1,6 +1,8 @@
 ﻿using AlphaBlogging.Data;
 using AlphaBlogging.Models;
 using AlphaBlogging.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,14 +12,18 @@ namespace AlphaBlogging.Services
     public class BlogsService : IBlogsService
     {
         private ApplicationDbContext _db;
-        public BlogsService(ApplicationDbContext db)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        
+        public BlogsService(ApplicationDbContext context, SignInManager<ApplicationUser> signInManager)
         {
-            _db = db;
+            _db = context;
+            _signInManager = signInManager; 
         }
+
         public void AddBlog(Blog blog)
         {
+            blog.Created = DateTime.Now;    
             _db.Add(blog);
-
         }
 
         public void DeleteBlog(int id)
@@ -26,9 +32,9 @@ namespace AlphaBlogging.Services
         }
 
         public List<Blog> GetAllBlogs()
-        {
-            return _db.Blogs.ToList();
+        {           
 
+            return _db.Blogs.ToList();
         }
 
         public Blog GetBlog(int id)

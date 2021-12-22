@@ -1,21 +1,14 @@
 ﻿@model IEnumerable<AlphaBlogging.Models.Blog>
 
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
-
-@*<p>
+<p>
     <a asp-action="Create">Create New</a>
 </p>
-*@@*<table class="table">
+<table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Id)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
@@ -25,18 +18,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.Created)
             </th>
-            
+            <th>
+                @Html.DisplayNameFor(model => model.Visible)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-    @if (item.Visible == true)
-    {
         <tr>
-            <td>
-            @Html.DisplayFor(modelItem => item.Id)
-            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -50,12 +43,11 @@
                 @Html.DisplayFor(modelItem => item.Visible)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+              @*  @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
-    }
 }
     </tbody>
-</table>*@
+</table>
