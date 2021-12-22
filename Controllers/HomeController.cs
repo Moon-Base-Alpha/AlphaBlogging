@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using static AlphaBlogging.Data.Repos.BlogRepos;
+using static AlphaBlogging.Data.Repos.BlogServices;
 
 namespace AlphaBlogging.Controllers
 {
@@ -31,10 +31,10 @@ namespace AlphaBlogging.Controllers
             return View();
         }
 
-        [HttpPost]  
-        public IActionResult BlogCreate(ApplicationUser newBlogger)
+        [HttpPost]
+        public void BlogCreate(Blog newBlog)
         {
-            return View(CreateBlog(newBlogger));
+             RedirectToAction("Index","Home");
         }
 
         public IActionResult Privacy()

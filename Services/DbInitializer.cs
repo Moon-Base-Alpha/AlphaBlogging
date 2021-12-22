@@ -62,9 +62,11 @@ namespace AlphaBlogging.Services
                     await CreateRoleAsync("Author");
                     //await CreateRoleAsync("SuperUser");
                 }
+
             }
 
             //Seed users
+
             if (_userManager.FindByEmailAsync("admin@email.com").Result == null)
             {
                 var user = new ApplicationUser
@@ -181,7 +183,13 @@ namespace AlphaBlogging.Services
                 await _userManager.CreateAsync(user, "123456");
                 await _userManager.AddToRoleAsync(user, "User");
             }
+
             // End seed users //
+
+            }
+        }
+
+
 
             // Seed Blogs
             if (_db.Blogs.Any())

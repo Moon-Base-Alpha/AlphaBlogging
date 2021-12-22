@@ -1,4 +1,5 @@
 using AlphaBlogging.Data;
+using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models;
 using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +36,7 @@ namespace AlphaBlogging
             services.AddDatabaseDeveloperPageExceptionFilter();
 
 
+
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -47,9 +49,9 @@ namespace AlphaBlogging
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
+            services.AddTransient<IPostServices, PostServices>();
             //Adding DbInitializer Service
             services.AddAsyncInitializer<DbInitializer>();
-
             services.AddRazorPages();
 
         }
