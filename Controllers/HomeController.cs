@@ -23,19 +23,10 @@ namespace AlphaBlogging.Controllers
         public IActionResult Index()
         {
             //return a linq list with all user's blogs by using a _db context call, from repos
-            List<Blog> blogs = new List<Blog>();
-            return View(blogs);
-        }
-        public IActionResult BlogCreate()
-        {
+            //List<Blog> blogs = new List<Blog>();
             return View();
         }
-
-        [HttpPost]
-        public void BlogCreate(Blog newBlog)
-        {
-             RedirectToAction("Index","Home");
-        }
+       
 
         public IActionResult Privacy()
         {

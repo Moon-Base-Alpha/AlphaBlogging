@@ -1,11 +1,5 @@
 ﻿@model IEnumerable<AlphaBlogging.Models.Blog>
 
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-@*
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -24,17 +18,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.Created)
             </th>
-            
+            <th>
+                @Html.DisplayNameFor(model => model.Visible)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-    @if (item.Visible == true)
-    {
         <tr>
             <td>
-            @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -54,8 +48,6 @@
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
-    }
 }
     </tbody>
 </table>
-*@

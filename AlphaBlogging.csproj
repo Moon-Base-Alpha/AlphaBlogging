@@ -9,8 +9,6 @@
   <ItemGroup>
 
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-
-    <Compile Remove="Data\Migrations\ApplicationDbContextModelSnapshot.cs" />
     <Compile Remove="Data\Repos\IRepos.cs" />
     <Compile Remove="Data\Repos\Repos.cs" />
     <Compile Remove="Services\IAsyncInitializer.cs" />
@@ -30,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
