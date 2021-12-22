@@ -35,7 +35,7 @@ namespace AlphaBlogging
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-
+            services.AddTransient<IBlogsService, BlogsService>();
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
