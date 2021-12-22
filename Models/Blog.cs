@@ -6,7 +6,7 @@ namespace AlphaBlogging.Models
 {
     public class Blog
     {
-        [Required]
+        
         public int Id { get; set; }
 
         [Required]

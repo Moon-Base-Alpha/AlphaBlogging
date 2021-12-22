@@ -59,7 +59,6 @@ namespace AlphaBlogging.Areas.Identity.Pages.Account
 
         public bool IsValidEmail(string email)
         {
-            string Email;
             try
             {
                 MailAddress m = new MailAddress(email);
