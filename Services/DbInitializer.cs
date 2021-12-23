@@ -15,12 +15,6 @@ namespace AlphaBlogging.Services
         private readonly ApplicationDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly bool InitializeDb = true;
-
-
-        //What to add
-        //private readonly bool Add_Roles = true;
-        //private readonly bool Add_Blogs = true;
 
         public DbInitializer(
             ApplicationDbContext context,
@@ -53,15 +47,18 @@ namespace AlphaBlogging.Services
             await _db.Database.MigrateAsync();
 
             //if true, initializes the database with some sample data
-            if (InitializeDb)
+            if (!_db.Roles.Any())
             {
                     await CreateRoleAsync("Admin");
                     await CreateRoleAsync("User");
                     await CreateRoleAsync("Author");
-                    //await CreateRoleAsync("SuperUser");
+                //await CreateRoleAsync("SuperUser");
 
 
             //Seed users
+            if (!_db.Users.Any())
+            {
+
             if (_userManager.FindByEmailAsync("admin@email.com").Result == null)
             {
                 var user = new ApplicationUser
@@ -179,16 +176,14 @@ namespace AlphaBlogging.Services
                 await _userManager.AddToRoleAsync(user, "User");
             }
             }
+            }
             // End seed users //
 
-
             // Seed Blogs
-            if (_db.Blogs.Any())
+            if (!_db.Blogs.Any())
             {
-                return; // DB has been seeded
-            }
-            var Blogs = new Blog[]
-            {
+                var blogs = new List<Blog>()
+                {
                     new Blog
                     {
                         Author = _db.Users.Where(x => x.UserName == "Neo").FirstOrDefault(),
@@ -276,7 +271,6 @@ namespace AlphaBlogging.Services
                     },
                     new Blog
                     {
-
                         Author = _db.Users.Where(x => x.UserName == "Clark").FirstOrDefault(),
                         Title = "I can fly!",
                         Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
@@ -286,22 +280,17 @@ namespace AlphaBlogging.Services
                         Created = DateTime.ParseExact("2021-12-20 03:22:33", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
                     }
+           };
+                await _db.Blogs.AddRangeAsync(blogs);
+                await _db.SaveChangesAsync();
             };
-            foreach (Blog b in Blogs)
-            {
-                await _db.Blogs.AddAsync(b);
-            }
-            await _db.SaveChangesAsync();
+            // End Seed Blogs
 
 
-        // End Seed Blogs
-        
             //Seed Post
-            if (_db.Posts.Any())
+            if (!_db.Posts.Any())
             {
-                return; // DB has been seeded
-            }
-            var posts = new List<Post>()
+                var posts = new List<Post>()
             {
                 new Post
                 {
@@ -310,7 +299,7 @@ namespace AlphaBlogging.Services
                     "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
                     "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                     "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
-                    Created = DateTime.ParseExact("2021-12-01 07:23:12", "yyyy-MM-dd hh:mm:ss", null),
+                    Created = DateTime.ParseExact("2021-12-01 11:33:12", "yyyy-MM-dd hh:mm:ss", null),
                     Views = 14,
                     Visible = true,
                     BlogId = 2
@@ -322,7 +311,7 @@ namespace AlphaBlogging.Services
                     "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
                     "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                     "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
-                    Created = DateTime.ParseExact("2021-12-03 03:11:56", "yyyy-MM-dd hh:mm:ss", null),
+                    Created = DateTime.ParseExact("2021-12-03 07:23:12", "yyyy-MM-dd hh:mm:ss", null),
                     Views = 3,
                     Visible = true,
                     BlogId = 3
@@ -334,17 +323,135 @@ namespace AlphaBlogging.Services
                     "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
                     "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                     "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
-                    Created = DateTime.ParseExact("2021-12-05 11:33:12", "yyyy-MM-dd hh:mm:ss", null),
+                    Created = DateTime.ParseExact("2021-12-05 03:11:56", "yyyy-MM-dd hh:mm:ss", null),
                     Views = 5,
                     Visible = true,
                     BlogId = 6
                 },
+                new Post
+                {
+                    Title = "Post title 4 here...",
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
+                    "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
+                    "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
+                    "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
+                    Created = DateTime.ParseExact("2021-12-06 09:13:12", "yyyy-MM-dd hh:mm:ss", null),
+                    Views = 1,
+                    Visible = true,
+                    BlogId = 9
+                },
+                new Post
+                {
+                    Title = "Post title 5 here...",
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
+                    "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
+                    "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
+                    "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
+                    Created = DateTime.ParseExact("2021-12-08 01:50:24", "yyyy-MM-dd hh:mm:ss", null),
+                    Views = 19,
+                    Visible = true,
+                    BlogId = 3
+                },
+                new Post
+                {
+                    Title = "Post title 6 here...",
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
+                    "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
+                    "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
+                    "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
+                    Created = DateTime.ParseExact("2021-12-10 05:44:19", "yyyy-MM-dd hh:mm:ss", null),
+                    Views = 3,
+                    Visible = true,
+                    BlogId = 3
+                },
+                new Post
+                {
+                    Title = "Post title 7 here...",
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
+                    "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
+                    "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
+                    "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
+                    Created = DateTime.ParseExact("2021-12-11 11:11:11", "yyyy-MM-dd hh:mm:ss", null),
+                    Views = 5,
+                    Visible = true,
+                    BlogId = 3
+                }
             };
-
-        await _db.Posts.AddRangeAsync(posts);
-
-        await _db.SaveChangesAsync();
+                await _db.Posts.AddRangeAsync(posts);
+                await _db.SaveChangesAsync();
+            };
             // End Seed Posts
+
+            //Seed comments
+            if (!_db.Comments.Any())
+            {
+                var comments = new List<Comment>()
+            {
+                new Comment
+                {
+                    Author = _db.Users.Where(x => x.UserName == "Neo").FirstOrDefault(),
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
+                    " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
+                    "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
+                    "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
+                    Created = DateTime.ParseExact("2021-12-01 12:33:12", "yyyy-MM-dd hh:mm:ss", null),
+                    PostId = 1
+                },
+                new Comment
+                {
+                    Author = _db.Users.Where(x => x.UserName == "Bruce").FirstOrDefault(),
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
+                    " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
+                    "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
+                    "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
+                    Created = DateTime.ParseExact("2021-12-03 04:11:56", "yyyy-MM-dd hh:mm:ss", null),
+                    PostId = 2
+                },
+                new Comment
+                {
+                    Author = _db.Users.Where(x => x.UserName == "Jack").FirstOrDefault(),
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
+                    " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
+                    "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
+                    "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
+                    Created = DateTime.ParseExact("2021-12-05 11:11:56", "yyyy-MM-dd hh:mm:ss", null),
+                    PostId = 3
+                },
+                new Comment
+                {
+                    Author = _db.Users.Where(x => x.UserName == "MaryJ").FirstOrDefault(),
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
+                    " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
+                    "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
+                    "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
+                    Created = DateTime.ParseExact("2021-12-06 10:13:12", "yyyy-MM-dd hh:mm:ss", null),
+                    PostId = 4
+                },
+                new Comment
+                {
+                    Author = _db.Users.Where(x => x.UserName == "Diana").FirstOrDefault(),
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
+                    " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
+                    "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
+                    "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
+                    Created = DateTime.ParseExact("2021-12-08 02:50:24", "yyyy-MM-dd hh:mm:ss", null),
+                    PostId = 5
+                },
+            };
+                await _db.Comments.AddRangeAsync(comments);
+                await _db.SaveChangesAsync();
+            }
+            // End Seed comments
         }
     }
 }
