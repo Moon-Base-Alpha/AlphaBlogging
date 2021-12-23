@@ -16,7 +16,7 @@ namespace AlphaBlogging.Data.Repos
         }
         public void AddPost(Post post)
         {
-            _db.Add(post);
+            _db.Posts.Add(post);
             
         }
 
