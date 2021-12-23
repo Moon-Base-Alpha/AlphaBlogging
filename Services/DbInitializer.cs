@@ -452,6 +452,41 @@ namespace AlphaBlogging.Services
                 await _db.SaveChangesAsync();
             }
             // End Seed comments
+
+            // Seed tags
+            if (!_db.Tags.Any())
+            {
+                var tags = new List<Tag>()
+                {
+                    new Tag
+                    {
+                        HashTag ="#martix"
+                    },
+                    new Tag
+                    {
+                        HashTag ="#blablabla"
+                    },new Tag
+                    {
+                        HashTag ="#donuts"
+                    },new Tag
+                    {
+                        HashTag ="#spider"
+                    },new Tag
+                    {
+                        HashTag ="#realworld"
+                    },
+                    new Tag
+                    {
+                        HashTag ="#music"
+                    },
+                    new Tag
+                    {
+                        HashTag ="#love"
+                    },
+                };
+                await _db.Tags.AddRangeAsync(tags);
+                await _db.SaveChangesAsync();
+            }
         }
     }
 }
