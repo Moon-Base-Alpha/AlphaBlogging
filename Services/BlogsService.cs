@@ -23,7 +23,7 @@ namespace AlphaBlogging.Services
         public void AddBlog(Blog blog)
         {
             blog.Created = DateTime.Now;    
-            _db.Add(blog);
+            _db.Blogs.Add(blog);
         }
 
         public void DeleteBlog(int id)
