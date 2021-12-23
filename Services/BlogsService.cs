@@ -39,7 +39,7 @@ namespace AlphaBlogging.Services
 
         public Blog GetBlog(int id)
         {
-            return _db.Blogs.FirstOrDefault(b => b.Id == id);
+            return _db.Blogs.Where(b=>b.Id ==id).FirstOrDefault();
 
         }
 

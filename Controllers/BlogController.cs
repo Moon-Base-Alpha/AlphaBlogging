@@ -30,11 +30,12 @@ namespace AlphaBlogging.Controllers
         }
 
         [Authorize]
-        public IActionResult Blog(int id)
+        public IActionResult BlogView(int Id)
         {
-            var blog = _bloggyService.GetBlog(id);
+            var blog = _bloggyService.GetBlog(Id);
             return View(blog);
         }
+
 
         [Authorize]
         [HttpGet]

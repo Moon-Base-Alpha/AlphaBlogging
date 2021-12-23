@@ -1,6 +1,8 @@
-﻿using AlphaBlogging.Data.Repos;
+﻿using AlphaBlogging.Data;
+using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AlphaBlogging.Controllers
@@ -8,13 +10,16 @@ namespace AlphaBlogging.Controllers
     public class PostController : Controller
     {
         private IPostServices _repo;
-        public PostController(IPostServices repo)
+        private readonly ApplicationDbContext _db;
+        public PostController(IPostServices repo, ApplicationDbContext context)
         {
             _repo = repo;
+            _db = context;
         }
-        public IActionResult Postlist()
+        public IActionResult Postlist(int blogid)
         {
-            var posts = _repo.GetAllPosts();
+            var posts = _db.Blogs.Where(b => b.Id == blogid).FirstOrDefault().Posts;
+            //var posts = _repo.GetAllPosts();
             return View(posts);
         }
         public IActionResult Post(int id) 
@@ -28,9 +33,16 @@ namespace AlphaBlogging.Controllers
             return View(new Post());
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Post post)
+        public async Task<IActionResult> Create(Post post, int blogid)
         {
+            //var user = User.Identity.Name;
+            
+            //post.BlogId = (from x in _db
+            //               where x.UserName == user
+            //               select x).First();
+            //post.BlogId = blogid;
             _repo.AddPost(post);
+            (_db.Blogs.Where(b => b.Id == blogid).FirstOrDefault()).Posts.Add(post);
             if (await _repo.SaveChangesAsync())
                 return RedirectToAction("Edit");
             else
