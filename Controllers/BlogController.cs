@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using AlphaBlogging.Data;
 using System.Linq;
+using AlphaBlogging.Data.Repos;
 
 namespace AlphaBlogging.Controllers
 {
@@ -15,11 +16,13 @@ namespace AlphaBlogging.Controllers
     {
         //Dependency Inject of BlogService and SignIn
         private readonly IBlogsService _bloggyService;
+        private readonly IPostServices _postService;
         private readonly ApplicationDbContext _db;
 
-        public BlogController(IBlogsService bloggy, ApplicationDbContext context)
+        public BlogController(IBlogsService bloggy, IPostServices posty, ApplicationDbContext context)
         {
             _bloggyService = bloggy;
+            _postService = posty;
             _db = context;
         }
 
@@ -27,13 +30,19 @@ namespace AlphaBlogging.Controllers
         {
             var blogs = _bloggyService.GetAllBlogs();
             return View(blogs);
+
         }
 
         [Authorize]
-        public IActionResult BlogView(int Id)
+        public IActionResult BlogView(int id)
+        {           
+            var blog = _bloggyService.GetBlog(id);           
+            return View(blog);  
+        }
+        public IActionResult BlogPostView(int Id)
         {
-            var blog = _bloggyService.GetBlog(Id);
-            return View(blog);
+            //var blog = _bloggyService.GetPostsFromBlogID(Id);
+            return View();
         }
 
 

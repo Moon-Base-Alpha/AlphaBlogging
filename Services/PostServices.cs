@@ -9,10 +9,29 @@ namespace AlphaBlogging.Data.Repos
 {
     public class PostServices : IPostServices
     {
+
         private ApplicationDbContext _db;
         public PostServices(ApplicationDbContext db)
         {
             _db = db;
+        }
+
+        public List<Post> Posts { get;}
+
+        public IEnumerable<Post> GetPostsFromBlogID(int Id) // returns all blogs as a list
+        {
+            List<Post> resultList = new List<Post>();
+            
+            var temp = (from x in _db.Blogs 
+                        where x.Id == Id
+                        select x.Posts).First();
+
+            if (temp != null)
+            {
+                resultList = temp.ToList();
+            }
+
+            return resultList;
         }
         public void AddPost(Post post)
         {
@@ -30,10 +49,14 @@ namespace AlphaBlogging.Data.Repos
             return _db.Posts.ToList();
 
         }
-
-        public Post GetPost(int id)
+        public IEnumerable<Post> GetBlogPosts(int? Id)
         {
-            return _db.Posts.FirstOrDefault(p => p.Id == id);
+            return _db.Posts.Where(p => p.BlogId == Id).ToList();
+            
+        }
+        public Post GetPost(int Id)
+        {
+            return _db.Posts.FirstOrDefault(p => p.Id == Id);
 
         }
 

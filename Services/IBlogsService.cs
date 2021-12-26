@@ -13,6 +13,7 @@ namespace AlphaBlogging.Services
         void AddBlog(Blog blog);
         void UpdateBlog(Blog blog);
         void DeleteBlog(int Id);
+        //List<Post> GetPostsFromBlogID(int BlogID);
 
         Task<bool> SaveChangesAsync();
 
