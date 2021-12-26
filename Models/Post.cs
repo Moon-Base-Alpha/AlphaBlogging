@@ -20,6 +20,7 @@ namespace AlphaBlogging.Models
         }
         private ILazyLoader LazyLoader { get; set; }
         [Required]
+
         public int Id { get; set; }
 
         [Required]

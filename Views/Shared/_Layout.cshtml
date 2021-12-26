@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-
 </head>
 <body>
     <header>
@@ -21,9 +20,9 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>                        
+                        </li>   *@                     
                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Create">Create new Blog</a>
@@ -37,6 +36,13 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Postlist">List of posts</a>                           
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Comment" asp-action="Create">Create comment</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Comment" asp-action="Commentlist">List of comments</a>                           
                         </li>
                         
                     </ul>

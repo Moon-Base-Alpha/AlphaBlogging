@@ -1,0 +1,30 @@
+﻿@model IEnumerable<AlphaBlogging.Models.Comment>
+
+@{
+  }
+  <h2>List of comments</h2>
+  <hr />
+  <div>
+      <ul>
+           @foreach (var comment in Model)
+    {
+        <li>
+            @*<span style="font-weight:500">Author: </span>@Html.DisplayFor(modelItem => comment.Author)
+            <br />*@
+            <span style="font-weight:500">Post ID: </span>@Html.DisplayFor(modelItem => comment.PostId)
+            <br />
+            <span style="font-weight:500">Comment: </span>@Html.DisplayFor(modelItem => comment.Body)
+            <br />
+             <a asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.Id">
+                Edit
+            </a>
+             |
+             <a asp-controller="Comment" asp-action="Remove" asp-route-id="@comment.Id">
+                Remove
+            </a>
+            <br />
+            <hr />
+        </li>
+    }
+      </ul>
+  </div>

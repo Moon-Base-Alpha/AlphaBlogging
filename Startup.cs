@@ -50,6 +50,8 @@ namespace AlphaBlogging
             services.AddControllersWithViews();
 
             services.AddTransient<IPostServices, PostServices>();
+            services.AddTransient<ICommentServices, CommentServices>();
+
             //Adding DbInitializer Service
             services.AddAsyncInitializer<DbInitializer>();
             services.AddRazorPages();
