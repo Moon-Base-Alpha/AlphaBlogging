@@ -22,9 +22,12 @@ namespace AlphaBlogging.Controllers
             //var posts = _repo.GetAllPosts();
             return View(posts);
         }
-        public IActionResult Post(int id) 
+        public IActionResult Post(int Id) 
         {
-            var post = _repo.GetPost(id);
+            var post = new Post();
+            post.Id = Id;
+            post.Title = _repo.GetPost(Id).Title;
+            post.Body = _repo.GetPost(Id).Body;            
             return View(post); 
         }
         [HttpGet]
