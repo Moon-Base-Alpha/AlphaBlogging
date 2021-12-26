@@ -55,5 +55,20 @@ namespace AlphaBlogging.Services
             }
             return false;
         }
+        public List<Post> GetPostsFromBlogID(int BlogID) // returns all blogs as a list
+        {
+            List<Post> resultList = new List<Post>();
+
+            var temp = (from x in _db.Blogs
+                        where x.Id == BlogID
+                        select x.Posts).First();
+
+            if (temp != null)
+            {
+                resultList = temp.ToList();
+            }
+
+            return resultList;
+        }
     }
 }

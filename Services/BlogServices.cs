@@ -46,7 +46,7 @@ namespace AlphaBlogging.Data.Repos
 
             return resultList;
         }
-        public static List<Post> GetPostsFromBlogID(int BlogID) // returns all blogs as a list
+        public List<Post> GetPostsFromBlogID(int BlogID) // returns all blogs as a list
         {
             List<Post> resultList = new List<Post>();
 

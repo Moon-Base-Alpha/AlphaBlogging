@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,16 +21,25 @@ namespace AlphaBlogging.Models
         public DateTime Created { get; set; }
 
         [Required]
-        public ApplicationUser Author { get; set; }
-
-        public virtual ICollection<Post> Posts { get; set; }
+        public ApplicationUser Author { get; set; }      
 
         public bool Visible { get; set; }
+        private ICollection<Post> _posts;
         public Blog()
         {
 
         }
-        public Blog(string title, string body, ApplicationUser author, ICollection<Post> posts, bool visible = true)
+        private Blog(ILazyLoader lazyLoader)
+        {
+            LazyLoader = lazyLoader;
+        }
+        private ILazyLoader LazyLoader { get; set; }
+        public ICollection<Post> Posts
+        {
+            get => LazyLoader.Load(this, ref _posts);
+            set => _posts = value;
+        }
+        public Blog(string title, string body, ApplicationUser author, List<Post> posts, bool visible = true)
         {
             Title = title;
             Body = body;
@@ -37,13 +48,6 @@ namespace AlphaBlogging.Models
             Posts = posts;
             Visible = visible;
         }
-        public Blog(string title, string body, ApplicationUser author, bool visible = true)
-        {
-            Title = title;
-            Body = body;
-            Created = DateTime.Today;
-            Author = author;
-            Visible = visible;
-        }
+       
     }
 }

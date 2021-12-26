@@ -1,4 +1,5 @@
-﻿@model AlphaBlogging.Models.Blog
+﻿@using AlphaBlogging.Models;
+@model AlphaBlogging.Models.Blog
 
 @{
     ViewData["Title"] = "BlogView";
@@ -34,35 +35,37 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Created)
         </dd>
-       @* <dt class = "col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Visible)
-        </dt>*@
-       @* <dd class = "col-sm-10">
+        </dt>
+       <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Visible)
-        </dd>*@
+        </dd>
     </dl>
 </div>
+
+
 <div>
-      <ul>
-           @foreach (var item in Model.Posts)
+   
+    @if (Model.Posts.Count() > 0)
+    {       
+        @foreach (var post in Model.Posts)
+        {
+            <div>
+                 <partial name="_Post"  model="post" />              
+            </div>
+           
+        }
+    }
+    else if ( Model.Posts.Count() == 0 | Model.Posts == null)
     {
-        <li>
-            @item.Title
-        </li>
+        <h3>No posts yet</h3>
+        // Attempting to use mClass here will result in NullReferenceException
     }
-      </ul>
-  </div>
-<div>    
-    
-    @{
-        
-        //Html.ActionLink("Postlist", "Post")
-        //await Html.RenderPartialAsync("/Views/Post/Postlist.cshtml",  Model.Posts);
-    }
-    @*@await Html.RenderPartialAsync("Postlist", Model.Posts)*@
-    @*<partial name="../Post/Postlist" />*@
 </div>
+
+
 <div>
-    @Html.ActionLink("Add post", "Create", "Post", new { blogid = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+    @*@Html.ActionLink("Add post", "Create", "Post", new { blogid = Model.Id }) |*@
+    <a asp-action="Bloglist">Back to List</a>
 </div>
