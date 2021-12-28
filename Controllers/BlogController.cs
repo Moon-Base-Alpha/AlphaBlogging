@@ -33,6 +33,26 @@ namespace AlphaBlogging.Controllers
 
         }
 
+        public IActionResult MyBloglist()
+        {
+            
+            var user = User.Identity.Name;
+
+            var authorId = (from x in _db.Users
+                           where x.UserName == user
+                           select x).First();
+
+            var blogs = _bloggyService.GetAllBlogs();
+
+            var query = (from blogItem in blogs
+                        where blogItem.Author == authorId
+                        select blogItem).ToList();            
+
+            return View(query);
+
+        }
+
+
         [Authorize]
         public IActionResult BlogView(int id)
         {           

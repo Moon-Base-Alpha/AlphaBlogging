@@ -20,7 +20,6 @@ namespace AlphaBlogging.Models
                 
         }
         private ICollection<Post> _posts;
-
         private Tag(ILazyLoader lazyLoader)
         {
             LazyLoader = lazyLoader;
@@ -33,7 +32,7 @@ namespace AlphaBlogging.Models
         }
         public Tag(int id, string hashTag, ICollection<Post> posts)
         {
-            Id = id;
+            
             HashTag = hashTag;
             Posts = posts;
         }

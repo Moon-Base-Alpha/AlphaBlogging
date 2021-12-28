@@ -59,9 +59,9 @@ namespace AlphaBlogging.Controllers
             if (post == null | tag == null)
            
             //var user = User.Identity.Name;
-            
-            //post.BlogId = (from x in _db
-            //               where x.UserName == user
+
+            //post.BlogId = (from x in _db.Blogs
+            //               where x.Author == user
             //               select x).First();
             //post.BlogId = blogid;
             
