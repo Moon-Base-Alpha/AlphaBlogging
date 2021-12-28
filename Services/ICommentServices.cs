@@ -11,7 +11,9 @@ namespace AlphaBlogging.Data.Repos
         void AddComment(Comment comment);
         void UpdateComment(Comment comment);
         void DeleteComment(int Id);
+        IEnumerable<Comment> GetCommentsFromPostID(int Id);
 
+        IEnumerable<Comment> GetPostComments(int? Id);
         Task<bool> SaveChangesAsync();
     }
 }
