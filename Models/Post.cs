@@ -45,12 +45,12 @@ namespace AlphaBlogging.Models
             set => _blog = value;
         }
 
-        public Post(int id, string title, string body, DateTime created, int blogId, int views, ICollection<Comment> comments, ICollection<Tag> tags, bool visible = true)
+        public Post(string title, string body, int blogId, int views, ICollection<Comment> comments, ICollection<Tag> tags, bool visible = true)
         {
-            Id = id;
+            
             Title = title;
             Body = body;
-            Created = created;
+            Created = DateTime.Today;
             Views = views;
             Comments = comments;
             Tags = tags;

@@ -16,7 +16,7 @@ namespace AlphaBlogging.Models
         [Required]
         public DateTime Created { get; set; }
 
-        [Required]
+        
         public ApplicationUser Author { get; set; }
 
         public int PostId { get; set; }
@@ -27,11 +27,11 @@ namespace AlphaBlogging.Models
         {
 
         }
-        public Comment(int id, string body, DateTime created, ApplicationUser author)
+        public Comment(string body, ApplicationUser author)
         {
-            Id = id;
+            
             Body = body;
-            Created = created;
+            Created = DateTime.Today;
             Author = author;
         }
     }

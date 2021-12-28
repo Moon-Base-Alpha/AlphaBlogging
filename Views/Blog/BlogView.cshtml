@@ -46,6 +46,12 @@
 
 
 <div>
+    @Html.ActionLink("Add Post", "Create", "Post", new {blogId = Model.Id} )
+   
+</div>
+
+
+<div>
    
     @if (Model.Posts.Count() > 0)
     {       

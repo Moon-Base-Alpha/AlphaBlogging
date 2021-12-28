@@ -19,9 +19,9 @@ namespace AlphaBlogging.Models
                 
         }
 
-        public Tag(int id, string hashTag, ICollection<Post> posts)
+        public Tag(string hashTag, ICollection<Post> posts)
         {
-            Id = id;
+            
             HashTag = hashTag;
             Posts = posts;
         }
