@@ -1,0 +1,42 @@
+﻿@model AlphaBlogging.Models.Comment
+
+@{
+    ViewData["Title"] = "Comment";
+}
+
+<div>
+    <h4>Comment view</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Author)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(Model => Model.Author)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Body)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(Model => Model.Body)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(Model => Model.Created)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PostId)
+        </dt>
+       <dd class = "col-sm-10">
+            @Html.DisplayFor(Model => Model.PostId)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="CommentList">Back to List</a>
+</div>
+
+@* <partial name="Create" />*@

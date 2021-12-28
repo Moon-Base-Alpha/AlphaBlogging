@@ -14,6 +14,24 @@ namespace AlphaBlogging.Data.Repos
         {
             _db = db;
         }
+
+        public List<Comment> Comments { get;}
+
+        public IEnumerable<Comment> GetCommentsFromPostID(int Id)
+        {
+            List<Comment> resultList = new List<Comment>();
+
+            var temp = (from x in _db.Posts
+                        where x.Id == Id
+                        select x.Comments).First();
+
+            if (temp != null)
+            {
+                resultList = temp.ToList();
+            }
+            return resultList;
+        }
+
         public void AddComment(Comment comment)
         {
             _db.Comments.Add(comment);
@@ -27,6 +45,11 @@ namespace AlphaBlogging.Data.Repos
         public List<Comment> GetAllComments()
         {
             return _db.Comments.ToList();
+        }
+
+        public IEnumerable<Comment> GetPostComments(int? Id)
+        {
+            return _db.Comments.Where(c => c.PostId == Id).ToList();
         }
 
         public Comment GetComment(int id)
