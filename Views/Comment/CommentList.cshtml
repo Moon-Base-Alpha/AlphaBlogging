@@ -9,19 +9,15 @@
            @foreach (var comment in Model)
     {
         <li>
-            @*<span style="font-weight:500">Author: </span>@Html.DisplayFor(modelItem => comment.Author)
-            <br />*@
+            <span style="font-weight:500">Author: </span>@Html.DisplayFor(modelItem => comment.Author)
+            <br />
             <span style="font-weight:500">Post ID: </span>@Html.DisplayFor(modelItem => comment.PostId)
             <br />
             <span style="font-weight:500">Comment: </span>@Html.DisplayFor(modelItem => comment.Body)
             <br />
-             <a asp-controller="Comment" asp-action="Edit" asp-route-id="@comment.Id">
-                Edit
-            </a>
-             |
-             <a asp-controller="Comment" asp-action="Remove" asp-route-id="@comment.Id">
-                Remove
-            </a>
+             @Html.ActionLink("Edit", "Edit", new { id=comment.Id }) |
+             @Html.ActionLink("Details", "CommentView",  new { id=comment.Id }) |
+             @Html.ActionLink("Delete", "Remove", new { id=comment.Id })
             <br />
             <hr />
         </li>
