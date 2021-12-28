@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -42,9 +42,11 @@ namespace AlphaBlogging.Models
         {
 
         }
+
         public Comment(int id, string body, DateTime created, ApplicationUser author, int postId)
+
         {
-            Id = id;
+            
             Body = body;
             Created = DateTime.Today;
             Author = author;

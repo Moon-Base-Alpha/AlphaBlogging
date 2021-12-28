@@ -39,11 +39,12 @@ namespace AlphaBlogging.Controllers
         public async Task<IActionResult> Create(Post post, int blogid)
         {
             //var user = User.Identity.Name;
-            
-            //post.BlogId = (from x in _db
-            //               where x.UserName == user
+
+            //post.BlogId = (from x in _db.Blogs
+            //               where x.Author == user
             //               select x).First();
-            //post.BlogId = blogid;
+
+            post.BlogId = blogid;
             _repo.AddPost(post);
             (_db.Blogs.Where(b => b.Id == blogid).FirstOrDefault()).Posts.Add(post);
             if (await _repo.SaveChangesAsync())

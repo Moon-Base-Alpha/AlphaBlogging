@@ -1,5 +1,6 @@
 ﻿using AlphaBlogging.Data;
 using AlphaBlogging.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,17 +15,29 @@ namespace AlphaBlogging.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly SignInManager<ApplicationUser> _SignInManager;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, SignInManager<ApplicationUser> SignInManager)
         {
             _logger = logger;
+            _SignInManager = SignInManager; 
+           
         }
 
         public IActionResult Index()
         {
-            ////return a linq list with all user's blogs by using a _db context call, from repos
-            //List<Blog> blogs = new List<Blog>();
-            return View();
+            var signedIn = _SignInManager.IsSignedIn(User);
+
+            if (!signedIn) 
+            { 
+                return View(); 
+            }   
+            else 
+            {
+                return RedirectToAction("MyBloglist", "Blog"); 
+            } 
+            
         }
         public IActionResult BlogCreate()
         {
