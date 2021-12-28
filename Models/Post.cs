@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
@@ -57,5 +58,15 @@ namespace AlphaBlogging.Models
             Visible = visible;
             BlogId = blogId;    
         }
+    }
+
+    [Keyless]
+    public class PostTag
+    {
+        public int PostsId { get; set; }
+        public Post Post { get; set; }
+        public int TagsId { get; set; }
+        public Tag Tag { get; set; }
+
     }
 }

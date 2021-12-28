@@ -3,6 +3,7 @@ using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models;
 using AlphaBlogging.Models.ViewModels;
 using AlphaBlogging.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace AlphaBlogging.Controllers
             _db = context;
             
         }
+       
         public IActionResult Postlist(int blogid)
         {
             var posts = _db.Blogs.Where(b => b.Id == blogid).FirstOrDefault().Posts;
@@ -54,7 +56,8 @@ namespace AlphaBlogging.Controllers
                 return View(tag);
 
         }
-        public async Task<IActionResult> Create(Post post, int blogid, Tag tag, string tags)
+        [HttpPost]
+        public async Task<IActionResult> Create(Post post, int blogId, Tag tag, string tags)
         {           
             if (post == null | tag == null)
            
@@ -65,25 +68,37 @@ namespace AlphaBlogging.Controllers
             //               select x).First();
             //post.BlogId = blogid;
             
-            _repo.AddPost(post, tag);
-
+            _repo.AddPost(post);
+            (_db.Blogs.Where(b => b.Id == blogId).FirstOrDefault()).Posts.Add(post);
+            
+            _tagservice.AddTag(tag);
+            _db.SaveChanges();
+            PostTag posTag = new PostTag()
+            {
+                PostsId = post.Id,
+                TagsId = _db.Tags.Where(t=>t.HashTag == tag.HashTag).FirstOrDefault().Id
+            };
+            //var PostTag = _db.PostTag.ToList(); 
+            //_db.PostTag.Add(posTag);
+            _db.SaveChanges();
             //string[] tagArr = tags.Split(',');
 
             //foreach (string item in tagArr)
             //{
-               
+
             //    postTags .AddTag(item);
             //}
             //_tagservice.AddTag(tag);
-            (_db.Blogs.Where(b => b.Id == 3/*blogid*/).FirstOrDefault()).Posts.Add(post);
+
             //(_db.Posts.Where(p => p.Id == 3).FirstOrDefault()).Tags.Add(tag);
             if (await _repo.SaveChangesAsync())
-                return RedirectToAction("Edit");
+                //return RedirectToAction("Edit");
+                return Redirect($"~/Blog/BlogView/{blogId}");
             else
                 return View(post);
         }
         [HttpGet]
-        public IActionResult Edit(int? id/*, Tag tag*/)
+        public IActionResult Edit(int? id, Tag tag)
         {
             if (id == null)
                 return View(new PostVM());
@@ -113,7 +128,7 @@ namespace AlphaBlogging.Controllers
                 _repo.UpdatePost(post);
             else
             {
-                _repo.AddPost(post, tag);
+                _repo.AddPost(post/*, tag*/);
             }
            
             if (await _repo.SaveChangesAsync())
@@ -123,11 +138,12 @@ namespace AlphaBlogging.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> Remove(int id, int blogId)
         {
             _repo.DeletePost(id);
             await _repo.SaveChangesAsync();
-            return RedirectToAction("Postlist");
+                      
+            return Redirect($"~/Blog/BlogView/{blogId}");
         }
 
         //// GET: PostController
@@ -195,8 +211,11 @@ namespace AlphaBlogging.Controllers
         //[ValidateAntiForgeryToken]
         //public ActionResult Delete(int id, IFormCollection collection)
         //{
+        //    Post post = _db.Posts.Where(post=>post.Id == id).FirstOrDefault();
         //    try
         //    {
+        //        _db.Posts.Remove(post);
+               
         //        return RedirectToAction(nameof(Index));
         //    }
         //    catch
@@ -205,4 +224,6 @@ namespace AlphaBlogging.Controllers
         //    }
         //}
     }
+
+   
 }

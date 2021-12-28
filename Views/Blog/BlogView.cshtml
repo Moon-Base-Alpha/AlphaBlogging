@@ -58,7 +58,11 @@
         @foreach (var post in Model.Posts)
         {
             <div>
-                 <partial name="_Post"  model="post" />              
+                 <partial name="_Post"  model="post" />   
+                 
+                 @Html.ActionLink("Remove", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} )
+                 @Html.ActionLink("Edit", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} )
+                
             </div>
            
         }
