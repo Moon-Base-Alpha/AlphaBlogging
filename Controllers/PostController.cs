@@ -1,7 +1,10 @@
 ﻿using AlphaBlogging.Data;
 using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models;
+using AlphaBlogging.Models.ViewModels;
+using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,11 +13,14 @@ namespace AlphaBlogging.Controllers
     public class PostController : Controller
     {
         private IPostServices _repo;
+        private ITagServices _tagservice;
         private readonly ApplicationDbContext _db;
-        public PostController(IPostServices repo, ApplicationDbContext context)
+        public PostController(IPostServices repo, ApplicationDbContext context, ITagServices tagservice)
         {
             _repo = repo;
+            _tagservice = tagservice;   
             _db = context;
+            
         }
         public IActionResult Postlist(int blogid)
         {
@@ -24,52 +30,90 @@ namespace AlphaBlogging.Controllers
         }
         public IActionResult Post(int Id) 
         {
-            var post = new Post();
+            var post = new PostVM();
             post.Id = Id;
             post.Title = _repo.GetPost(Id).Title;
-            post.Body = _repo.GetPost(Id).Body;            
+            post.Body = _repo.GetPost(Id).Body;
+            post.Tags = _repo.GetPost(Id).Tags;
             return View(post); 
         }
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new Post());
+            return View(new PostVM());
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Post post, int blogid)
+        public async Task<IActionResult> AddTag(Tag tag)
         {
+
+           _tagservice.AddTag(tag); 
+                
+            if (await _repo.SaveChangesAsync())
+                return RedirectToAction();
+            else
+                return View(tag);
+
+        }
+        public async Task<IActionResult> Create(Post post, int blogid, Tag tag, string tags)
+        {           
+            if (post == null | tag == null)
+           
             //var user = User.Identity.Name;
             
             //post.BlogId = (from x in _db
             //               where x.UserName == user
             //               select x).First();
             //post.BlogId = blogid;
-            _repo.AddPost(post);
-            (_db.Blogs.Where(b => b.Id == blogid).FirstOrDefault()).Posts.Add(post);
+            
+            _repo.AddPost(post, tag);
+
+            //string[] tagArr = tags.Split(',');
+
+            //foreach (string item in tagArr)
+            //{
+               
+            //    postTags .AddTag(item);
+            //}
+            //_tagservice.AddTag(tag);
+            (_db.Blogs.Where(b => b.Id == 3/*blogid*/).FirstOrDefault()).Posts.Add(post);
+            //(_db.Posts.Where(p => p.Id == 3).FirstOrDefault()).Tags.Add(tag);
             if (await _repo.SaveChangesAsync())
                 return RedirectToAction("Edit");
             else
                 return View(post);
         }
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? id/*, Tag tag*/)
         {
             if (id == null)
-                return View(new Post());
+                return View(new PostVM());
+
             else
             {
-                var post = _repo.GetPost((int)id);
+
+                //var post = _repo.GetPost((int)id);
+
+                var post = new PostVM();
+                post.Id = (int)id;
+                post.Title = _repo.GetPost((int)id).Title;
+                post.Body = _repo.GetPost((int)id).Body;
+                post.Tags = _repo.GetPost((int)id).Tags;
+                post.PostTagId = _tagservice.GetTag((int)id).Id;
+                post.PostsId = _repo.GetPost((int)(id)).Id;
+               
                 return View(post);
+                //string tagg = _db.Tags.Find().HashTag;
+                //return View(tag);
             }           
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Post post)
+        public async Task<IActionResult> Edit(Post post, Tag tag)
         {
             if (post.Id > 0)
                 _repo.UpdatePost(post);
             else
             {
-                _repo.AddPost(post);
+                _repo.AddPost(post, tag);
             }
            
             if (await _repo.SaveChangesAsync())

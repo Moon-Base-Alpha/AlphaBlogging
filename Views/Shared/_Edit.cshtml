@@ -35,7 +35,7 @@
         </form>
     </div>
 </div>
- @*@if (Model.Tags != null)
+ @if (Model.Tags.Count() > 0)
     {       
         @foreach (var post in Model.Tags)
         {
@@ -44,12 +44,12 @@
             </div>
            
         }
-    }*@
-  @*  else if ( Model.Tags.Count() == 0 | Model.Tags == null)
+    }
+    else if ( Model.Tags.Count() == 0 | Model.Tags == null)
     {
         <h3>No posts yet</h3>
         // Attempting to use mClass here will result in NullReferenceException
-    }*@
+    }
 
 
     <!--------------------------------------------------->

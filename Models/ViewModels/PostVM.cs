@@ -15,8 +15,12 @@ namespace AlphaBlogging.Models.ViewModels
         public int Views { get; set; }
         public bool Visible { get; set; }
         public int BlogId { get; set; }
-        //public int PostTagId { get; set; }             
-        //public string HashTag { get; set; }
+        public int PostTagId { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; } 
+        public string HashTag { get; set; }
+        public int PostsId { get; set; }
+        public int TagsId { get; set; }
 
 
     }
