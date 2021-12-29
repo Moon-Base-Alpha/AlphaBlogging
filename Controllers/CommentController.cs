@@ -11,11 +11,13 @@ namespace AlphaBlogging.Controllers
     public class CommentController : Controller
     {
         private ICommentServices _repo;
+        private IPostServices _postService;
         private readonly ApplicationDbContext _db;
 
-        public CommentController(ICommentServices repo, ApplicationDbContext context)
+        public CommentController(ICommentServices repo, IPostServices postServices, ApplicationDbContext context)
         {
             _repo = repo;
+            _postService = postServices;
             _db = context;
         }
 
@@ -39,25 +41,26 @@ namespace AlphaBlogging.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Comment comment, int postId)
+        public async Task<IActionResult> Create(Comment comment/*, int postId*/)
         {
-            //var user = User.Identity.Name;
-            //comment.Author = (from x in _db.Users
-            //                  where x.UserName == user
-            //                  select x).First();
-
-            //_repo.AddComment(comment);
-            //if (await _repo.SaveChangesAsync())
-            //    return RedirectToAction("Index", "Home");
-            //else
-            //    return View(comment);
+            var user = User.Identity.Name;
+            comment.Author = (from x in _db.Users
+                              where x.UserName == user
+                              select x).First();
 
             _repo.AddComment(comment);
-            (_db.Posts.Where(p => p.Id == 1).FirstOrDefault()).Comments.Add(comment);
+
             if (await _repo.SaveChangesAsync())
-                return RedirectToAction("Edit");
+                return RedirectToAction("CreatView", "Comment");
             else
                 return View(comment);
+
+            //_repo.AddComment(comment);
+            //(_db.Posts.Where(p => p.Id == 1).FirstOrDefault()).Comments.Add(comment);
+            //if (await _repo.SaveChangesAsync())
+            //    return RedirectToAction("Edit");
+            //else
+            //    return View(comment);
         }
 
         [HttpGet]
