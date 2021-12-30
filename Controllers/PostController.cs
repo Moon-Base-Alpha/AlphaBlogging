@@ -23,8 +23,11 @@ namespace AlphaBlogging.Controllers
             _tagservice = tagservice;   
             _db = context;
             
-        }
-       
+  
+      }
+
+        // PostList only used for testing. TO BE REMOVED
+
         public IActionResult Postlist(int blogid)
         {
             var posts = _db.Blogs.Where(b => b.Id == blogid).FirstOrDefault().Posts;
@@ -58,6 +61,7 @@ namespace AlphaBlogging.Controllers
             {
                 //var user = User.Identity.Name;
 
+
                 //post.BlogId = (from x in _db.Blogs
                 //               where x.Author == user
                 //               select x).First();
@@ -81,8 +85,9 @@ namespace AlphaBlogging.Controllers
             if (await _postservice.SaveChangesAsync())
                 //return RedirectToAction("Edit");
                 return Redirect($"~/Blog/BlogView/{post.BlogId}");
+
             else
-                return View(post);
+                return RedirectToAction("Index", "Home");
         }
         [HttpGet]
         public IActionResult Edit(int? id, Tag tag)

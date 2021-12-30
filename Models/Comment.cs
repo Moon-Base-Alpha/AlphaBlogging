@@ -40,10 +40,10 @@ namespace AlphaBlogging.Models
 
         public Comment()
         {
-
+            Created = DateTime.Now;
         }
 
-        public Comment(int id, string body, DateTime created, ApplicationUser author, int postId)
+        public Comment( string body, ApplicationUser author, int postId)
 
         {
             

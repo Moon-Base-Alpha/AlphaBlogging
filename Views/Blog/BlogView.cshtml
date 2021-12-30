@@ -1,4 +1,4 @@
-﻿@using AlphaBlogging.Models;
+@using AlphaBlogging.Models;
 @model AlphaBlogging.Models.Blog
 
 @{
@@ -46,28 +46,37 @@
 </div>
 
 
+
 <div>
    
-    @if (Model.Posts.Count() > 0)
-    {       
-        @foreach (var post in Model.Posts)
-        {
-            <div>
+    @{
+
+
+        if (Model.Posts != null || Model.Posts.Count() > 0)
+        {       
+            foreach (var post in Model.Posts.Reverse())
+            {
+                <div>
                  <partial name="_Post"  model="post" />   
                  
                  @Html.ActionLink("Remove", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} )
                  @Html.ActionLink("Edit", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} )
                 
-            </div>
-           
+                </div>
+                <hr />           
+            }
+        }
+        else
+        {
+
+            <h3>No posts yet</h3>
+            // Attempting to use mClass here will result in NullReferenceException
+
         }
     }
-    else if ( Model.Posts.Count() == 0 | Model.Posts == null)
-    {
-        <h3>No posts yet</h3>
-        // Attempting to use mClass here will result in NullReferenceException
-    }
 </div>
+
+
 
 
 <div>

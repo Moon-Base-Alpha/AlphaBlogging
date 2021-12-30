@@ -15,15 +15,29 @@ namespace AlphaBlogging.Controllers
     public class BlogController : Controller
     {
         //Dependency Inject of BlogService and SignIn
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ISignedInService _signedInService; 
         private readonly IBlogsService _bloggyService;
         private readonly IPostServices _postService;
-        private readonly ApplicationDbContext _db;
+        
 
-        public BlogController(IBlogsService bloggy, IPostServices posty, ApplicationDbContext context)
+        public BlogController(ISignedInService signedInService, IBlogsService bloggy, IPostServices posty, SignInManager<ApplicationUser> signInManager)
         {
             _bloggyService = bloggy;
             _postService = posty;
-            _db = context;
+            _signedInService = signedInService;
+            _signInManager = signInManager; 
+            
+        }
+
+        public ApplicationUser GetSignedInId()
+        {
+            var signedIn = _signInManager.IsSignedIn(User);
+            var user = User.Identity.Name;
+
+            ApplicationUser authorId = _signedInService.GetAuthorId(user);
+
+            return authorId;
         }
 
         public IActionResult Bloglist()
@@ -38,17 +52,15 @@ namespace AlphaBlogging.Controllers
             
             var user = User.Identity.Name;
 
-            var authorId = (from x in _db.Users
-                           where x.UserName == user
-                           select x).First();
+            ApplicationUser authorId = GetSignedInId();
 
-            var blogs = _bloggyService.GetAllBlogs();
+            var blogs = _bloggyService.GetMyBlogs(authorId);
 
-            var query = (from blogItem in blogs
-                        where blogItem.Author == authorId
-                        select blogItem).ToList();            
+            //var query = (from blogItem in blogs
+            //            where blogItem.Author == authorId
+            //            select blogItem).ToList();            
 
-            return View(query);
+            return View(blogs);
 
         }
 
@@ -79,9 +91,7 @@ namespace AlphaBlogging.Controllers
         {
             var user = User.Identity.Name;
             
-            blog.Author = (from x in _db.Users
-                           where x.UserName == user
-                           select x).First();
+            blog.Author = GetSignedInId();
 
             _bloggyService.AddBlog(blog);
 

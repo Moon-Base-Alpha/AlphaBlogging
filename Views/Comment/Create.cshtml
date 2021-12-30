@@ -9,18 +9,22 @@
 <div class="row">
     <div class="col-md-12 ">
         <form method="post">
+            
              <div class="form-group mb-3">
+
                 <textarea id="limitedtextarea" asp-for="Body" class="form-control bg-light" rows="5" placeholder="Type comment here..." 
                         onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,512);"
                           onKeyUp="limitText(this.form.limitedtextarea,this.form.countdown,512);">
                 </textarea><br>
 
                 @*(Maximum characters: 512)<br>*@
+
                 <font size="2">You have <input readonly type="text" name="countdown" size="1" value="512"> characters left.
                 </font>
 
-                @*<textarea asp-for="Body" class="form-control bg-light" rows="3" valuedata-""></textarea>*@
-            </div>
+                <textarea asp-for="Body" class="form-control bg-light" rows="3" valuedata-""></textarea>
+            </div> 
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
