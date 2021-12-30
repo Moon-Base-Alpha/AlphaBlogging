@@ -15,7 +15,9 @@ namespace AlphaBlogging.Models.ViewModels
         public int BlogId { get; set; }
         public string HashTag { get; set; }
 
-
-
+        public PostVM()
+        {
+            HashTag = "";   
+        }
     }
 }

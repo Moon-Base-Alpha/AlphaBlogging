@@ -71,14 +71,18 @@ namespace AlphaBlogging.Controllers
                 newPost.Body = post.Body;
                 newPost.BlogId = post.BlogId;
                 newPost.Created = DateTime.Now;
-                string[] tagArr = post.HashTag.Split(',');               
-                foreach (string item in tagArr)
+
+                if (post.HashTag != null)
                 {
-                    Tag foundTag = _tagservice.FindTag(item);
-                    if (foundTag != null)                        
-                        newPost.Tags.Add(foundTag);                
-                    else
-                    newPost.Tags.Add(new Tag() { HashTag = item }); 
+                    string[] tagArr = post.HashTag.Split(',');
+                    foreach (string item in tagArr)
+                    {
+                        Tag foundTag = _tagservice.FindTag(item);
+                        if (foundTag != null)
+                            newPost.Tags.Add(foundTag);
+                        else
+                            newPost.Tags.Add(new Tag() { HashTag = item });
+                    }
                 }
                 _postservice.AddPost(newPost);
             }   
