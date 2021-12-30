@@ -1,25 +1,31 @@
 ﻿using AlphaBlogging.Data;
 using AlphaBlogging.Models;
-using AlphaBlogging.Models.ViewModels;
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using AlphaBlogging.Services;
+using AlphaBlogging.Data.Repos;
+using AlphaBlogging.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AlphaBlogging.Services
 {
     public class BlogsService : IBlogsService
     {
         private ApplicationDbContext _db;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         
-        public BlogsService(ApplicationDbContext context, SignInManager<ApplicationUser> signInManager)
+
+        public BlogsService(ApplicationDbContext context)
         {
             _db = context;
-            _signInManager = signInManager; 
+            
         }
-
+        
         public void AddBlog(Blog blog)
         {
             blog.Created = DateTime.Now;    
@@ -37,9 +43,20 @@ namespace AlphaBlogging.Services
             return _db.Blogs.ToList();
         }
 
+        public List<Blog> GetMyBlogs(ApplicationUser authorId)
+        {
+            var allBlogs = GetAllBlogs();
+
+            var query = (from blogItem in allBlogs
+                         where blogItem.Author == authorId
+                         select blogItem).ToList();
+
+            return query;
+        }
+
         public Blog GetBlog(int id)
         {
-            return _db.Blogs.Where(b=>b.Id ==id).FirstOrDefault();
+            return _db.Blogs.Where(b=>b.Id ==id).Include(b => b.Posts).ThenInclude(p => p.Comments).FirstOrDefault();
 
         }
 

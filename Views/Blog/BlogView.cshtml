@@ -51,24 +51,33 @@
 </div>
 
 
+
 <div>
    
-    @if (Model.Posts.Count() > 0)
-    {       
-        @foreach (var post in Model.Posts)
+    @{
+
+
+        if (Model.Posts != null || Model.Posts.Count() > 0)
+        {       
+            foreach (var post in Model.Posts.Reverse())
+            {
+                <div>
+                    <partial name="_Post"  model="post"/> 
+                 
+                    @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} )
+                </div>
+                <hr />           
+            }
+        }
+        else
         {
-            <div>
-                 <partial name="_Post"  model="post" />              
-            </div>
-           
+            <h3>No posts yet</h3>
+            // Attempting to use mClass here will result in NullReferenceException
         }
     }
-    else if ( Model.Posts.Count() == 0 | Model.Posts == null)
-    {
-        <h3>No posts yet</h3>
-        // Attempting to use mClass here will result in NullReferenceException
-    }
 </div>
+
+
 
 
 <div>

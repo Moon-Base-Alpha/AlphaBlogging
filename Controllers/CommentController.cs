@@ -10,12 +10,14 @@ namespace AlphaBlogging.Controllers
 {
     public class CommentController : Controller
     {
-        private ICommentServices _repo;
+        private readonly ICommentServices _repo;
+        private readonly ISignedInService _signedInService;
         private readonly ApplicationDbContext _db;
 
-        public CommentController(ICommentServices repo, ApplicationDbContext context)
+        public CommentController(ICommentServices repo, ApplicationDbContext context, ISignedInService signedInService)
         {
             _repo = repo;
+            _signedInService = signedInService; 
             _db = context;
         }
 
@@ -41,21 +43,19 @@ namespace AlphaBlogging.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Comment comment, int postId)
         {
-            //var user = User.Identity.Name;
-            //comment.Author = (from x in _db.Users
-            //                  where x.UserName == user
-            //                  select x).First();
+            var user = User.Identity.Name;
+            comment.Author = _signedInService.GetAuthorId(user);
 
             //_repo.AddComment(comment);
             //if (await _repo.SaveChangesAsync())
             //    return RedirectToAction("Index", "Home");
             //else
             //    return View(comment);
-
-            _repo.AddComment(comment);
-            (_db.Posts.Where(p => p.Id == 1).FirstOrDefault()).Comments.Add(comment);
+            comment.PostId = postId;    
+            //_repo.AddComment(comment);
+            (_db.Posts.Where(p => p.Id == postId).FirstOrDefault()).Comments.Add(comment);
             if (await _repo.SaveChangesAsync())
-                return RedirectToAction("Edit");
+                return RedirectToAction("CommentList");
             else
                 return View(comment);
         }

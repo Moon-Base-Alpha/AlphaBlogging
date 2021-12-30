@@ -16,6 +16,8 @@ namespace AlphaBlogging.Controllers
             _repo = repo;
             _db = context;
         }
+
+        // PostList only used for testing. TO BE REMOVED
         public IActionResult Postlist(int blogid)
         {
             var posts = _db.Blogs.Where(b => b.Id == blogid).FirstOrDefault().Posts;
@@ -45,12 +47,12 @@ namespace AlphaBlogging.Controllers
             //               select x).First();
 
             post.BlogId = blogid;
-            _repo.AddPost(post);
+            //_repo.AddPost(post);
             (_db.Blogs.Where(b => b.Id == blogid).FirstOrDefault()).Posts.Add(post);
             if (await _repo.SaveChangesAsync())
                 return RedirectToAction("Edit");
             else
-                return View(post);
+                return RedirectToAction("Index", "Home");
         }
         [HttpGet]
         public IActionResult Edit(int? id)

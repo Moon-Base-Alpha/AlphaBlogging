@@ -1,7 +1,30 @@
 ﻿@model Post
-@{
-  }
+
   <h2>@Model.Title</h2>
   <p>@Model.Body</p>
 
+<div>
+    @*TO DO*@
 
+   @* @{
+        if (  Model.Comments != null && Model.Comments.Count() > 0)
+    {       
+        @foreach (var comment in Model.Comments.Reverse())
+        {
+            <div>
+                 <partial name="_Comment"  model="comment"/> 
+                 
+                @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} )
+
+            </div>
+            <hr />
+           
+        }
+    }
+    else
+    {
+        <h3>No comments yet</h3>
+        // Attempting to use mClass here will result in NullReferenceException
+    }
+    }*@
+</div>

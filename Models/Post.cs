@@ -10,10 +10,7 @@ namespace AlphaBlogging.Models
     public class Post
     {
         private Blog _blog;
-        public Post()
-        {
-
-        }
+        
         private Post(ILazyLoader lazyLoader)
         {
             LazyLoader = lazyLoader;
@@ -44,16 +41,23 @@ namespace AlphaBlogging.Models
             get => LazyLoader.Load(this, ref _blog);
             set => _blog = value;
         }
-
-        public Post(string title, string body, int blogId, int views, ICollection<Comment> comments, ICollection<Tag> tags, bool visible = true)
+        public Post()
         {
-            
+            Comments = new List<Comment>();
+            //Tags = new List<Tag>();
+            Created = DateTime.Today;
+            Visible = true;
+            Views = 0;
+        }
+        public Post(string title, string body, int blogId,  bool visible = true)
+        {
+               
             Title = title;
             Body = body;
             Created = DateTime.Today;
-            Views = views;
-            Comments = comments;
-            Tags = tags;
+            Views = 0;
+            Comments = new List<Comment>();
+            Tags = new List<Tag>();             
             Visible = visible;
             BlogId = blogId;    
         }
