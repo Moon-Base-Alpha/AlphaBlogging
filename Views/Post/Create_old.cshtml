@@ -2,8 +2,7 @@
 @model AlphaBlogging.Models.ViewModels.PostVM
 <link rel="stylesheet" href="~/css/site.css" />
 
-
-<h4>Edit Post</h4>
+<h4>Create Post</h4>
 <hr />
 <div class="row">
     <div class="col-md-6 ">
@@ -12,21 +11,23 @@
                 <label>Title</label>
                 <input asp-for="Title" class="form-control bg-light" />
             </div>
-             <div class="form-group mb-3">
-                <label>Body</label>
-                <textarea asp-for="Body" class="form-control bg-light" rows="3" valuedata-""></textarea>
-            </div>
             <div class="form-group mb-3">
-                <label>Tags</label>
-                @*<input asp-for="Tags" class="form-control bg-light" />*@
+                <label>Body</label>
+                <textarea asp-for="Body" class="form-control bg-light" rows="3"></textarea>
             </div>
-             <div class="keyHandler">
+            @*<div class="form-group mb-3">
+                <label>Tags</label>
+                <input asp-for="Tags" class="form-control bg-light" />
+
+            </div>*@
+            <div class="keyHandler">
                 <button type="button" id="addKey">+</button>
                 <input type="text" placeholder="Keyword + Enter" id="keysInput">
             </div>
             <div class="addedKeysHolder"></div>
+
             <!-- Just give this input the name="etc" attribute -->
-            @*<input asp-for="Tags" type="hidden" id="lkey" name="Tags">*@
+            <input asp-for="HashTag" type="hidden" id="lkey" name="HashTag">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -35,32 +36,17 @@
         </form>
     </div>
 </div>
- @*@if (Model.Tags != null)
-    {       
-        @foreach (var post in Model.Tags)
-        {
-            <div>
-                 <partial name="_Post"  model="post" />              
-            </div>
-           
-        }
-    }*@
-  @*  else if ( Model.Tags.Count() == 0 | Model.Tags == null)
-    {
-        <h3>No posts yet</h3>
-        // Attempting to use mClass here will result in NullReferenceException
-    }*@
 
 
-    <!--------------------------------------------------->
+<!--------------------------------------------------->
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="~/js/site.js"></script>
 
 
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
-<script type="text/javascript" src="~/js/site.js"></script>
 
 }
 

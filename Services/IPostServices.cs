@@ -9,14 +9,15 @@ namespace AlphaBlogging.Data.Repos
 {
     public interface IPostServices
     {
-        Post GetPost(int Id);
+        Post GetPost(int id);
         IEnumerable<Post> GetBlogPosts(int? Id);
         List<Post> GetAllPosts();
-        void AddPost(Post post);
+        void AddPost(Post post/*, int blogId, Tag tag*/);
         void UpdatePost(Post post);
-        void DeletePost(int Id);
+        void DeletePost(int id);
         IEnumerable<Post> GetPostsFromBlogID(int Id);
 
         Task<bool> SaveChangesAsync();
+       
     }
 }

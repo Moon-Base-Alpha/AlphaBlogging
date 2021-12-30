@@ -48,7 +48,7 @@ namespace AlphaBlogging.Models
         {
             
             Body = body;
-            Created = DateTime.Today;
+            Created = DateTime.Now;
             Author = author;
             PostId = postId;
         }

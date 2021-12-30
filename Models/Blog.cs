@@ -39,11 +39,11 @@ namespace AlphaBlogging.Models
             get => LazyLoader.Load(this, ref _posts);
             set => _posts = value;
         }
-        public Blog(string title, string body, ApplicationUser author, List<Post> posts, bool visible = true)
+        public Blog(string title, string body, DateTime created, ApplicationUser author, List<Post> posts, bool visible = true)
         {
             Title = title;
             Body = body;
-            Created = DateTime.Today;
+            Created = DateTime.Now;
             Author = author;
             Posts = posts;
             Visible = visible;

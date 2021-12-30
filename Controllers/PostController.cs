@@ -1,7 +1,12 @@
 ﻿using AlphaBlogging.Data;
 using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models;
+using AlphaBlogging.Models.ViewModels;
+using AlphaBlogging.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,84 +14,128 @@ namespace AlphaBlogging.Controllers
 {
     public class PostController : Controller
     {
-        private IPostServices _repo;
+        private IPostServices _postservice;
+        private ITagServices _tagservice;
         private readonly ApplicationDbContext _db;
-        public PostController(IPostServices repo, ApplicationDbContext context)
+        public PostController(IPostServices repo, ApplicationDbContext context, ITagServices tagservice)
         {
-            _repo = repo;
+            _postservice = repo;
+            _tagservice = tagservice;   
             _db = context;
-        }
+            
+  
+      }
 
         // PostList only used for testing. TO BE REMOVED
+
         public IActionResult Postlist(int blogid)
         {
             var posts = _db.Blogs.Where(b => b.Id == blogid).FirstOrDefault().Posts;
-            //var posts = _repo.GetAllPosts();
+            //var posts = _postservice.GetAllPosts();
             return View(posts);
         }
         public IActionResult Post(int Id) 
         {
-            var post = new Post();
-            post.Id = Id;
-            post.Title = _repo.GetPost(Id).Title;
-            post.Body = _repo.GetPost(Id).Body;            
+            var post = new PostVM();
+            //post.Id = Id;
+            var dbPpost = _postservice.GetPost(Id);
+            post.Title = dbPpost.Title;
+            post.Body = dbPpost.Body;
+            //post.Tags = 
             return View(post); 
         }
+
         [HttpGet]
-        public IActionResult Create()
-        {
-            return View(new Post());
+        public IActionResult Create(int blogId)
+        {                        
+            return View(new PostVM() {BlogId = blogId });
         }
+
+        
+
         [HttpPost]
-        public async Task<IActionResult> Create(Post post, int blogid)
+        public async Task<IActionResult> Create(PostVM post/*, int blogId, Tag tag, string tags*/)
         {
-            //var user = User.Identity.Name;
 
-            //post.BlogId = (from x in _db.Blogs
-            //               where x.Author == user
-            //               select x).First();
+            if (ModelState.IsValid )
+            {
+                //var user = User.Identity.Name;
 
-            post.BlogId = blogid;
-            //_repo.AddPost(post);
-            (_db.Blogs.Where(b => b.Id == blogid).FirstOrDefault()).Posts.Add(post);
-            if (await _repo.SaveChangesAsync())
-                return RedirectToAction("Edit");
+
+                //post.BlogId = (from x in _db.Blogs
+                //               where x.Author == user
+                //               select x).First();
+                //post.BlogId = blogid;
+                Post newPost = new Post();
+                newPost.Title = post.Title;
+                newPost.Body = post.Body;
+                newPost.BlogId = post.BlogId;
+                newPost.Created = DateTime.Now;
+                string[] tagArr = post.HashTag.Split(',');               
+                foreach (string item in tagArr)
+                {
+                    Tag foundTag = _tagservice.FindTag(item);
+                    if (foundTag != null)                        
+                        newPost.Tags.Add(foundTag);                
+                    else
+                    newPost.Tags.Add(new Tag() { HashTag = item }); 
+                }
+                _postservice.AddPost(newPost);
+            }   
+            if (await _postservice.SaveChangesAsync())
+                //return RedirectToAction("Edit");
+                return Redirect($"~/Blog/BlogView/{post.BlogId}");
+
             else
                 return RedirectToAction("Index", "Home");
         }
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? id, Tag tag)
         {
             if (id == null)
-                return View(new Post());
+                return View(new PostVM());
+
             else
             {
-                var post = _repo.GetPost((int)id);
+               
+                //var post = _postservice.GetPost((int)id);
+
+                var post = new PostVM();
+                post.BlogId = (int)id;
+                var dbPpost = _postservice.GetPost((int)id);
+                post.Title = dbPpost.Title;
+                post.Body = dbPpost.Body;               
+                post.Visible = true;
+
+                
                 return View(post);
+                //string tagg = _db.Tags.Find().HashTag;
+                //return View(tag);
             }           
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Post post)
+        public async Task<IActionResult> Edit(Post post, int blogId, Tag tag)
         {
             if (post.Id > 0)
-                _repo.UpdatePost(post);
+                _postservice.UpdatePost(post);
             else
             {
-                _repo.AddPost(post);
+                _postservice.AddPost(post);
             }
            
-            if (await _repo.SaveChangesAsync())
+            if (await _postservice.SaveChangesAsync())
                 return RedirectToAction("Edit");
             else
                 return View(post);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> Remove(int id, int blogId)
         {
-            _repo.DeletePost(id);
-            await _repo.SaveChangesAsync();
-            return RedirectToAction("Postlist");
+            _postservice.DeletePost(id);
+            await _postservice.SaveChangesAsync();
+                      
+            return Redirect($"~/Blog/BlogView/{blogId}");
         }
 
         //// GET: PostController
@@ -154,8 +203,11 @@ namespace AlphaBlogging.Controllers
         //[ValidateAntiForgeryToken]
         //public ActionResult Delete(int id, IFormCollection collection)
         //{
+        //    Post post = _db.Posts.Where(post=>post.Id == id).FirstOrDefault();
         //    try
         //    {
+        //        _db.Posts.Remove(post);
+               
         //        return RedirectToAction(nameof(Index));
         //    }
         //    catch
@@ -164,4 +216,6 @@ namespace AlphaBlogging.Controllers
         //    }
         //}
     }
+
+   
 }

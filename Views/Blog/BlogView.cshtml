@@ -1,4 +1,4 @@
-﻿@using AlphaBlogging.Models;
+@using AlphaBlogging.Models;
 @model AlphaBlogging.Models.Blog
 
 @{
@@ -35,12 +35,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Created)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Visible)
-        </dt>
-       <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Visible)
-        </dd>
+        
     </dl>
 </div>
 
@@ -62,17 +57,21 @@
             foreach (var post in Model.Posts.Reverse())
             {
                 <div>
-                    <partial name="_Post"  model="post"/> 
+                 <partial name="_Post"  model="post" />   
                  
-                    @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} )
+                 @Html.ActionLink("Remove", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} )
+                 @Html.ActionLink("Edit", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} )
+                
                 </div>
                 <hr />           
             }
         }
         else
         {
+
             <h3>No posts yet</h3>
             // Attempting to use mClass here will result in NullReferenceException
+
         }
     }
 </div>

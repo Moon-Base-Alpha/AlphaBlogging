@@ -7,7 +7,10 @@
 <div>
     <h4>Comment view</h4>
     <hr />
-    <dl class="row">
+    @Html.DisplayFor(Model => Model.Author)<br />
+    @Html.DisplayFor(Model => Model.Body)<br />
+    @Html.DisplayFor(Model => Model.Created)<br />
+@*    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(Model => Model.Author)
         </dt>
@@ -32,7 +35,7 @@
        <dd class = "col-sm-10">
             @Html.DisplayFor(Model => Model.PostId)
         </dd>
-    </dl>
+    </dl>*@
 </div>
 
 <div>
