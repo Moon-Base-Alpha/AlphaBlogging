@@ -5,6 +5,7 @@ using AlphaBlogging.Models.ViewModels;
 using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,12 +14,12 @@ namespace AlphaBlogging.Controllers
 {
     public class PostController : Controller
     {
-        private IPostServices _repo;
+        private IPostServices _postservice;
         private ITagServices _tagservice;
         private readonly ApplicationDbContext _db;
         public PostController(IPostServices repo, ApplicationDbContext context, ITagServices tagservice)
         {
-            _repo = repo;
+            _postservice = repo;
             _tagservice = tagservice;   
             _db = context;
             
@@ -27,73 +28,59 @@ namespace AlphaBlogging.Controllers
         public IActionResult Postlist(int blogid)
         {
             var posts = _db.Blogs.Where(b => b.Id == blogid).FirstOrDefault().Posts;
-            //var posts = _repo.GetAllPosts();
+            //var posts = _postservice.GetAllPosts();
             return View(posts);
         }
         public IActionResult Post(int Id) 
         {
             var post = new PostVM();
-            post.Id = Id;
-            post.Title = _repo.GetPost(Id).Title;
-            post.Body = _repo.GetPost(Id).Body;
-            post.Tags = _repo.GetPost(Id).Tags;
+            //post.Id = Id;
+            var dbPpost = _postservice.GetPost(Id);
+            post.Title = dbPpost.Title;
+            post.Body = dbPpost.Body;
+            //post.Tags = 
             return View(post); 
         }
+
         [HttpGet]
-        public IActionResult Create()
-        {
-            return View(new PostVM());
+        public IActionResult Create(int blogId)
+        {                        
+            return View(new PostVM() {BlogId = blogId });
         }
+
+        
+
         [HttpPost]
-        public async Task<IActionResult> AddTag(Tag tag)
+        public async Task<IActionResult> Create(PostVM post/*, int blogId, Tag tag, string tags*/)
         {
 
-           _tagservice.AddTag(tag); 
-                
-            if (await _repo.SaveChangesAsync())
-                return RedirectToAction();
-            else
-                return View(tag);
-
-        }
-        [HttpPost]
-        public async Task<IActionResult> Create(Post post, int blogId, Tag tag, string tags)
-        {           
-            if (post == null | tag == null)
-           
-            //var user = User.Identity.Name;
-
-            //post.BlogId = (from x in _db.Blogs
-            //               where x.Author == user
-            //               select x).First();
-            //post.BlogId = blogid;
-            
-            _repo.AddPost(post);
-            (_db.Blogs.Where(b => b.Id == blogId).FirstOrDefault()).Posts.Add(post);
-            
-            _tagservice.AddTag(tag);
-            _db.SaveChanges();
-            PostTag posTag = new PostTag()
+            if (ModelState.IsValid )
             {
-                PostsId = post.Id,
-                TagsId = _db.Tags.Where(t=>t.HashTag == tag.HashTag).FirstOrDefault().Id
-            };
-            //var PostTag = _db.PostTag.ToList(); 
-            //_db.PostTag.Add(posTag);
-            _db.SaveChanges();
-            //string[] tagArr = tags.Split(',');
+                //var user = User.Identity.Name;
 
-            //foreach (string item in tagArr)
-            //{
-
-            //    postTags .AddTag(item);
-            //}
-            //_tagservice.AddTag(tag);
-
-            //(_db.Posts.Where(p => p.Id == 3).FirstOrDefault()).Tags.Add(tag);
-            if (await _repo.SaveChangesAsync())
+                //post.BlogId = (from x in _db.Blogs
+                //               where x.Author == user
+                //               select x).First();
+                //post.BlogId = blogid;
+                Post newPost = new Post();
+                newPost.Title = post.Title;
+                newPost.Body = post.Body;
+                newPost.BlogId = post.BlogId;
+                newPost.Created = DateTime.Now;
+                string[] tagArr = post.HashTag.Split(',');               
+                foreach (string item in tagArr)
+                {
+                    Tag foundTag = _tagservice.FindTag(item);
+                    if (foundTag != null)                        
+                        newPost.Tags.Add(foundTag);                
+                    else
+                    newPost.Tags.Add(new Tag() { HashTag = item }); 
+                }
+                _postservice.AddPost(newPost);
+            }   
+            if (await _postservice.SaveChangesAsync())
                 //return RedirectToAction("Edit");
-                return Redirect($"~/Blog/BlogView/{blogId}");
+                return Redirect($"~/Blog/BlogView/{post.BlogId}");
             else
                 return View(post);
         }
@@ -105,33 +92,33 @@ namespace AlphaBlogging.Controllers
 
             else
             {
-
-                //var post = _repo.GetPost((int)id);
+               
+                //var post = _postservice.GetPost((int)id);
 
                 var post = new PostVM();
-                post.Id = (int)id;
-                post.Title = _repo.GetPost((int)id).Title;
-                post.Body = _repo.GetPost((int)id).Body;
-                post.Tags = _repo.GetPost((int)id).Tags;
-                post.PostTagId = _tagservice.GetTag((int)id).Id;
-                post.PostsId = _repo.GetPost((int)(id)).Id;
-               
+                post.BlogId = (int)id;
+                var dbPpost = _postservice.GetPost((int)id);
+                post.Title = dbPpost.Title;
+                post.Body = dbPpost.Body;               
+                post.Visible = true;
+
+                
                 return View(post);
                 //string tagg = _db.Tags.Find().HashTag;
                 //return View(tag);
             }           
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Post post, Tag tag)
+        public async Task<IActionResult> Edit(Post post, int blogId, Tag tag)
         {
             if (post.Id > 0)
-                _repo.UpdatePost(post);
+                _postservice.UpdatePost(post);
             else
             {
-                _repo.AddPost(post/*, tag*/);
+                _postservice.AddPost(post);
             }
            
-            if (await _repo.SaveChangesAsync())
+            if (await _postservice.SaveChangesAsync())
                 return RedirectToAction("Edit");
             else
                 return View(post);
@@ -140,8 +127,8 @@ namespace AlphaBlogging.Controllers
         [HttpGet]
         public async Task<IActionResult> Remove(int id, int blogId)
         {
-            _repo.DeletePost(id);
-            await _repo.SaveChangesAsync();
+            _postservice.DeletePost(id);
+            await _postservice.SaveChangesAsync();
                       
             return Redirect($"~/Blog/BlogView/{blogId}");
         }

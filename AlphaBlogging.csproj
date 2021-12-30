@@ -14,6 +14,8 @@
     <Compile Remove="Data\Repos\IRepos.cs" />
     <Compile Remove="Data\Repos\Repos.cs" />
     <Compile Remove="Services\IAsyncInitializer.cs" />
+    <Content Remove="Views\Post\Create_old.cshtml" />
+    <Content Remove="Views\Shared\_Edit.cshtml" />
 
     <PackageReference Include="bootstrap" Version="5.1.2" />
     <PackageReference Include="Extensions.Hosting.AsyncInitialization" Version="1.0.0" />
@@ -31,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

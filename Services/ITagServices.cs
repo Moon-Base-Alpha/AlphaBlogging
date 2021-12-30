@@ -13,7 +13,7 @@ namespace AlphaBlogging.Services
         
         List<Tag> GetAllTags();
         void AddTag(Tag tag);
-       
+        Tag FindTag(string tagName);
         void DeleteTag(int id);
         IEnumerable<Tag> GetTagsFromPostID(int Id);
         Task<bool> SaveChangesAsync();

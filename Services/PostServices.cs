@@ -33,9 +33,10 @@ namespace AlphaBlogging.Data.Repos
 
             return resultList;
         }
-        public void AddPost(Post post/*, Tag tag*/)
+        public void AddPost(Post post/*, int blogId, Tag tag*/)
         {
-            _db.Posts.Add(post);
+            (_db.Blogs.Where(b => b.Id == post.BlogId).FirstOrDefault()).Posts.Add(post);
+            //_db.Posts.Add(post);
             //_db.Tags.Add(tag);
             
         }

@@ -10,25 +10,25 @@ namespace AlphaBlogging.Controllers
 {
     public class CommentController : Controller
     {
-        private ICommentServices _repo;
+        private ICommentServices _commentservice;
         private readonly ApplicationDbContext _db;
 
         public CommentController(ICommentServices repo, ApplicationDbContext context)
         {
-            _repo = repo;
+            _commentservice = repo;
             _db = context;
         }
 
         public IActionResult CommentList(/*int postId*/)
         {
             //var comments = _db.Posts.Where(p => p.Id == postId).FirstOrDefault().Comments;
-            var comments = _repo.GetAllComments();
+            var comments = _commentservice.GetAllComments();
             return View(comments);
         }
 
         public IActionResult CommentView (int id)
         {
-            var comment = _repo.GetComment(id);
+            var comment = _commentservice.GetComment(id);
             return View(comment);
         }
 
@@ -46,15 +46,15 @@ namespace AlphaBlogging.Controllers
             //                  where x.UserName == user
             //                  select x).First();
 
-            //_repo.AddComment(comment);
-            //if (await _repo.SaveChangesAsync())
+            //_commentservice.AddComment(comment);
+            //if (await _commentservice.SaveChangesAsync())
             //    return RedirectToAction("Index", "Home");
             //else
             //    return View(comment);
 
-            _repo.AddComment(comment);
+            _commentservice.AddComment(comment);
             (_db.Posts.Where(p => p.Id == 1).FirstOrDefault()).Comments.Add(comment);
-            if (await _repo.SaveChangesAsync())
+            if (await _commentservice.SaveChangesAsync())
                 return RedirectToAction("Edit");
             else
                 return View(comment);
@@ -67,7 +67,7 @@ namespace AlphaBlogging.Controllers
                 return View(new Comment());
             else
             {
-                var comment = _repo.GetComment((int)id);
+                var comment = _commentservice.GetComment((int)id);
                 return View(comment);
             }
         }
@@ -76,13 +76,13 @@ namespace AlphaBlogging.Controllers
         public async Task<IActionResult> Edit(Comment comment)
         {
             if (comment.Id > 0)
-                _repo.UpdateComment(comment);
+                _commentservice.UpdateComment(comment);
             else
             {
-                _repo.AddComment(comment);
+                _commentservice.AddComment(comment);
             }
 
-            if (await _repo.SaveChangesAsync())
+            if (await _commentservice.SaveChangesAsync())
                 return RedirectToAction("Edit");
             else
                 return View(comment);
@@ -91,8 +91,8 @@ namespace AlphaBlogging.Controllers
         [HttpGet]
         public async Task<IActionResult> Remove(int id)
         {
-            _repo.DeleteComment(id);
-            await _repo.SaveChangesAsync();
+            _commentservice.DeleteComment(id);
+            await _commentservice.SaveChangesAsync();
             return RedirectToAction("CommentList");
         }
     }

@@ -1,26 +1,43 @@
-﻿@using AlphaBlogging.Models;
-@model AlphaBlogging.Models.ViewModels.PostVM
+﻿@model AlphaBlogging.Models.ViewModels.PostVM
 <link rel="stylesheet" href="~/css/site.css" />
+@{
+    ViewData["Title"] = "Create";
+}
 
-<h4>Create Post</h4>
+<h1>Create</h1>
+
+<h4>PostVM</h4>
 <hr />
 <div class="row">
-    <div class="col-md-6 ">
-        <form method="post">
-            <div class="form-group mb-3">
-                <label>Title</label>
-                <input asp-for="Title" class="form-control bg-light" />
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group mb-3">
-                <label>Body</label>
-                <textarea asp-for="Body" class="form-control bg-light" rows="3"></textarea>
+            <div class="form-group">
+                <label asp-for="Body" class="control-label"></label>
+                <input asp-for="Body" class="form-control" />
+                <span asp-validation-for="Body" class="text-danger"></span>
             </div>
-            @*<div class="form-group mb-3">
-                <label>Tags</label>
-                <input asp-for="Tags" class="form-control bg-light" />
-
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Visible" /> @Html.DisplayNameFor(model => model.Visible)
+                </label>
+            </div>
+            <div class="form-group">
+                
+                <input asp-for="BlogId" type="hidden" class="form-control" />
+               
+            </div>
+            @*<div class="form-group">
+                <label asp-for="HashTag" class="control-label"></label>
+                <input asp-for="HashTag" class="form-control" />
+                <span asp-validation-for="HashTag" class="text-danger"></span>
             </div>*@
-            <div class="keyHandler">
+             <div class="keyHandler">
                 <button type="button" id="addKey">+</button>
                 <input type="text" placeholder="Keyword + Enter" id="keysInput">
             </div>
@@ -28,25 +45,21 @@
 
             <!-- Just give this input the name="etc" attribute -->
             <input asp-for="HashTag" type="hidden" id="lkey" name="HashTag">
-
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input type="submit" name="name" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 <!--------------------------------------------------->
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="~/js/site.js"></script>
 
 
 @section Scripts {
-    @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
-}
-

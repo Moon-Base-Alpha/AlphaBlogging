@@ -12,7 +12,7 @@ namespace AlphaBlogging.Data.Repos
         Post GetPost(int id);
         IEnumerable<Post> GetBlogPosts(int? Id);
         List<Post> GetAllPosts();
-        void AddPost(Post post/*, Tag tag*/);
+        void AddPost(Post post/*, int blogId, Tag tag*/);
         void UpdatePost(Post post);
         void DeletePost(int id);
         IEnumerable<Post> GetPostsFromBlogID(int Id);
