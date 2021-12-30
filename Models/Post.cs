@@ -50,6 +50,7 @@ namespace AlphaBlogging.Models
             Created = DateTime.Today;
             Visible = true;
             Views = 0;
+            Tags = new List<Tag>();
         }
         public Post(string title, string body, int blogId,  bool visible = true)
         {
@@ -63,21 +64,11 @@ namespace AlphaBlogging.Models
             Tags = new List<Tag>();             
 
             Visible = visible;
-            BlogId = blogId;    
-            if (tags == null) 
-                Tags = new List<Tag>();
-            else            
-                Tags = tags;
-            if (comments == null)
-                Comments = new List<Comment>();
-            else
-                Comments = comments;
+            BlogId = blogId;
+            
 
         }
-        public Post()
-        {
-            Tags = new List<Tag>();
-        }
+     
     }
 
    
