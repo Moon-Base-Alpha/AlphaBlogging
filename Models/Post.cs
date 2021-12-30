@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
@@ -9,11 +10,7 @@ namespace AlphaBlogging.Models
 {
     public class Post
     {
-        private Blog _blog;
-        public Post()
-        {
-
-        }
+        private Blog _blog;       
         private Post(ILazyLoader lazyLoader)
         {
             LazyLoader = lazyLoader;
@@ -51,11 +48,24 @@ namespace AlphaBlogging.Models
             Title = title;
             Body = body;
             Created = DateTime.Today;
-            Views = views;
-            Comments = comments;
-            Tags = tags;
+            Views = views;            
             Visible = visible;
             BlogId = blogId;    
+            if (tags == null) 
+                Tags = new List<Tag>();
+            else            
+                Tags = tags;
+            if (comments == null)
+                Comments = new List<Comment>();
+            else
+                Comments = comments;
+
+        }
+        public Post()
+        {
+            Tags = new List<Tag>();
         }
     }
+
+   
 }

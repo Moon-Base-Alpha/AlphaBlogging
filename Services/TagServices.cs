@@ -22,9 +22,18 @@ namespace AlphaBlogging.Data.Repos
        
         public void AddTag(Tag tag)
         {
+            //if (!_db.Tags.Any(t=>t.HashTag == tag.HashTag))
+            //{
+            //    _db.Tags.Add(tag);
+            //}
             _db.Tags.Add(tag);
             
         }
+        public Tag FindTag(string tagName)
+        {
+           return _db.Tags.Where(t=>t.HashTag == tagName).FirstOrDefault();   
+        } 
+
 
         public void DeleteTag(int id)
         {

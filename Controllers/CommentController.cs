@@ -10,13 +10,17 @@ namespace AlphaBlogging.Controllers
 {
     public class CommentController : Controller
     {
-        private ICommentServices _repo;
+
+        private ICommentServices _commentservice;
+
         private IPostServices _postService;
+
         private readonly ApplicationDbContext _db;
 
         public CommentController(ICommentServices repo, IPostServices postServices, ApplicationDbContext context)
         {
-            _repo = repo;
+
+            _commentservice = repo;
             _postService = postServices;
             _db = context;
         }
@@ -24,13 +28,13 @@ namespace AlphaBlogging.Controllers
         public IActionResult CommentList(/*int postId*/)
         {
             //var comments = _db.Posts.Where(p => p.Id == postId).FirstOrDefault().Comments;
-            var comments = _repo.GetAllComments();
+            var comments = _commentservice.GetAllComments();
             return View(comments);
         }
 
         public IActionResult CommentView (int id)
         {
-            var comment = _repo.GetComment(id);
+            var comment = _commentservice.GetComment(id);
             return View(comment);
         }
 
@@ -43,15 +47,21 @@ namespace AlphaBlogging.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Comment comment/*, int postId*/)
         {
-            var user = User.Identity.Name;
-            comment.Author = (from x in _db.Users
-                              where x.UserName == user
-                              select x).First();
+            //var user = User.Identity.Name;
+            //comment.Author = (from x in _db.Users
+            //                  where x.UserName == user
+            //                  select x).First();
 
-            _repo.AddComment(comment);
+            //_commentservice.AddComment(comment);
+            //if (await _commentservice.SaveChangesAsync())
+            //    return RedirectToAction("Index", "Home");
+            //else
+            //    return View(comment);
 
-            if (await _repo.SaveChangesAsync())
-                return RedirectToAction("CreatView", "Comment");
+            _commentservice.AddComment(comment);
+            (_db.Posts.Where(p => p.Id == 1).FirstOrDefault()).Comments.Add(comment);
+            if (await _commentservice.SaveChangesAsync())
+                return RedirectToAction("Edit");
             else
                 return View(comment);
 
@@ -70,7 +80,7 @@ namespace AlphaBlogging.Controllers
                 return View(new Comment());
             else
             {
-                var comment = _repo.GetComment((int)id);
+                var comment = _commentservice.GetComment((int)id);
                 return View(comment);
             }
         }
@@ -79,13 +89,13 @@ namespace AlphaBlogging.Controllers
         public async Task<IActionResult> Edit(Comment comment)
         {
             if (comment.Id > 0)
-                _repo.UpdateComment(comment);
+                _commentservice.UpdateComment(comment);
             else
             {
-                _repo.AddComment(comment);
+                _commentservice.AddComment(comment);
             }
 
-            if (await _repo.SaveChangesAsync())
+            if (await _commentservice.SaveChangesAsync())
                 return RedirectToAction("Edit");
             else
                 return View(comment);
@@ -94,8 +104,8 @@ namespace AlphaBlogging.Controllers
         [HttpGet]
         public async Task<IActionResult> Remove(int id)
         {
-            _repo.DeleteComment(id);
-            await _repo.SaveChangesAsync();
+            _commentservice.DeleteComment(id);
+            await _commentservice.SaveChangesAsync();
             return RedirectToAction("CommentList");
         }
     }
