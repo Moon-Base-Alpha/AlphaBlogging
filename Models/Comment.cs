@@ -11,7 +11,7 @@ namespace AlphaBlogging.Models
         [Required]
         public int Id { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Content")]
         [StringLength(512)]
         public string Body { get; set; }
 

@@ -40,6 +40,7 @@ namespace AlphaBlogging.Controllers
             return authorId;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Bloglist()
         {
             var blogs = _bloggyService.GetAllBlogs();

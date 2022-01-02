@@ -49,14 +49,18 @@ namespace AlphaBlogging.Services
             //if true, initializes the database with some sample data
             if (!_db.Roles.Any())
             {
-                    await CreateRoleAsync("Admin");
-                    await CreateRoleAsync("User");
-                    await CreateRoleAsync("Author");
-                //await CreateRoleAsync("SuperUser");
+                await CreateRoleAsync("Superadmin");
+                await CreateRoleAsync("Editor");
+                await CreateRoleAsync("Contributor");
+                await CreateRoleAsync("Subscriber");
+                await CreateRoleAsync("Admin");
+                await CreateRoleAsync("User");
+                await CreateRoleAsync("Author");
+                await CreateRoleAsync("SuperUser");
 
 
-            //Seed users
-            if (!_db.Users.Any())
+                //Seed users
+                if (!_db.Users.Any())
             {
 
             if (_userManager.FindByEmailAsync("admin@email.com").Result == null)

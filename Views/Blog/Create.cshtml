@@ -1,7 +1,11 @@
 ﻿@model AlphaBlogging.Models.Blog
 
-
-<h4>Blog</h4>
+@{
+     Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+<div class="container-fluid px-4">
+    <br />
+<h1>Create blog</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -40,9 +44,9 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="MyBloglist">Back to List</a>
 </div>
-
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+} 

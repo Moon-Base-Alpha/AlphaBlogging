@@ -1,10 +1,16 @@
 ﻿@using AlphaBlogging.Models;
 @model IEnumerable<AlphaBlogging.Models.Blog>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+@{
+     Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4">
+<br />
+<h1>Blog list</h1>
+<a href="@Url.Action("Create", "Blog")" class="btn btn-primary"><i class="fas fa-pen"></i> Create new blog</a>
+<br />
+<table id="datatablesSimple">
     <thead>
         <tr>
             @*<th>
@@ -55,3 +61,6 @@
 }
     </tbody>
 </table>
+</div>
+
+<script src="~/js/datatables-simple-demo.js"></script>
