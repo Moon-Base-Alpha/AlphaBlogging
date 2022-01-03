@@ -54,7 +54,7 @@ namespace AlphaBlogging.Controllers
         
 
         [HttpPost]
-        public async Task<IActionResult> Create(PostVM post/*, int blogId, Tag tag, string tags*/)
+        public async Task<IActionResult> Create(PostVM post, int blogId /*, Tag tag, string tags*/)
         {
 
             if (ModelState.IsValid )
@@ -66,11 +66,8 @@ namespace AlphaBlogging.Controllers
                 //               where x.Author == user
                 //               select x).First();
                 //post.BlogId = blogid;
-                Post newPost = new Post();
-                newPost.Title = post.Title;
-                newPost.Body = post.Body;
-                newPost.BlogId = post.BlogId;
-                newPost.Created = DateTime.Now;
+                Post newPost = new Post(post.Title,post.Body,blogId);
+
 
                 if (post.HashTag != null)
                 {

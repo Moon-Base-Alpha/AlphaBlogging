@@ -14,7 +14,7 @@ namespace AlphaBlogging.Controllers
         private ICommentServices _commentservice;
         private IPostServices _postService;
         private readonly ISignedInService _signedInService;
-        private readonly ApplicationDbContext _db;
+        //private readonly ApplicationDbContext _db;
 
         public CommentController(ICommentServices repo, IPostServices postServices, ApplicationDbContext context, ISignedInService signedInService)
         {
@@ -23,7 +23,7 @@ namespace AlphaBlogging.Controllers
             _postService = postServices;
             _signedInService = signedInService; 
 
-            _db = context;
+            //_db = context;
         }
 
         public IActionResult CommentList(/*int postId*/)
@@ -40,38 +40,25 @@ namespace AlphaBlogging.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int postId)
         {
-            return View(new Comment());
+            return View(new Comment() { PostId = postId});
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Comment comment/*, int postId*/)
+        public async Task<IActionResult> Create(Comment comment)
         {
-            var user = User.Identity.Name;
-            comment.Author = _signedInService.GetAuthorId(user);
+                var user = User.Identity.Name;
 
-            //_commentservice.AddComment(comment);
-            //if (await _commentservice.SaveChangesAsync())
-            //    return RedirectToAction("Index", "Home");
-            //else
-            //    return View(comment);
+                Comment newComment = new Comment(comment.Body, _signedInService.GetAuthorId(user), comment.PostId);
 
+                _commentservice.AddComment(newComment);
 
-            _commentservice.AddComment(comment);
-            (_db.Posts.Where(p => p.Id == 1).FirstOrDefault()).Comments.Add(comment);
-            if (await _commentservice.SaveChangesAsync())
-                return RedirectToAction("Edit");
-
-            else
-                return View(comment);
-
-            //_repo.AddComment(comment);
-            //(_db.Posts.Where(p => p.Id == 1).FirstOrDefault()).Comments.Add(comment);
-            //if (await _repo.SaveChangesAsync())
-            //    return RedirectToAction("Edit");
-            //else
-            //    return View(comment);
+                if (await _commentservice.SaveChangesAsync())
+                    return RedirectToAction("Edit");
+                else
+                    return View(newComment);
+            
         }
 
         [HttpGet]
