@@ -49,29 +49,24 @@
 
 <div>
    
-    @{
-
-
-        if (Model.Posts != null || Model.Posts.Count() > 0)
+    @{ if (Model.Posts != null && Model.Posts.Count() > 0)
         {       
             foreach (var post in Model.Posts.Reverse())
             {
                 <div>
-                 <partial name="_Post"  model="post" />   
+                     <partial name="_Post"  model="post" />   
                  
-                 @Html.ActionLink("Remove", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} )
-                 @Html.ActionLink("Edit", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} )
-                
-                </div>
+                     @Html.ActionLink("Remove", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} )
+                     @Html.ActionLink("Edit", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} )                  
+                     @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = post.Id} )
+                 </div>  
                 <hr />           
             }
         }
         else
         {
-
             <h3>No posts yet</h3>
             // Attempting to use mClass here will result in NullReferenceException
-
         }
     }
 </div>
