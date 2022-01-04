@@ -4,7 +4,8 @@
 
 <div>
     <hr />    
-            @Html.DisplayFor(model => model.HashTag)     
+    <h6><span class="badge badge-secondary">@Model.HashTag</span></h6>
+             
 </div>
 <div>
     <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>   
