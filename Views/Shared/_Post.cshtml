@@ -1,3 +1,5 @@
+@using AlphaBlogging.Models;
+
 @model Post
 
   <h2>@Model.Title</h2>
@@ -5,6 +7,20 @@
 
 
 <div>
+
+    @{
+        if (Model.Tags != null && Model.Tags.Count() > 0)
+        {
+            foreach (var tag in Model.Tags)
+            {
+                <partial name="_TagPartial" model="tag" />
+            }
+        }
+        else
+        {
+            <p>no tags</p>
+        }
+    }
     @*TO DO*@
 
    @* @{
