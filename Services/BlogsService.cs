@@ -1,4 +1,4 @@
-﻿using AlphaBlogging.Data;
+using AlphaBlogging.Data;
 using AlphaBlogging.Models;
 using System;
 using System.Collections.Generic;
@@ -57,6 +57,7 @@ namespace AlphaBlogging.Services
 
         public Blog GetBlog(int id)
         {
+
             ///var q0 = _db.Blogs.Where(b=>b.Id == id).FirstOrDefault();
             //returning q0 works as well, since the connections are being made in q1, and then reused in the previous q0
             var q1 = _db.Blogs.Where(b=>b.Id == id)
@@ -65,6 +66,7 @@ namespace AlphaBlogging.Services
                 .FirstOrDefault();
 
             return q1;
+
 
         }
 
