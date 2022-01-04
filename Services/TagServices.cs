@@ -49,8 +49,9 @@ namespace AlphaBlogging.Data.Repos
         
         public Tag GetTag(int id)
         {
-            //return _db.Tags.FirstOrDefault(t => t.Id == id);
-            return _db.Blogs.Where(b => b.Id == id).Include(b => b.Posts).ThenInclude(p => p.Tags).ThenInclude(t=>t.HashTag).FirstOrDefault();
+            
+            return _db.Tags.FirstOrDefault(t => t.Id == id);
+            //return _db.Blogs.Where(b => b.Id == id).Include(b => b.Posts).ThenInclude(p => p.Tags).ThenInclude(t=>t.HashTag).FirstOrDefault();
         }
         public IEnumerable<Tag> GetTagsFromPostID(int Id) // returns all tags as a list
         {
