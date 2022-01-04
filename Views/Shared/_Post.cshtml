@@ -5,29 +5,19 @@
   <h2>@Model.Title</h2>
   <p>@Model.Body</p>
 
-  <div>
-      @{
-        if (Model.Tags != null)
-        {
-            foreach(var x in Model.Tags)
-            {
-              <button type="button">@x.HashTag</button> 
 
-            }
-        }
-        
-    }
-  </div>
 
 <div>
 
     @{
         if (Model.Tags != null && Model.Tags.Count() > 0)
         {
-            foreach (var tag in Model.Tags)
+            <div class="row rounded m-3" >
+            @foreach (var tag in Model.Tags)
             {
                 <partial name="_TagPartial" model="tag" />
             }
+            </div>
         }
         else
         {
