@@ -30,8 +30,8 @@ namespace AlphaBlogging.Controllers
 
         public IActionResult Postlist(int blogid)
         {
-            var posts = _db.Blogs.Where(b => b.Id == blogid).FirstOrDefault().Posts;
-            //var posts = _postservice.GetAllPosts();
+            //var posts = _db.Blogs.Where(b => b.Id == blogid).FirstOrDefault().Posts;
+            var posts = _postservice.GetAllPosts();
             return View(posts);
         }
         public IActionResult Post(int Id) 

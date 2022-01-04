@@ -25,7 +25,7 @@ namespace AlphaBlogging.Models
         [Required]
         public string Title { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Content")]
         public string Body { get; set; }
 
         [Required]
