@@ -5,6 +5,19 @@
   <h2>@Model.Title</h2>
   <p>@Model.Body</p>
 
+  <div>
+      @{
+        if (Model.Tags != null)
+        {
+            foreach(var x in Model.Tags)
+            {
+              <button type="button">@x.HashTag</button> 
+
+            }
+        }
+        
+    }
+  </div>
 
 <div>
 
