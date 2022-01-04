@@ -5,7 +5,7 @@ namespace AlphaBlogging.Models.ViewModels
 {
     public class BlogVM
     {
-        public int Id { get; set; } 
+        public int BlogId { get; set; } 
         public string Title { get; set; }     
         public string Body { get; set; }    
         public DateTime Created { get; set; }    

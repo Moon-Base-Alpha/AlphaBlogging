@@ -41,10 +41,8 @@
 
 
 <div>
-    @Html.ActionLink("Add Post", "Create", "Post", new {blogId = Model.Id} )
-   
+    @Html.ActionLink("Add Post", "Create", "Post", new {blogId = Model.Id} )   
 </div>
-
 
 
 <div>
@@ -53,15 +51,16 @@
         {       
             foreach (var post in Model.Posts.Reverse())
             {
-                <div>
+                <div style="border-color:black; padding-block:7px; background-color:beige">
                      <partial name="_Post"  model="post" />   
                  
-                     @Html.ActionLink("Remove", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} )
-                     @Html.ActionLink("Edit", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} )                  
+                     @Html.ActionLink("Remove", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} ) -|- 
+                     @Html.ActionLink("Edit", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} ) -|-                 
                      @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = post.Id} )
                  </div>  
                 <hr />           
             }
+
         }
         else
         {
