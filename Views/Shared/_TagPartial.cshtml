@@ -1,0 +1,11 @@
+﻿@model AlphaBlogging.Models.Tag
+
+
+
+<div>
+    <hr />    
+            @Html.DisplayFor(model => model.HashTag)     
+</div>
+<div>
+    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>   
+</div>
