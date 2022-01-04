@@ -56,7 +56,9 @@ namespace AlphaBlogging.Services
 
         public Blog GetBlog(int id)
         {
-            return _db.Blogs.Where(b=>b.Id ==id).Include(b => b.Posts).ThenInclude(p => p.Comments).FirstOrDefault();
+            var q0 = _db.Blogs.Find(id);
+
+            return q0;
 
         }
 
