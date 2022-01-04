@@ -30,14 +30,14 @@ namespace AlphaBlogging.Controllers
             var signedIn = _SignInManager.IsSignedIn(User);
 
             return View();
-            //if (!signedIn) 
-            //{ 
-            //    return View(); 
-            //}   
-            //else 
+            //if (!signedIn)
             //{
-            //    return RedirectToAction("MyBloglist", "Blog"); 
-            //} 
+            //    return View();
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "Admin");
+            //}
 
         }
         public IActionResult BlogCreate()

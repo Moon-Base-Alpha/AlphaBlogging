@@ -79,7 +79,7 @@ namespace AlphaBlogging.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(Roles = "Admin, Author")]
         [HttpGet]
         public IActionResult Create()
         {            
