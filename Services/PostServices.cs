@@ -66,6 +66,13 @@ namespace AlphaBlogging.Data.Repos
         {
             _db.Posts.Update(post);
         }
+        public void IncreaseLikesInPost(int Id)
+        {
+            var qPost = GetPost(Id);
+            qPost.Likes++;
+            _db.Posts.Update(qPost);
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             if (await _db.SaveChangesAsync() > 0)

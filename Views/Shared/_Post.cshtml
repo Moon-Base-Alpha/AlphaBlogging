@@ -4,14 +4,21 @@
 
   <h2>@Model.Title</h2>
   <p>@Model.Body</p>
-  <div>
-        <a href="#" class="btn btn-info btn-sm">
-          <span class="glyphicon glyphicon-thumbs-up"></span> @Model.Likes Likes </a>
-    </div>
+  <p>post ID: @Model.Id</p>
+
+@*<form asp-controller="Post" asp-action="UserClicksOnLike" method="post">
+
+    <button type="submit" class="glyphicon glyphicon-thumbs-up" >@Model.Likes Likes></button>
+    <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+
+</form>*@
+
+<a asp-controller="Post" asp-action="UserClicksOnLike" asp-route-id="@Model.Id"> Click me @Model.Likes </a>
 
 
 <div>
     @{
+        
         if (Model.Tags != null)
         {
             <div class="row rounded m-3" >

@@ -208,7 +208,7 @@ namespace AlphaBlogging.Controllers
         //    try
         //    {
         //        _db.Posts.Remove(post);
-               
+
         //        return RedirectToAction(nameof(Index));
         //    }
         //    catch
@@ -216,6 +216,26 @@ namespace AlphaBlogging.Controllers
         //        return View();
         //    }
         //}
+
+        public ActionResult UserClicksOnLike(int Id)////////////////////////////
+        {
+            //_postservice.
+            //await _postservice.SaveChangesAsync();
+
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult UserClicksOnLike()////////////////////////////
+        {
+            //_postservice.
+            //await _postservice.SaveChangesAsync();
+
+
+            return View();
+        }
     }
 
    
