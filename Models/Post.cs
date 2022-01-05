@@ -36,7 +36,7 @@ namespace AlphaBlogging.Models
         public int Views { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
-
+        public uint Likes { get; set; }
         public bool Visible { get; set; }
         public Blog Blog
         {
@@ -51,6 +51,7 @@ namespace AlphaBlogging.Models
             Visible = true;
             Views = 0;
             Tags = new List<Tag>();
+            Likes = 0;
         }
         public Post(string title, string body, int blogId,  bool visible = true)
         {
@@ -65,10 +66,11 @@ namespace AlphaBlogging.Models
 
             Visible = visible;
             BlogId = blogId;
-            
+            Likes = 0;
+
 
         }
-     
+
     }
 
    
