@@ -1,5 +1,6 @@
 ﻿using AlphaBlogging.Models;
 using AlphaBlogging.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace AlphaBlogging.Data.Repos
 
         public void AddComment(Comment comment)
         {
+            comment.Updated = DateTime.Now;
             _db.Comments.Add(comment);
         }
 
@@ -59,6 +61,11 @@ namespace AlphaBlogging.Data.Repos
 
         public void UpdateComment(Comment comment)
         {
+            comment.Updated = DateTime.Now;
+            comment.Created = (from x in _db.Blogs
+                            where x.Id == comment.Id
+                            select x.Created).First();
+
             _db.Comments.Update(comment);
         }
 
