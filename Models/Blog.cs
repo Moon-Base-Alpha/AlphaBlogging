@@ -19,16 +19,15 @@ namespace AlphaBlogging.Models
 
         [Required]
         public DateTime Created { get; set; }
+        [Required]
+        public DateTime Updated { get; set; }
 
         [Required]
         public ApplicationUser Author { get; set; }      
 
         public bool Visible { get; set; }
         private ICollection<Post> _posts;
-        public Blog()
-        {
-
-        }
+       
         private Blog(ILazyLoader lazyLoader)
         {
             LazyLoader = lazyLoader;
@@ -39,13 +38,23 @@ namespace AlphaBlogging.Models
             get => LazyLoader.Load(this, ref _posts);
             set => _posts = value;
         }
-        public Blog(string title, string body, DateTime created, ApplicationUser author, List<Post> posts, bool visible = true)
+        public Blog()
+        {
+
+        }
+
+        public Blog(DateTime created)
+        {
+            Created = created;
+        }
+        public Blog(string title, string body,ApplicationUser author, bool visible = true)
         {
             Title = title;
             Body = body;
             Created = DateTime.Now;
+            Updated = DateTime.Now;
             Author = author;
-            Posts = posts;
+            //Posts = posts;
             Visible = visible;
         }
        

@@ -89,17 +89,18 @@ namespace AlphaBlogging.Controllers
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(Blog blog)
-        {
-            var user = User.Identity.Name;
+        {            
             
             blog.Author = GetSignedInId();
 
-            _bloggyService.AddBlog(blog);
+            Blog bloggy = new Blog(blog.Title,blog.Body,blog.Author,blog.Visible);
+
+            _bloggyService.AddBlog(bloggy);
 
             if (await _bloggyService.SaveChangesAsync())
                 return RedirectToAction("Index", "Home" );
             else
-                return View(blog);
+                return View(bloggy);
         }
 
         [Authorize]

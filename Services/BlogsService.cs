@@ -28,7 +28,7 @@ namespace AlphaBlogging.Services
         
         public void AddBlog(Blog blog)
         {
-            blog.Created = DateTime.Now;    
+               
             _db.Blogs.Add(blog);
         }
 
@@ -70,8 +70,13 @@ namespace AlphaBlogging.Services
 
         }
 
-        public void UpdateBlog(Blog blog)
-        {
+        public void UpdateBlog(Blog blog)        {
+            
+            blog.Updated = DateTime.Now;
+            blog.Created = (from x in _db.Blogs
+                            where x.Id == blog.Id
+                            select x.Created).First();
+
             _db.Blogs.Update(blog);
         }
         public async Task<bool> SaveChangesAsync()
