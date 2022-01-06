@@ -217,26 +217,13 @@ namespace AlphaBlogging.Controllers
         //    }
         //}
 
-        public ActionResult UserClicksOnLike(int Id)////////////////////////////
+        public async void UserClicksOnLike(int Id)////////////////////////////
         {
-            //_postservice.
-            //await _postservice.SaveChangesAsync();
+            _postservice.IncreaseLikesInPost(Id);
+            await _postservice.SaveChangesAsync();
 
 
-            return View();
+            //return View(_postservice.GetPost(Id), Post);
         }
-
-
-        [HttpPost]
-        public ActionResult UserClicksOnLike()////////////////////////////
-        {
-            //_postservice.
-            //await _postservice.SaveChangesAsync();
-
-
-            return View();
-        }
-    }
-
-   
+    }   
 }
