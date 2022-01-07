@@ -240,6 +240,10 @@ body {
 .jumbotron {
     margin-bottom: 0;
 }
+.special-card {
+    background-color: rgba(245, 245, 245, 0.15);
+    /*opacity: .4;*/
+}
 
 /* Footer */
 .wn-footer {
