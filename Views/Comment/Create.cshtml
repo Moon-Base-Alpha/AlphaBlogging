@@ -2,15 +2,18 @@
 
 @{
     ViewData["Title"] = "Create comment";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
 }
 
-<h4>Post a Comment</h4>
+<div class="container-fluid px-4">
+    <br />
+<h1>Post a Comment</h1>
 <hr />
 <div class="row">
-    <div class="col-md-12 ">
+    <div class="col-md-6">
         <form method="post">
             
-             <div class="form-group mb-3">
+             <div class="form-group">
 
                 <textarea id="limitedtextarea" asp-for="Body" class="form-control bg-light" rows="5" placeholder="Type comment here..." 
                         onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,512);"
@@ -35,10 +38,11 @@
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="CommentList">Back to List</a>
 </div>
+
+@*<div>
+    <a asp-action="CommentList">Back to List</a>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -53,13 +57,3 @@ function limitText(limitField, limitCount, limitNum) {
 	}
 }
 </script>
-
-
-@*<script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
-<script>
-    ClassicEditor
-    .create(document.querySelector('.textarea'))
-    .catch(error => {
-        console.error(error);
-    });
-</script>*@

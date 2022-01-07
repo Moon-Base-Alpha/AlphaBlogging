@@ -5,9 +5,8 @@
 }
 
 <div>
-    <h4>Comment view</h4>
-    <hr />
-    @Html.DisplayFor(Model => Model.Author)<br />
+    <h5>Comment view</h5>
+    @Html.DisplayFor(Model => Model.Author.UserName)<br />
     @Html.DisplayFor(Model => Model.Body)<br />
     @Html.DisplayFor(Model => Model.Created)<br />
 @*    <dl class="row">
@@ -38,8 +37,8 @@
     </dl>*@
 </div>
 
-<div>
+@*<div>
     <a asp-action="CommentList">Back to List</a>
-</div>
+</div>*@
 
 @* <partial name="Create" />*@
