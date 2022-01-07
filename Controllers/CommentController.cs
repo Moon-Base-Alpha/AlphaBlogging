@@ -76,8 +76,14 @@ namespace AlphaBlogging.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Comment comment)
         {
+            var user = User.Identity.Name;
+
             if (comment.Id > 0)
+            {
+                comment.Author = _signedInService.GetAuthorId(user);
                 _commentservice.UpdateComment(comment);
+            }
+            
             else
             {
                 _commentservice.AddComment(comment);

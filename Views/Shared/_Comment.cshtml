@@ -5,13 +5,14 @@
 }
 
 <div>
+
     <h6>Comment view</h6>
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(Model => Model.Author)
+            @Html.DisplayNameFor(Model => Model.Author.UserName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(Model => Model.Author)
+            @Html.DisplayFor(Model => Model.Author.UserName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Body)
@@ -24,6 +25,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(Model => Model.Created)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Updated)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(Model => Model.Updated)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.PostId)

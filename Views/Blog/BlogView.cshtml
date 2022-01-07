@@ -36,6 +36,18 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Created)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Updated)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Updated)
+        </dd>
+        <dd class = "col-sm-10">
+            @Html.ActionLink("Edit", "Edit", new { id=@Model.Id }) |
+                <a asp-controller="Blog" asp-action="Edit" asp-route-id="@Model.Id">
+                
+            </a>
+        </dd>
     </dl>
 </div>
 
@@ -53,15 +65,15 @@
         {       
             foreach (var post in Model.Posts.Reverse())
             {
-                <div class="container p-3 my-3 text-black" style="background-color:#f1f1f1">
-                @*<div style="border-color:black; padding-block:7px;"> </div>*@
-                     <partial name="_Post"  model="post" />   
+
+                <div style="border-color:black; margin-block:7px; background-color:beige">                       
                  
-                     @Html.ActionLink("Remove Post", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} ) -|- 
-                     @Html.ActionLink("Edit Post", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} ) -|-                 
-                     @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = post.Id} )
-                   
-                 </div> 
+                     @Html.ActionLink("Add a Comment", "Create", "Comment", new {postId = post.Id} )
+                     @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} )              
+                     @Html.ActionLink("Remove this Post", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} )
+
+                     <partial name="_Post"  model="post" /> 
+                 </div>  
                 <hr />           
             }
 
