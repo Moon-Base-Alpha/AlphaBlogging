@@ -217,13 +217,15 @@ namespace AlphaBlogging.Controllers
         //    }
         //}
 
-        public async void UserClicksOnLike(int Id)////////////////////////////
+        public async Task<IActionResult> UserClicksOnLike(int Id)////////////////////////////
         {
+            //ApplicationUser CurrentUser = UserServices.get 
             _postservice.IncreaseLikesInPost(Id);
             await _postservice.SaveChangesAsync();
+            var t = _postservice.GetPost(Id);
 
-
-            //return View(_postservice.GetPost(Id), Post);
+            return RedirectToAction("BlogView", "Blog", new {Id = t.BlogId});
+            //return Redirect($"~/Blog/BlogView/{t.BlogId}");
         }
     }   
 }

@@ -13,7 +13,11 @@
 
 </form>*@
 
-<a asp-controller="Post" asp-action="UserClicksOnLike" asp-route-id="@Model.Id"> Click me @Model.Likes </a>
+@* <partial name="_LikePartial" model="Model.Likes" />
+*@
+
+<button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077; @Model.Likes</button>
+
 
 
 <div>
@@ -57,5 +61,38 @@
         }
     }
 
-    
 </div>
+
+    <script>
+        //function LikeIncrease()
+        //{
+        //    var xhttp = new XMLHttpRequest();
+        //    xhttp.onreadystatechange = function() 
+        //    {
+        //        if (this.readyState == 4 && this.status == 200) 
+        //        {
+        //            document.getElementById("demo").innerHTML =
+        //            this.responseText;
+        //        }
+        //    };
+        //    xhttp.open("GET", "ajax_info.txt", true);
+        //    xhttp.send();
+        //}
+        function UserclicksOnLikeJS(bla)
+        {
+
+                $(document).ready(function () {
+                $.ajax({
+                    url: '@Url.Action("UserClicksOnLike", "Post")',
+                    data: {Id:bla},
+                    type: 'GET',
+                    success: function(data) {
+                        if (data) {  // check if data is defined
+                           document.getElementById("LikeButton").innerHTML = "&#128077; " + (@Model.Likes+1);
+                        }
+                    }
+                });
+            });
+        }
+
+    </script>

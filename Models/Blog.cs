@@ -27,7 +27,7 @@ namespace AlphaBlogging.Models
         private ICollection<Post> _posts;
         public Blog()
         {
-
+            Visible = true;
         }
         private Blog(ILazyLoader lazyLoader)
         {
