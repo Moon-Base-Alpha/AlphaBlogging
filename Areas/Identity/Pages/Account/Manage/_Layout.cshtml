@@ -1,4 +1,4 @@
-﻿@*@{
+﻿@{
     if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
     {
         Layout = (string)parentLayout;
@@ -7,11 +7,11 @@
     {
         Layout = "/Areas/Identity/Pages/_Layout.cshtml";
     }
-}*@
-
-@{
-     Layout = "~/Views/Admin/_AdminLayout.cshtml";
 }
+
+@*@{
+     Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}*@
 
 <div class="container-fluid px-4">
     <br />

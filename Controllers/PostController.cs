@@ -107,6 +107,7 @@ namespace AlphaBlogging.Controllers
                 post.Title = dbPpost.Title;
                 post.Body = dbPpost.Body;               
                 post.Visible = true;
+                post.Updated = new DateTime();
 
                 
                 return View(post);

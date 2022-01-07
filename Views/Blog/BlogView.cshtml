@@ -3,12 +3,13 @@
 
 @{
     ViewData["Title"] = "BlogView";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
 }
 
+<div class="container-fluid px-4">
+    <br />
 <h1>BlogView</h1>
-
 <div>
-    <h4>Blog</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -35,15 +36,15 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Created)
         </dd>
-        
-        
     </dl>
 </div>
 
 
 <div>
-    @Html.ActionLink("Add Post", "Create", "Post", new {blogId = Model.Id} )   
+<a href="@Url.Action("Create", "Post", new {blogId = Model.Id} )" class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i> Add Post</a>
+    @*@Html.ActionLink("Add Post", "Create", "Post", new {blogId = Model.Id} ) *@
 </div>
+<br />
 
 
 <div>
@@ -52,20 +53,22 @@
         {       
             foreach (var post in Model.Posts.Reverse())
             {
-                <div style="border-color:black; padding-block:7px; background-color:beige">
+                <div class="container p-3 my-3 text-black" style="background-color:#f1f1f1">
+                @*<div style="border-color:black; padding-block:7px;"> </div>*@
                      <partial name="_Post"  model="post" />   
                  
-                     @Html.ActionLink("Remove", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} ) -|- 
-                     @Html.ActionLink("Edit", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} ) -|-                 
+                     @Html.ActionLink("Remove Post", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} ) -|- 
+                     @Html.ActionLink("Edit Post", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} ) -|-                 
                      @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = post.Id} )
-                 </div>  
+                   
+                 </div> 
                 <hr />           
             }
 
         }
         else
         {
-            <h3>No posts yet</h3>
+            <h6>No posts yet</h6>
             // Attempting to use mClass here will result in NullReferenceException
         }
     }
@@ -74,7 +77,9 @@
 
 
 
-<div>
-    @*@Html.ActionLink("Add post", "Create", "Post", new { blogid = Model.Id }) |*@
-    <a asp-action="Bloglist">Back to List</a>
+@*<div>
+    @Html.ActionLink("Add post", "Create", "Post", new { blogid = Model.Id }) |
+    <a asp-action="MyBloglist">Back to List</a>
+</div>*@
+
 </div>

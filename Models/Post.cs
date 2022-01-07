@@ -31,6 +31,8 @@ namespace AlphaBlogging.Models
         [Required]
         public DateTime Created { get; set; }
 
+        public DateTime Updated { get; set; }
+
         public int BlogId { get; set; }
 
         public int Views { get; set; }
@@ -47,7 +49,8 @@ namespace AlphaBlogging.Models
         {
             Comments = new List<Comment>();
             //Tags = new List<Tag>();
-            Created = DateTime.Today;
+            Created = DateTime.Now;
+            Updated = DateTime.Now;
             Visible = true;
             Views = 0;
             Tags = new List<Tag>();
@@ -57,7 +60,8 @@ namespace AlphaBlogging.Models
                
             Title = title;
             Body = body;
-            Created = DateTime.Today;
+            Created = DateTime.Now;
+            Updated = DateTime.Now;
 
             Views = 0;
             Comments = new List<Comment>();

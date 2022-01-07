@@ -2,9 +2,10 @@
 
 @model Post
 
-  <h2>@Model.Title</h2>
+  <h4>@Model.Title</h4>
   <p>@Model.Body</p>
-
+  <p>Created: @Model.Created</p>
+  <p>Updated: @Model.Updated</p>
 
 <div>
     @{
@@ -32,7 +33,7 @@
                 <div>
                      <partial name="_Comment"  model="comment"/> 
                  
-                    @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} )
+                    @*@Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} )*@
 
 
                 </div>
@@ -42,7 +43,7 @@
         }
         else
         {
-            <h3>No comments yet</h3>        
+            <h6>No comments yet</h6>        
         }
     }
 </div>

@@ -5,8 +5,7 @@
 }
 
 <div>
-    <h4>Comment view</h4>
-    <hr />
+    <h6>Comment view</h6>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(Model => Model.Author)
@@ -33,11 +32,18 @@
             @Html.DisplayFor(Model => Model.PostId)
         </dd>
     </dl>
+    @*    <div>
+        @Html.DisplayFor(Model => Model.Body)
+    </div>
+    <div>
+        @Html.DisplayFor(Model => Model.Author) | @Html.DisplayFor(Model => Model.Created)
+    </div>
+    <input asp-for="PostId" value="Model.PostId" type="hidden" />*@
 </div>
 
-<div>
+@*<div>
     <a asp-action="CommentList">Back to List</a>
-</div>
+</div>*@
 
 @* <partial name="Create" />*@
 
