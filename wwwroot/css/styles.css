@@ -11725,4 +11725,11 @@ border-radius: 5px;
 #myBtn:hover {
   color: #555;
 }
+
+/*Styling of tags*/
+.tag {
+    display: inline-block;
+   
+   
+}
 /*End - Back to top button*/
