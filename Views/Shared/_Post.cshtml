@@ -7,16 +7,16 @@
   <small>Created: @Model.Created</small><br />
   <small>Updated: @Model.Updated</small>
 
-<div class="bg-dark">
+<div class="">
     @{
         if (Model.Tags != null)
         {
-            <div class="row rounded m-3" >
+            //<div class=" rounded m-3" >
             @foreach (var tag in Model.Tags)
             {
                 <partial name="_TagPartial" model="tag" />
             }
-            </div>
+            //</div>
         }
         else
         {
