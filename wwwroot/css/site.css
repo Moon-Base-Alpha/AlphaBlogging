@@ -63,7 +63,7 @@ body {
   margin-bottom: 60px;
 }
 .footer {
-  position: absolute;
+  position: inherit;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
@@ -175,7 +175,7 @@ div.login-form-icon {
 /*  END CSS for tag function  */
 
 
-.wrapper {
+/*.wrapper {
     display: grid;
     grid-template-columns: 100px 100px 100px;
     grid-gap: 10px;
@@ -189,7 +189,7 @@ div.login-form-icon {
     border-radius: 5px;
     padding: 20px;
     font-size: 150%;
-}
+}*/
 
 body {
     background-color: black;
@@ -262,7 +262,7 @@ body {
     /*opacity: .4;*/
 }
 
-/* Footer */
+ Footer 
 .wn-footer {
     padding: 2.5rem 0;
     text-align: center;

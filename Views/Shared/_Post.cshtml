@@ -2,10 +2,10 @@
 
 @model Post
 
-  <h4>@Model.Title</h4>
+  <h5>@Model.Title</h5>
   <p>@Model.Body</p>
-  <p>Created: @Model.Created</p>
-  <p>Updated: @Model.Updated</p>
+  <small>Created: @Model.Created</small><br />
+  <small>Updated: @Model.Updated</small>
 
 <div class="bg-dark">
     @{
@@ -30,7 +30,8 @@
         {       
             @foreach (var comment in Model.Comments.Reverse())
             {
-                <div  style="border-color:black; margin-block:7px; background-color:lightblue">
+                <div class="container p-3 my-3 text-black" style="background-color:lightblue">
+                @*<div  style="border-color:black; margin-block:7px; background-color:lightblue">*@
                      <partial name="_Comment"  model="comment"/> 
                  
 

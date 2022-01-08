@@ -4523,6 +4523,10 @@ textarea.form-control-lg {
   color: #fff;
 }
 
+#card-blk-title {
+    color: #000;
+}
+
 .card {
   position: relative;
   display: flex;
@@ -6870,7 +6874,7 @@ textarea.form-control-lg {
 }
 
 .border-top {
-  border-top: 1px solid #dee2e6 !important;
+  border-top: 1px solid #686868 !important;
 }
 
 .border-top-0 {

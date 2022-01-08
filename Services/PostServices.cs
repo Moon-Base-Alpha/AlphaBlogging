@@ -64,8 +64,13 @@ namespace AlphaBlogging.Data.Repos
 
         public void UpdatePost(Post post)
         {
+            post.Updated = DateTime.Now;
+            post.Created = (from x in _db.Posts
+                            where x.Id == post.Id
+                            select x.Created).First();
             _db.Posts.Update(post);
         }
+
         public async Task<bool> SaveChangesAsync()
         {
             if (await _db.SaveChangesAsync() > 0)
