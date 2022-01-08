@@ -65,8 +65,8 @@
         {       
             foreach (var post in Model.Posts.Reverse())
             {
-
-                <div style="border-color:black; margin-block:7px; background-color:beige">                       
+                <div class="container p-3 my-3 text-black" style="background-color:beige">
+                @*<div style="border-color:black; margin-block:7px; background-color:beige">*@                       
                  
                      @Html.ActionLink("Add a Comment", "Create", "Comment", new {postId = post.Id} )
                      @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} )              
