@@ -41,6 +41,7 @@ namespace AlphaBlogging.Controllers
             var dbPpost = _postservice.GetPost(Id);
             post.Title = dbPpost.Title;
             post.Body = dbPpost.Body;
+            
             //post.Tags = 
             return View(post); 
         }

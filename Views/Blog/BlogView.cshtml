@@ -3,13 +3,15 @@
 
 @{
     ViewData["Title"] = "BlogView";
+    if(User.IsInRole("Admin")){
     Layout = "~/Views/Admin/_AdminLayout.cshtml";
+    }
 }
 
-<div class="container-fluid px-4">
+<div class="container-fluid px-4 ">
     <br />
 <h1>BlogView</h1>
-<div>
+<div >
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -51,40 +53,53 @@
     </dl>
 </div>
 
-
+ @if (User.IsInRole("Admin"))
+                        {
 <div>
+   
 <a href="@Url.Action("Create", "Post", new {blogId = Model.Id} )" class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i> Add Post</a>
     @*@Html.ActionLink("Add Post", "Create", "Post", new {blogId = Model.Id} ) *@
-</div>
+</div> 
+                        }
 <br />
 
 
-<div>
-   
-    @{ if (Model.Posts != null && Model.Posts.Count() > 0)
-        {       
-            foreach (var post in Model.Posts.Reverse())
+    <div>
+        @{
+            if (Model.Posts != null && Model.Posts.Count() > 0)
             {
-                <div class="container p-3 my-3 text-black" style="background-color:beige">
-                @*<div style="border-color:black; margin-block:7px; background-color:beige">*@                       
-                 
-                     @Html.ActionLink("Add a Comment", "Create", "Comment", new {postId = post.Id} )
-                     @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} )              
-                     @Html.ActionLink("Remove this Post", "Remove", "Post", new {id = post.Id, blogId = post.BlogId} )
+                foreach (var post in Model.Posts.Reverse())
+                {
+                    <div  class="postcontainer mb-0 mb-3 p-3">
+                        @*<div style="border-color:black; margin-block:7px; background-color:beige">*@
 
-                     <partial name="_Post"  model="post" /> 
-                 </div>  
-                <hr />           
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} ) @: | 
+                            @Html.ActionLink("Remove this Post", "Remove", "Post", new {id = post.Id, blogId = post.BlogId})
+                        }
+                        else
+                        {
+                            
+                        }
+
+                        <partial name="_Post" model="post" />
+                       
+                            @Html.ActionLink("Add a Comment", "Create", "Comment", new {postId = post.Id} )
+                        
+                    </div>
+
+                    
+                }
+
             }
-
+            else
+            {
+                <h6>No posts yet</h6>
+                // Attempting to use mClass here will result in NullReferenceException
+            }
         }
-        else
-        {
-            <h6>No posts yet</h6>
-            // Attempting to use mClass here will result in NullReferenceException
-        }
-    }
-</div>
+    </div>
 
 
 

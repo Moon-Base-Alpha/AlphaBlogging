@@ -246,10 +246,7 @@ body {
 .jumbotron {
     margin-bottom: 0;
 }
-.special-card {
-    background-color: rgba(245, 245, 245, 0.15);
-    /*opacity: .4;*/
-}
+
 
  Footer 
 .wn-footer {
@@ -264,3 +261,37 @@ body {
         color: yellow;
     }
 
+/*Post styles*/
+.postcontainer {
+    background-color: rgba(45, 45, 45, 0.7);
+    /*opacity: .4;*/
+}
+
+.postcontainer h1, .postcontainer p {
+        color: lightgray;
+    }
+
+    .postcontainer a {
+        color: steelblue;
+    }
+.created {
+    font-size: 0.7em;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: -0.1rem !important;
+    color: gray;
+}
+
+.updated {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    margin-bottom: -0.2rem !important;
+    color: gray;
+}
+
+.comment {
+    background-color: rgba(10, 10, 10, 0.5);
+}
+.comment h1, .comment p {
+        color: lightgray;
+    }

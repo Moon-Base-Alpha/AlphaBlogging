@@ -1,22 +1,30 @@
 @using AlphaBlogging.Models;
 
 @model Post
-
-  <h5>@Model.Title</h5>
+ <p class="created">Published @Model.Created.ToShortDateString() by @Model.Blog.Author.UserName</p>
+ 
+  @{ 
+      if (Model.Created != @Model.Updated){
+       <p class="updated">Last updated (@Model.Updated.ToShortDateString())</p>
+       }
+  }
+   <h1>@Model.Title</h1>
   <p>@Model.Body</p>
-  <small>Created: @Model.Created</small><br />
-  <small>Updated: @Model.Updated</small>
+ 
+  
+  
 
 <div class="">
     @{
         if (Model.Tags != null)
         {
-            //<div class=" rounded m-3" >
+            <div class="rounded  mx-0 px-2 text-white-50 bg-opacity-75 bg-dark" style="border-width:1px; border-color:steelblue;">
+            Tags: 
             @foreach (var tag in Model.Tags)
             {
                 <partial name="_TagPartial" model="tag" />
             }
-            //</div>
+            </div>
         }
         else
         {
@@ -30,15 +38,16 @@
         {       
             @foreach (var comment in Model.Comments.Reverse())
             {
-                <div class="container p-3 my-3 text-black" style="background-color:lightblue">
+                <div class="comment container p-3 my-3 " >
                 @*<div  style="border-color:black; margin-block:7px; background-color:lightblue">*@
-                     <partial name="_Comment"  model="comment"/> 
-                 
+                     <partial name="_Comment"  model="comment"/>                  
 
-                    @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} )
-                    @Html.ActionLink("Edit Comment", "Edit", "Comment", new {postId = Model.Id} )
+                    @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} ) | 
+                     @if (User.IsInRole("Admin") || User.IsInRole("User"))
+                        {
+                    @Html.ActionLink("Edit Comment", "Edit", "Comment", new {postId = Model.Id} ) @: | 
                     @Html.ActionLink("Delete Comment", "Remove", "Comment", new {postId = Model.Id} )
-
+                        }
 
                 </div>
                 <hr />
