@@ -13,6 +13,8 @@
 <span>
     Blog Id: 
     <small class="text-muted">@Html.DisplayFor(model => model.Id)</small>, 
+    Author: 
+    <small class="text-muted">@Html.DisplayFor(model => model.Author.UserName)</small>, 
     Created: 
     <small class="text-muted">@Html.DisplayFor(model => model.Created)</small>, 
     Latest Update: 
@@ -24,7 +26,7 @@
     <p>@Html.DisplayFor(model => model.Body)</p>
   </blockquote>
   <figcaption class="blockquote-footer">
-    Blog declaration <cite title="Source Author"><i class="fa-regular fa-user"></i>@Html.DisplayFor(model => model.Author.Email)</cite>
+    Blog declaration by: <cite title="Source Author"><i class="fa-regular fa-user"></i>@Html.DisplayFor(model => model.Author.UserName)</cite>
   </figcaption>
 </figure>
 
