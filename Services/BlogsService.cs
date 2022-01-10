@@ -58,9 +58,9 @@ namespace AlphaBlogging.Services
         public Blog GetBlog(int id)
         {
 
-            ///var q0 = _db.Blogs.Where(b=>b.Id == id).FirstOrDefault();
-            //returning q0 works as well, since the connections are being made in q1, and then reused in the previous q0
+            // returning a blog with these includes ensures availability of everythng needed
             var q1 = _db.Blogs.Where(b=>b.Id == id)
+                .Include(b=>b.Author)
                 .Include(b=>b.Posts).ThenInclude(p=>p.Comments)
                 .Include(b=>b.Posts).ThenInclude(p=>p.Tags)
                 .FirstOrDefault();
