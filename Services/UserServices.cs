@@ -5,7 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 
 using System.Linq;
 
-
+using Microsoft.AspNetCore.Mvc;
+using AlphaBlogging.Services;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using AlphaBlogging.Models;
+using AlphaBlogging.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using AlphaBlogging.Data;
+using System.Linq;
+using AlphaBlogging.Data.Repos;
 
 namespace AlphaBlogging.Data.Repos
 {
@@ -37,7 +47,7 @@ namespace AlphaBlogging.Data.Repos
         public string GetCurrentUserID()
         {
             string result = "";
-            string temp = User.Identity.Name; // ger null???
+            var temp = User.Identity.Name; // ger null???
             var query = (from x in _db.Users
                          where x.UserName == User.Identity.Name
                          select x.Id).ToString();
@@ -51,7 +61,14 @@ namespace AlphaBlogging.Data.Repos
                          select x).FirstOrDefault();
             return (ApplicationUser)query;
         }
+        public async Task<bool> SaveChangesAsync()
+        {
+            if (await _db.SaveChangesAsync() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
 
-       
     }
 }

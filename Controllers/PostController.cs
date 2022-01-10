@@ -11,6 +11,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using AlphaBlogging.Services;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using AlphaBlogging.Models;
+using AlphaBlogging.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using AlphaBlogging.Data;
+using System.Linq;
+using AlphaBlogging.Data.Repos;
 
 namespace AlphaBlogging.Controllers
 {
@@ -226,21 +237,32 @@ namespace AlphaBlogging.Controllers
         public async Task<IActionResult> UserClicksOnLike(int Id) // id some hämtas är postID
         {
             //var CurrentUser = _userServices.GetCurrentApplicationUser();
-            var cuid = _userServices.GetCurrentUserID();
+            //var cuid1 = _userServices.GetCurrentUserID();
             //var hasLiked = (from x in CurrentUser.Likes
             //                where x.PostId == Id
-            //                select x).First();        
+            //                select x).First();
 
-            //if (hasLiked == null)
-            //{
-            //    _postservice.IncreaseLikesInPost(Id);
-            //    await _postservice.SaveChangesAsync();
-            //}
-            //else if (hasLiked != null)
-            //{
-            //    _postservice.DecreaseLikesInPost(Id);
-            //    await _postservice.SaveChangesAsync();
-            //}
+            var cuid2 = User.Identity.Name;
+            var CurrentUser = (from x in _db.Users
+                            where x.UserName == cuid2
+                            select x).First();
+            var v = _db.Posts.Find(Id);
+            bool hasLiked = CurrentUser.LikedPosts.Contains(v);
+
+            if (hasLiked == false)
+            {
+                CurrentUser.LikedPosts.Add(v);
+                _postservice.IncreaseLikesInPost(Id);
+
+                await _postservice.SaveChangesAsync();
+            }
+            else if (hasLiked == true)
+            {
+                CurrentUser.LikedPosts.Remove(v);
+
+                _postservice.DecreaseLikesInPost(Id);
+                await _postservice.SaveChangesAsync();
+            }
             var t = _postservice.GetPost(Id);
 
             return RedirectToAction("BlogView", "Blog", new {Id = t.BlogId});
