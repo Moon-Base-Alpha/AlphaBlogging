@@ -16,6 +16,7 @@ namespace AlphaBlogging.Data.Repos
         void UpdatePost(Post post);
         void DeletePost(int id);
         void IncreaseLikesInPost(int Id);
+        void DecreaseLikesInPost(int Id);
         IEnumerable<Post> GetPostsFromBlogID(int Id);
 
         Task<bool> SaveChangesAsync();

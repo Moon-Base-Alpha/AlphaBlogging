@@ -72,6 +72,12 @@ namespace AlphaBlogging.Data.Repos
             qPost.Likes++;
             _db.Posts.Update(qPost);
         }
+        public void DecreaseLikesInPost(int Id)
+        {
+            var qPost = GetPost(Id);
+            qPost.Likes--;
+            _db.Posts.Update(qPost);
+        }
 
         public async Task<bool> SaveChangesAsync()
         {

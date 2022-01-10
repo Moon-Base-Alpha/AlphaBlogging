@@ -17,13 +17,11 @@ namespace AlphaBlogging.Services
 {
     public class BlogsService : IBlogsService
     {
-        private ApplicationDbContext _db;
-        
+        private ApplicationDbContext _db;        
 
         public BlogsService(ApplicationDbContext context)
         {
-            _db = context;
-            
+            _db = context;            
         }
         
         public void AddBlog(Blog blog)
