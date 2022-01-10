@@ -63,17 +63,17 @@ namespace AlphaBlogging.Services
                 if (!_db.Users.Any())
             {
 
-            if (_userManager.FindByEmailAsync("admin@email.com").Result == null)
+            if (_userManager.FindByEmailAsync("tony@email.com").Result == null)
             {
                 var user = new ApplicationUser
                 {
                     FirstName = "Tony",
                     LastName = "Stark",
-                    UserName = "admin",
-                    Email = "admin@email.com",
+                    UserName = "Superadmin",
+                    Email = "tony@email.com",
                 };
                 await _userManager.CreateAsync(user, "123Asd");
-                await _userManager.AddToRoleAsync(user, "Admin");
+                await _userManager.AddToRoleAsync(user, "Superadmin");
             }
 
             if (_userManager.FindByEmailAsync("neo@email.com").Result == null)
@@ -121,11 +121,11 @@ namespace AlphaBlogging.Services
                 {
                     FirstName = "Jack",
                     LastName = "Frost",
-                    UserName = "Jack",
+                    UserName = "Admin",
                     Email = "jack@email.com",
                 };
                 await _userManager.CreateAsync(user, "123Asd");
-                await _userManager.AddToRoleAsync(user, "User");
+                await _userManager.AddToRoleAsync(user, "Admin");
             }
 
             if (_userManager.FindByEmailAsync("peter@email.com").Result == null)
@@ -232,7 +232,7 @@ namespace AlphaBlogging.Services
                     },
                     new Blog
                     {
-                        Author = _db.Users.Where(x => x.UserName == "Bruce").FirstOrDefault(),
+                        Author = _db.Users.Where(x => x.UserName == "Lisa").FirstOrDefault(),
                         Title = "Something about Robin...",
                         Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
                         "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +

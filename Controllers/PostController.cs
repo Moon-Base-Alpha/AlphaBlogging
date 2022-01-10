@@ -126,7 +126,7 @@ namespace AlphaBlogging.Controllers
             }
            
             if (await _postservice.SaveChangesAsync())
-                return RedirectToAction("Edit");
+                return Redirect($"~/Blog/BlogView/{post.BlogId}");
             else
                 return View(post);
         }

@@ -12,6 +12,7 @@ using AlphaBlogging.Data.Repos;
 
 namespace AlphaBlogging.Controllers
 {
+    //[Authorize(Roles = "Superadmin, Admin, Author")]
     public class BlogController : Controller
     {
         //Dependency Inject of BlogService and SignIn
@@ -40,7 +41,7 @@ namespace AlphaBlogging.Controllers
             return authorId;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Superadmin, Admin")]
         public IActionResult Bloglist()
         {
             var blogs = _bloggyService.GetAllBlogs();
@@ -48,6 +49,7 @@ namespace AlphaBlogging.Controllers
 
         }
 
+        [Authorize(Roles = "Author")]
         public IActionResult MyBloglist()
         {
             
