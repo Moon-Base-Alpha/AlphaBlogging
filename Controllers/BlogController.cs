@@ -127,9 +127,9 @@ namespace AlphaBlogging.Controllers
             }
 
             if (await _bloggyService.SaveChangesAsync())
-                return RedirectToAction("Edit");
+                return RedirectToAction("BlogView", new { id = blog.Id });
             else
-                return View(blog);
+                return RedirectToAction("Edit");
         }
         [Authorize]
         [HttpGet]
