@@ -75,9 +75,9 @@ namespace AlphaBlogging.Controllers
                     foreach (string item in tagArr)
                     {
                         Tag foundTag = _tagservice.FindTag(item);
-                        if (foundTag != null)
+                        if (foundTag != null && item.Length != 0)
                             newPost.Tags.Add(foundTag);
-                        else
+                        else if(item.Length !=0)
                             newPost.Tags.Add(new Tag() { HashTag = item });
                     }
                 }
