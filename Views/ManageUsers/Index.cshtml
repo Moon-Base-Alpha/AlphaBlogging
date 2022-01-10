@@ -1,0 +1,50 @@
+﻿@model List<AlphaBlogging.Models.ViewModels.UserRolesVM>
+
+@{
+    ViewData["Title"] = "Manage users";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <br />
+    <h1>Manage users</h1>
+    @*<a href="@Url.Action("Register", "Account")" class="btn btn-primary"><i class="fas fa-pen"></i> Create new user</a>*@
+    <a class="btn btn-primary" href='/Identity/Account/Register'><i class="fas fa-pen"></i> Create new user</a>
+    <br /><br />
+    <table id="datatablesSimple">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.FirstName @user.LastName</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@string.Join(" ,", user.Roles.ToList())</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Action
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                <li><a class="dropdown-item" href="#">Delete</a></li>
+                                <li><a class="dropdown-item" asp-controller="ManageUsers" asp-action="Manage" asp-route-userId="@user.UserId">Manage Roles</a></li>
+                            </ul>
+                        </div>
+
+                        @*<a class="btn btn-primary btn-sm" asp-controller="ManageUsers" asp-action="Manage" asp-route-userId="@user.UserId">Manage Roles</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

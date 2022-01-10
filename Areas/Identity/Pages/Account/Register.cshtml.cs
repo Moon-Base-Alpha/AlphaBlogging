@@ -94,6 +94,12 @@ namespace AlphaBlogging.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync((ApplicationUser)user, Input.Password);
                 if (result.Succeeded)
                 {
+                    // Redirect Superadmin to userslist after created a new user
+                    if (_signInManager.IsSignedIn(User) && User.IsInRole("Superadmin"))
+                    {
+                        return RedirectToAction("Index", "ManageUsers");
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
                     await _userManager.AddToRoleAsync(user, "Author");
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync((ApplicationUser)user);
