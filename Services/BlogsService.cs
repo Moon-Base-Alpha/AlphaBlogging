@@ -57,17 +57,13 @@ namespace AlphaBlogging.Services
 
         public Blog GetBlog(int id)
         {
-
             // returning a blog with these includes ensures availability of everythng needed
             var q1 = _db.Blogs.Where(b=>b.Id == id)
-                .Include(b=>b.Author)
-                .Include(b=>b.Posts).ThenInclude(p=>p.Comments)
+                .Include(b=>b.Posts).ThenInclude(p=>p.Comments).ThenInclude(c=>c.Author)
                 .Include(b=>b.Posts).ThenInclude(p=>p.Tags)
+                .Include(b=>b.Author)
                 .FirstOrDefault();
-
             return q1;
-
-
         }
 
         public void UpdateBlog(Blog blog)        {
