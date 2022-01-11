@@ -55,7 +55,9 @@ namespace AlphaBlogging.Models
             Views = 0;
             Tags = new List<Tag>();
         }
-        public Post(string title, string body, int blogId,  bool visible)
+
+        public Post(string title, string body, int blogId)
+
         {
                
             Title = title;

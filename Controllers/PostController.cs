@@ -46,6 +46,15 @@ namespace AlphaBlogging.Controllers
             return View(post); 
         }
 
+        public IActionResult PostView(int Id) 
+        {            
+            var dbPost = _postservice.GetPost(Id);
+            //var post = new Post(dbPost.Title, dbPost.Body, 1);           
+            
+            //post.Tags = 
+            return View(dbPost);
+        }
+
         [HttpGet]
         public IActionResult Create(int blogId)
         {                        

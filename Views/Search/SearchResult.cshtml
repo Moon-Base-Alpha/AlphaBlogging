@@ -1,0 +1,51 @@
+﻿@model AlphaBlogging.Models.ViewModels.SearchResultsVM
+
+<div class="bg-white bg-opacity-50">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Blog titles including the term: @Model.SearchTerm
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var id in Model.BlogIds ) 
+    {
+        <tr>
+            <td>
+                @id
+            </td>
+            <td>               
+                @Html.ActionLink("View Blog","BlogView", "Blog", new { id = @id })                
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Post titles including the term: @Model.SearchTerm
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var post in Model.PostIds) {
+        <tr>
+            <td>
+                post
+            </td>
+            <td>               
+                @Html.ActionLink("View Post","PostView", "Post", new { Id = post })                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
