@@ -47,7 +47,7 @@ namespace AlphaBlogging.Models
         {
             Created = created;
         }
-        public Blog(string title, string body,ApplicationUser author, bool visible = true)
+        public Blog(string title, string body,ApplicationUser author, bool visible)
         {
             Title = title;
             Body = body;
@@ -55,7 +55,7 @@ namespace AlphaBlogging.Models
             Updated = DateTime.Now;
             Author = author;
             //Posts = posts;
-            Visible = visible;
+            Visible = true;
         }
        
     }
