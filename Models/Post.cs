@@ -55,7 +55,7 @@ namespace AlphaBlogging.Models
             Views = 0;
             Tags = new List<Tag>();
         }
-        public Post(string title, string body, int blogId,  bool visible = true)
+        public Post(string title, string body, int blogId,  bool visible)
         {
                
             Title = title;
@@ -67,7 +67,7 @@ namespace AlphaBlogging.Models
             Comments = new List<Comment>();
             Tags = new List<Tag>();             
 
-            Visible = visible;
+            Visible = true;
             BlogId = blogId;
             
 

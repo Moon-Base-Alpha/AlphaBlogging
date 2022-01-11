@@ -26,11 +26,11 @@
                 <textarea asp-for="Body" class="form-control" rows="5"></textarea>
                 <span asp-validation-for="Body" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
+            @*<div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Visible" /> @Html.DisplayNameFor(model => model.Visible)
                 </label>
-            </div>
+            </div>*@
             <div class="form-group">
                 
                 <input asp-for="BlogId" type="hidden" class="form-control" />

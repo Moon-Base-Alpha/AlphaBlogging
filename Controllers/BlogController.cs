@@ -93,7 +93,7 @@ namespace AlphaBlogging.Controllers
             
             blog.Author = GetSignedInId();
 
-            Blog bloggy = new Blog(blog.Title,blog.Body,blog.Author,blog.Visible);
+            Blog bloggy = new Blog(blog.Title,blog.Body,blog.Author,blog.Visible = true);
 
             _bloggyService.AddBlog(bloggy);
 

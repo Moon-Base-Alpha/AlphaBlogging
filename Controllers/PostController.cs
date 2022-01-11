@@ -66,7 +66,7 @@ namespace AlphaBlogging.Controllers
                 //               where x.Author == user
                 //               select x).First();
                 //post.BlogId = blogid;
-                Post newPost = new Post(post.Title,post.Body,blogId);
+                Post newPost = new Post(post.Title,post.Body,blogId, true);
 
 
                 if (post.HashTag != null)
