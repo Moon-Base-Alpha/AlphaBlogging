@@ -1,5 +1,5 @@
 @using AlphaBlogging.Models;
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @model Post
  <p class="created">Published @Model.Created.ToShortDateString() by @Model.Blog.Author.UserName</p>
  
@@ -74,7 +74,6 @@
     }
 
 </div>
-
     <script>
         //function LikeIncrease()
         //{
@@ -92,16 +91,17 @@
         //}
         function UserclicksOnLikeJS(bla)
         {
-
+            // it gets here
                 $(document).ready(function () {
+                    //but not here
                 $.ajax({
                     url: '@Url.Action("UserClicksOnLike", "Post")',
                     data: {Id:bla},
                     type: 'GET',
                     success: function(data) {
                         if (data) {  // check if data is defined
-                            //if(@Model.Likes)
-                           document.getElementById("LikeButton").innerHTML = "&#128077; " + (@Model.Likes+1);
+                            document.getElementById("LikeButton").innerHTML = "&#128077; " + (@Model.Likes);
+
                         }
                     }
                 });
