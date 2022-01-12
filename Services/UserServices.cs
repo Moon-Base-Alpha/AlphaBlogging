@@ -54,10 +54,10 @@ namespace AlphaBlogging.Data.Repos
 
             return result;
         }
-        public ApplicationUser GetCurrentApplicationUser()
+        public ApplicationUser GetCurrentApplicationUser(string un)
         {
             var query = (from x in _db.Users
-                         where x.UserName == User.Identity.Name
+                         where x.UserName == un
                          select x).FirstOrDefault();
             return (ApplicationUser)query;
         }

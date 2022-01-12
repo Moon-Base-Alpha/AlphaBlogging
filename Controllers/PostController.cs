@@ -243,10 +243,11 @@ namespace AlphaBlogging.Controllers
             //                select x).First();
 
             var cuid2 = User.Identity.Name;
-            var CurrentUser = (from x in _db.Users
-                            where x.UserName == cuid2
-                            select x).First();
-            var v = _db.Posts.Find(Id);
+            //var CurrentUser = (from x in _db.Users
+            //                where x.UserName == cuid2
+            //                select x).First();
+            var CurrentUser = _userServices.GetCurrentApplicationUser(cuid2);
+            var v = _postservice.GetPost(Id);
             bool hasLiked = CurrentUser.LikedPosts.Contains(v);
 
             if (hasLiked == false)
@@ -259,8 +260,8 @@ namespace AlphaBlogging.Controllers
             else if (hasLiked == true)
             {
                 CurrentUser.LikedPosts.Remove(v);
-
                 _postservice.DecreaseLikesInPost(Id);
+
                 await _postservice.SaveChangesAsync();
             }
             var t = _postservice.GetPost(Id);
