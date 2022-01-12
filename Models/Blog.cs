@@ -28,6 +28,7 @@ namespace AlphaBlogging.Models
         public bool Visible { get; set; }
         private ICollection<Post> _posts;
        
+
         private Blog(ILazyLoader lazyLoader)
         {
             LazyLoader = lazyLoader;
@@ -38,9 +39,9 @@ namespace AlphaBlogging.Models
             get => LazyLoader.Load(this, ref _posts);
             set => _posts = value;
         }
-        public Blog()
+         public Blog()
         {
-
+            Visible = true;
         }
 
         public Blog(DateTime created)

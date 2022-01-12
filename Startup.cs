@@ -54,10 +54,9 @@ namespace AlphaBlogging
 
             services.AddTransient<IPostServices, PostServices>();
             services.AddTransient<ICommentServices, CommentServices>();
-
             services.AddTransient<ISignedInService, SignedInService>(); 
-
             services.AddTransient<ITagServices, TagServices>();
+            services.AddTransient<IUserServices, UserServices>();
 
             //Adding DbInitializer Service
             services.AddAsyncInitializer<DbInitializer>();
