@@ -15,11 +15,11 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AlphaBlogging.Services
 {
-    public class BlogsService : IBlogsService
+    public class BlogsServices : IBlogsServices
     {
         private ApplicationDbContext _db;        
 
-        public BlogsService(ApplicationDbContext context)
+        public BlogsServices(ApplicationDbContext context)
         {
             _db = context;            
         }

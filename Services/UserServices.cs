@@ -1,13 +1,11 @@
 ﻿using AlphaBlogging.Models;
 using Microsoft.AspNetCore.Identity;
-
 using Microsoft.AspNetCore.Mvc;
-
 using System.Linq;
-
+using System.Threading.Tasks;
+using AlphaBlogging.Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using AlphaBlogging.Services;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using AlphaBlogging.Models;
 using AlphaBlogging.Models.ViewModels;
@@ -15,51 +13,45 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using AlphaBlogging.Data;
 using System.Linq;
-using AlphaBlogging.Data.Repos;
 
-namespace AlphaBlogging.Data.Repos
+
+namespace AlphaBlogging.Data.Services
 {
     public class UserServices : Controller, IUserServices
     {
         
-        private readonly SignInManager<ApplicationUser> _SignInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ApplicationDbContext _db;
-        private IUserServices _UserService;
+        
 
         public UserServices(ApplicationDbContext context, SignInManager<ApplicationUser> signInManager)
         {
             _db = context;
-            _SignInManager = signInManager;
+            _signInManager = signInManager;
         }
 
         public bool IsLoggedIn()
         {
-            var signedIn = _SignInManager.IsSignedIn(User);
+            var signedIn = _signInManager.IsSignedIn(User);
             return signedIn;
         }
-        public string GetCurrentUsername()
-        {
-            string result = "";
-            var user = User.Identity.Name;
 
-            return result;
-        }
-        public string GetCurrentUserID()
+        public string GetCurrentUserID(string userName)
         {
-            string result = "";
-            var temp = User.Identity.Name; // ger null???
-            var query = (from x in _db.Users
-                         where x.UserName == User.Identity.Name
+            
+            var userId = (from x in _db.Users
+                         where x.UserName == userName
                          select x.Id).ToString();
 
-            return result;
+            return userId;
         }
-        public ApplicationUser GetCurrentApplicationUser(string un)
+        public ApplicationUser GetCurrentApplicationUser(string userName)
         {
-            var query = (from x in _db.Users
-                         where x.UserName == un
+            var userObj = (from x in _db.Users
+                         where x.UserName == userName
                          select x).FirstOrDefault();
-            return (ApplicationUser)query;
+
+            return userObj;
         }
         public async Task<bool> SaveChangesAsync()
         {
@@ -70,5 +62,14 @@ namespace AlphaBlogging.Data.Repos
             return false;
         }
 
+        public string GetCurrentUsername()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string GetCurrentUserID()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
