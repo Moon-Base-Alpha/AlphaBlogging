@@ -22,9 +22,10 @@ namespace AlphaBlogging.Services
             //throw new System.NotImplementedException();
         }
 
-        public List<int> FindPostsByTagTerm(string term)
+        public List<Models.Tag> FindPostsByTagTerm(string term)
         {
-            var query = _db.Posts.Where(p => p.Title.Contains(term)).Select(p => p.Id).ToList();
+            var query = _db.Tags.Where(t => t.HashTag.Contains(term)).ToList();
+
 
             return query;
 
@@ -38,6 +39,11 @@ namespace AlphaBlogging.Services
             return query;
 
             //throw new System.NotImplementedException();
+        }
+
+        List<int> ISearchServices.FindPostsByTagTerm(string term)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
