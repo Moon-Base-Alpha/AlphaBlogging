@@ -1,5 +1,6 @@
 using AlphaBlogging.Data;
 using AlphaBlogging.Data.Repos;
+using AlphaBlogging.Data.Services;
 using AlphaBlogging.Models;
 using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Builder;
@@ -36,7 +37,7 @@ namespace AlphaBlogging
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddTransient<IBlogsService, BlogsService>();
+            services.AddTransient<IBlogsServices, BlogsServices>();
             services.AddTransient<ISearchServices, SearchServices>();
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
@@ -54,7 +55,7 @@ namespace AlphaBlogging
 
             services.AddTransient<IPostServices, PostServices>();
             services.AddTransient<ICommentServices, CommentServices>();
-            services.AddTransient<ISignedInService, SignedInService>(); 
+             
             services.AddTransient<ITagServices, TagServices>();
             services.AddTransient<IUserServices, UserServices>();
 

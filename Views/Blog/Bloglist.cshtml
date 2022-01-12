@@ -56,9 +56,9 @@
                 @Html.DisplayFor(modelItem => item.Visible)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                <a asp-controller="Post" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
-                @Html.ActionLink("Details", "BlogView",  new { id=item.Id }) |
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id })
+                @Html.ActionLink("Details", "BlogView", new { id=item.Id })
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
 
             </td>
         </tr>

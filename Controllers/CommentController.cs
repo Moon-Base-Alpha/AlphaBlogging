@@ -15,22 +15,21 @@ namespace AlphaBlogging.Controllers
 
         private ICommentServices _commentservice;
         private IPostServices _postService;
-        private readonly ISignedInService _signedInService;
-        //private readonly ApplicationDbContext _db;
+        private readonly IUserServices _userServices;
+        
 
-        public CommentController(ICommentServices repo, IPostServices postServices, ApplicationDbContext context, ISignedInService signedInService)
+        public CommentController(ICommentServices repo, IPostServices postServices, IUserServices userServices)
         {
 
             _commentservice = repo;
             _postService = postServices;
-            _signedInService = signedInService; 
+            _userServices = userServices;
 
-            //_db = context;
         }
 
-        public IActionResult CommentList(/*int postId*/)
+        public IActionResult CommentList()
         {
-            //var comments = _db.Posts.Where(p => p.Id == postId).FirstOrDefault().Comments;
+            
             var comments = _commentservice.GetAllComments();
             return View(comments);
         }
@@ -52,7 +51,7 @@ namespace AlphaBlogging.Controllers
         {
                 var user = User.Identity.Name;
 
-                Comment newComment = new Comment(comment.Body, _signedInService.GetAuthorId(user), comment.PostId);
+                Comment newComment = new Comment(comment.Body, _userServices.GetCurrentApplicationUser(user), comment.PostId);
 
                 _commentservice.AddComment(newComment);
 
@@ -82,7 +81,7 @@ namespace AlphaBlogging.Controllers
 
             if (comment.Id > 0)
             {
-                comment.Author = _signedInService.GetAuthorId(user);
+                comment.Author = _userServices.GetCurrentApplicationUser(user);
                 _commentservice.UpdateComment(comment);
             }
             
