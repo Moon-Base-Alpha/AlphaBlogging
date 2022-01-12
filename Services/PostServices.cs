@@ -64,6 +64,10 @@ namespace AlphaBlogging.Data.Repos
 
         public void UpdatePost(Post post)
         {
+            post.Updated = DateTime.Now;
+            post.Created = (from x in _db.Posts
+                            where x.Id == post.Id
+                            select x.Created).First();
             _db.Posts.Update(post);
         }
         public void IncreaseLikesInPost(int Id)
@@ -78,6 +82,7 @@ namespace AlphaBlogging.Data.Repos
             qPost.Likes--;
             _db.Posts.Update(qPost);
         }
+
 
         public async Task<bool> SaveChangesAsync()
         {

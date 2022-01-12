@@ -12,6 +12,7 @@ using AlphaBlogging.Data.Repos;
 
 namespace AlphaBlogging.Controllers
 {
+    //[Authorize(Roles = "Superadmin, Admin, Author")]
     public class BlogController : Controller
     {
         //Dependency Inject of BlogService and SignIn
@@ -40,7 +41,7 @@ namespace AlphaBlogging.Controllers
             return authorId;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Superadmin, Admin")]
         public IActionResult Bloglist()
         {
             var blogs = _bloggyService.GetAllBlogs();
@@ -48,6 +49,7 @@ namespace AlphaBlogging.Controllers
 
         }
 
+        [Authorize(Roles = "Author")]
         public IActionResult MyBloglist()
         {
             
@@ -66,7 +68,7 @@ namespace AlphaBlogging.Controllers
         }
 
 
-        [Authorize]
+        //[Authorize]
         public IActionResult BlogView(int id)
         {           
             var blog = _bloggyService.GetBlog(id);           
@@ -89,17 +91,18 @@ namespace AlphaBlogging.Controllers
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(Blog blog)
-        {
-            var user = User.Identity.Name;
+        {            
             
             blog.Author = GetSignedInId();
 
-            _bloggyService.AddBlog(blog);
+            Blog bloggy = new Blog(blog.Title,blog.Body,blog.Author,blog.Visible = true);
+
+            _bloggyService.AddBlog(bloggy);
 
             if (await _bloggyService.SaveChangesAsync())
                 return RedirectToAction("Index", "Home" );
             else
-                return View(blog);
+                return View(bloggy);
         }
 
         [Authorize]
@@ -126,9 +129,9 @@ namespace AlphaBlogging.Controllers
             }
 
             if (await _bloggyService.SaveChangesAsync())
-                return RedirectToAction("Edit");
+                return RedirectToAction("BlogView", new { id = blog.Id });
             else
-                return View(blog);
+                return RedirectToAction("Edit");
         }
         [Authorize]
         [HttpGet]

@@ -58,8 +58,18 @@ namespace AlphaBlogging.Controllers
             var dbPpost = _postservice.GetPost(Id);
             post.Title = dbPpost.Title;
             post.Body = dbPpost.Body;
+            
             //post.Tags = 
             return View(post); 
+        }
+
+        public IActionResult PostView(int Id) 
+        {            
+            var dbPost = _postservice.GetPost(Id);
+            //var post = new Post(dbPost.Title, dbPost.Body, 1);           
+            
+            //post.Tags = 
+            return View(dbPost);
         }
 
         [HttpGet]
@@ -92,9 +102,9 @@ namespace AlphaBlogging.Controllers
                     foreach (string item in tagArr)
                     {
                         Tag foundTag = _tagservice.FindTag(item);
-                        if (foundTag != null)
+                        if (foundTag != null && item.Length != 0)
                             newPost.Tags.Add(foundTag);
-                        else
+                        else if(item.Length !=0)
                             newPost.Tags.Add(new Tag() { HashTag = item });
                     }
                 }
@@ -124,6 +134,7 @@ namespace AlphaBlogging.Controllers
                 post.Title = dbPpost.Title;
                 post.Body = dbPpost.Body;               
                 post.Visible = true;
+                post.Updated = new DateTime();
 
                 
                 return View(post);
@@ -142,7 +153,7 @@ namespace AlphaBlogging.Controllers
             }
            
             if (await _postservice.SaveChangesAsync())
-                return RedirectToAction("Edit");
+                return Redirect($"~/Blog/BlogView/{post.BlogId}");
             else
                 return View(post);
         }

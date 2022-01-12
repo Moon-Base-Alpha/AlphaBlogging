@@ -26,7 +26,7 @@ namespace AlphaBlogging.Services
         
         public void AddBlog(Blog blog)
         {
-            blog.Created = DateTime.Now;    
+               
             _db.Blogs.Add(blog);
         }
 
@@ -55,21 +55,22 @@ namespace AlphaBlogging.Services
 
         public Blog GetBlog(int id)
         {
-
-            ///var q0 = _db.Blogs.Where(b=>b.Id == id).FirstOrDefault();
-            //returning q0 works as well, since the connections are being made in q1, and then reused in the previous q0
+            // returning a blog with these includes ensures availability of everythng needed
             var q1 = _db.Blogs.Where(b=>b.Id == id)
-                .Include(b=>b.Posts).ThenInclude(p=>p.Comments)
+                .Include(b=>b.Posts).ThenInclude(p=>p.Comments).ThenInclude(c=>c.Author)
                 .Include(b=>b.Posts).ThenInclude(p=>p.Tags)
+                .Include(b=>b.Author)
                 .FirstOrDefault();
-
             return q1;
-
-
         }
 
-        public void UpdateBlog(Blog blog)
-        {
+        public void UpdateBlog(Blog blog)        {
+            
+            blog.Updated = DateTime.Now;
+            blog.Created = (from x in _db.Blogs
+                            where x.Id == blog.Id
+                            select x.Created).First();
+
             _db.Blogs.Update(blog);
         }
         public async Task<bool> SaveChangesAsync()

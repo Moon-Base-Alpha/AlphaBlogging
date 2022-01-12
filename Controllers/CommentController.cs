@@ -2,12 +2,14 @@
 using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models;
 using AlphaBlogging.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AlphaBlogging.Controllers
 {
+    [Authorize]
     public class CommentController : Controller
     {
 
@@ -76,8 +78,14 @@ namespace AlphaBlogging.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Comment comment)
         {
+            var user = User.Identity.Name;
+
             if (comment.Id > 0)
+            {
+                comment.Author = _signedInService.GetAuthorId(user);
                 _commentservice.UpdateComment(comment);
+            }
+            
             else
             {
                 _commentservice.AddComment(comment);

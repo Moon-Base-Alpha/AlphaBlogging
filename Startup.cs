@@ -37,6 +37,7 @@ namespace AlphaBlogging
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddTransient<IBlogsService, BlogsService>();
+            services.AddTransient<ISearchServices, SearchServices>();
 
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {

@@ -41,7 +41,7 @@
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
-  --bs-primary-rgb: 13, 110, 253;
+  --bs-primary-rgb: 31, 69, 124;
   --bs-secondary-rgb: 108, 117, 125;
   --bs-success-rgb: 25, 135, 84;
   --bs-info-rgb: 13, 202, 240;
@@ -4523,6 +4523,10 @@ textarea.form-control-lg {
   color: #fff;
 }
 
+#card-blk-title {
+    color: #000;
+}
+
 .card {
   position: relative;
   display: flex;
@@ -6870,7 +6874,7 @@ textarea.form-control-lg {
 }
 
 .border-top {
-  border-top: 1px solid #dee2e6 !important;
+  border-top: 1px solid #686868 !important;
 }
 
 .border-top-0 {
@@ -11700,3 +11704,33 @@ body {
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
 }
+
+/*Back to top button*/
+#myBtn {
+color: #fff;
+width: 50px;
+height: 50px;
+background: #a3bd0b;
+position: fixed;
+bottom: 20px;
+right: 30px;
+z-index: 99;
+line-height: 0px;
+border: 0;
+font-size: 28px;
+text-align: center;
+border-radius: 5px;
+}
+
+#myBtn:hover {
+  color: #555;
+}
+
+/*Styling of tags*/
+.tag {
+    display: inline-block;
+   
+   
+}
+/*End - Back to top button*/
+

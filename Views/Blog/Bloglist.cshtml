@@ -26,6 +26,9 @@
                 @Html.DisplayNameFor(model => model.Created)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Updated)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Visible)
             </th>
             <th></th>
@@ -46,6 +49,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Created)
             </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Updated)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Visible)
             </td>
@@ -53,7 +59,7 @@
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                 <a asp-controller="Post" asp-action="Edit" asp-route-id="@item.Id"> Edit </a>
                 @Html.ActionLink("Details", "BlogView",  new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+
             </td>
         </tr>
 }
