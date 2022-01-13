@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using AlphaBlogging.Data;
 using System.Linq;
 using AlphaBlogging.Data.Repos;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace AlphaBlogging.Controllers
 {
@@ -20,14 +22,19 @@ namespace AlphaBlogging.Controllers
         private readonly ISignedInService _signedInService; 
         private readonly IBlogsService _bloggyService;
         private readonly IPostServices _postService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         
 
-        public BlogController(ISignedInService signedInService, IBlogsService bloggy, IPostServices posty, SignInManager<ApplicationUser> signInManager)
+        public BlogController(ISignedInService signedInService, 
+            IBlogsService bloggy, 
+            IPostServices posty, 
+            SignInManager<ApplicationUser> signInManager, IWebHostEnvironment hostEnvironment)
         {
             _bloggyService = bloggy;
             _postService = posty;
             _signedInService = signedInService;
             _signInManager = signInManager; 
+            _webHostEnvironment = hostEnvironment;
             
         }
 
@@ -95,7 +102,7 @@ namespace AlphaBlogging.Controllers
             
             blog.Author = GetSignedInId();
 
-            Blog bloggy = new Blog(blog.Title,blog.Body,blog.Author,blog.Visible);
+            Blog bloggy = new Blog(blog.Title,blog.Description,blog.Body,blog.BlogImage,blog.Author,blog.Visible);
 
             _bloggyService.AddBlog(bloggy);
 
@@ -103,6 +110,15 @@ namespace AlphaBlogging.Controllers
                 return RedirectToAction("Index", "Home" );
             else
                 return View(bloggy);
+        }
+        private string UploadedFile(Blog blog)
+        {
+            string uniqueFileName = null;
+            if (blog.BlogImage != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment)
+            }
+            return uniqueFileName;
         }
 
         [Authorize]
@@ -141,5 +157,6 @@ namespace AlphaBlogging.Controllers
             await _bloggyService.SaveChangesAsync();
             return RedirectToAction("Bloglist");
         }
+
     }
 }

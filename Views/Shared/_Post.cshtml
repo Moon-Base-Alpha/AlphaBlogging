@@ -44,7 +44,7 @@
                      <partial name="_Comment"  model="comment"/>                  
 
                     @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} ) | 
-                     @if (User.IsInRole("Admin") || User.IsInRole("User"))
+                     @if (User.IsInRole("Admin") || User.IsInRole("Author"))
                         {
                     @Html.ActionLink("Edit Comment", "Edit", "Comment", new {postId = Model.Id} ) @: | 
                     @Html.ActionLink("Delete Comment", "Remove", "Comment", new {postId = Model.Id} )
