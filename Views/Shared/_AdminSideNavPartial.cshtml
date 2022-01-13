@@ -5,10 +5,11 @@
 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
         <div class="nav">
-            <a class="nav-link" asp-controller="Admin" asp-action="Index">
+            <br />
+            @*<a class="nav-link" asp-controller="Admin" asp-action="Index">
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                 Dashboard
-            </a>
+            </a>*@
             @if(SignInManager.IsSignedIn(User) && User.IsInRole("Superadmin"))
             {
                 <a class="nav-link" asp-controller="ManageUsers" asp-action="Index">

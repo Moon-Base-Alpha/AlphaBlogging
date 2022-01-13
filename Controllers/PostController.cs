@@ -57,7 +57,7 @@ namespace AlphaBlogging.Controllers
             //post.Id = Id;
             var dbPpost = _postservice.GetPost(Id);
             post.Title = dbPpost.Title;
-            post.Body = dbPpost.Body;
+            post.Body = dbPpost.Body; 
             
             //post.Tags = 
             return View(post); 
@@ -117,31 +117,28 @@ namespace AlphaBlogging.Controllers
             else
                 return RedirectToAction("Index", "Home");
         }
+
         [HttpGet]
         public IActionResult Edit(int? id, Tag tag)
         {
             if (id == null)
                 return View(new PostVM());
-
             else
             {
-               
                 //var post = _postservice.GetPost((int)id);
-
                 var post = new PostVM();
                 post.BlogId = (int)id;
                 var dbPpost = _postservice.GetPost((int)id);
                 post.Title = dbPpost.Title;
                 post.Body = dbPpost.Body;               
                 post.Visible = true;
-                post.Updated = new DateTime();
 
-                
                 return View(post);
                 //string tagg = _db.Tags.Find().HashTag;
                 //return View(tag);
             }           
         }
+
         [HttpPost]
         public async Task<IActionResult> Edit(Post post, int blogId, Tag tag)
         {
@@ -151,7 +148,6 @@ namespace AlphaBlogging.Controllers
             {
                 _postservice.AddPost(post);
             }
-           
             if (await _postservice.SaveChangesAsync())
                 return Redirect($"~/Blog/BlogView/{post.BlogId}");
             else

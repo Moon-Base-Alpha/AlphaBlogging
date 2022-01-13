@@ -1,0 +1,41 @@
+﻿@using AlphaBlogging.Models;
+@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "Users list";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4">
+<br />
+<h1>Users list</h1>
+<a href="@Url.Action("Register", "Account")" class="btn btn-primary"><i class="fas fa-pen"></i> Create new user</a>
+<br />
+<h1>User Roles</h1>
+<table id="datatablesSimple">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+        <tr>
+            <td>@user.FirstName @user.LastName</td>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>
+                @*<a class="btn btn-primary btn-sm" asp-controller="UserRoles" asp-action="Manage" asp-route-userId="@user.UserId">Manage Roles</a>*@
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+<script src="~/js/datatables-simple-demo.js"></script>

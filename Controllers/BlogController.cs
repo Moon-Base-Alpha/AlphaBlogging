@@ -49,7 +49,7 @@ namespace AlphaBlogging.Controllers
 
         }
 
-        [Authorize(Roles = "Author")]
+        [Authorize(Roles = "Superadmin, Admin, Author")]
         public IActionResult MyBloglist()
         {
             
@@ -81,7 +81,7 @@ namespace AlphaBlogging.Controllers
         }
 
 
-        [Authorize(Roles = "Admin, Author")]
+        [Authorize]
         [HttpGet]
         public IActionResult Create()
         {            
@@ -100,7 +100,7 @@ namespace AlphaBlogging.Controllers
             _bloggyService.AddBlog(bloggy);
 
             if (await _bloggyService.SaveChangesAsync())
-                return RedirectToAction("Index", "Home" );
+                return RedirectToAction("MyBloglist");
             else
                 return View(bloggy);
         }
@@ -139,7 +139,7 @@ namespace AlphaBlogging.Controllers
         {
             _bloggyService.DeleteBlog(id);
             await _bloggyService.SaveChangesAsync();
-            return RedirectToAction("Bloglist");
+            return RedirectToAction("MyBloglist");
         }
     }
 }

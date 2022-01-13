@@ -417,7 +417,7 @@ namespace AlphaBlogging.Services
                 },
                 new Comment
                 {
-                    Author = _db.Users.Where(x => x.UserName == "Jack").FirstOrDefault(),
+                    Author = _db.Users.Where(x => x.UserName == "Admin").FirstOrDefault(),
                     Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
                     "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
                     " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +

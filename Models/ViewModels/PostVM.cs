@@ -6,6 +6,7 @@ namespace AlphaBlogging.Models.ViewModels
 {
     public class PostVM
     {
+        internal static readonly object Tags;
 
         [Required]
         public string Title { get; set; }
