@@ -1,4 +1,5 @@
 ﻿using AlphaBlogging.Data;
+using AlphaBlogging.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +23,7 @@ namespace AlphaBlogging.Services
             //throw new System.NotImplementedException();
         }
 
-        public List<Models.Tag> FindPostsByTagTerm(string term)
+        public List<Tag> FindTagsByTerm(string term)
         {
             var query = _db.Tags.Where(t => t.HashTag.Contains(term)).ToList();
 
