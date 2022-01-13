@@ -70,6 +70,19 @@ namespace AlphaBlogging.Data.Repos
                             select x.Created).First();
             _db.Posts.Update(post);
         }
+        public void IncreaseLikesInPost(int Id)
+        {
+            var qPost = GetPost(Id);
+            qPost.Likes++;
+            _db.Posts.Update(qPost);
+        }
+        public void DecreaseLikesInPost(int Id)
+        {
+            var qPost = GetPost(Id);
+            qPost.Likes--;
+            _db.Posts.Update(qPost);
+        }
+
 
         public async Task<bool> SaveChangesAsync()
         {

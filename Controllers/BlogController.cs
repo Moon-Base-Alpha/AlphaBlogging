@@ -17,16 +17,16 @@ namespace AlphaBlogging.Controllers
     {
         //Dependency Inject of BlogService and SignIn
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ISignedInService _signedInService; 
-        private readonly IBlogsService _bloggyService;
+        private readonly IUserServices _userServices; 
+        private readonly IBlogsServices _bloggyService;
         private readonly IPostServices _postService;
         
 
-        public BlogController(ISignedInService signedInService, IBlogsService bloggy, IPostServices posty, SignInManager<ApplicationUser> signInManager)
+        public BlogController(IUserServices userServices, IBlogsServices bloggy, IPostServices posty, SignInManager<ApplicationUser> signInManager)
         {
             _bloggyService = bloggy;
             _postService = posty;
-            _signedInService = signedInService;
+            _userServices = userServices;
             _signInManager = signInManager; 
             
         }
@@ -36,7 +36,7 @@ namespace AlphaBlogging.Controllers
             var signedIn = _signInManager.IsSignedIn(User);
             var user = User.Identity.Name;
 
-            ApplicationUser authorId = _signedInService.GetAuthorId(user);
+            ApplicationUser authorId = _userServices.GetCurrentApplicationUser(user);
 
             return authorId;
         }
@@ -95,7 +95,7 @@ namespace AlphaBlogging.Controllers
             
             blog.Author = GetSignedInId();
 
-            Blog bloggy = new Blog(blog.Title,blog.Body,blog.Author,blog.Visible);
+            Blog bloggy = new Blog(blog.Title,blog.Body,blog.Author,blog.Visible = true);
 
             _bloggyService.AddBlog(bloggy);
 

@@ -3,12 +3,12 @@ using AlphaBlogging.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using static AlphaBlogging.Data.Repos.BlogServices;
+
 
 namespace AlphaBlogging.Controllers
 {
@@ -30,14 +30,7 @@ namespace AlphaBlogging.Controllers
             var signedIn = _SignInManager.IsSignedIn(User);
 
             return View();
-            //if (!signedIn)
-            //{
-            //    return View();
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Index", "Admin");
-            //}
+       
 
         }
         public IActionResult BlogCreate()

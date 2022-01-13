@@ -4,27 +4,44 @@ using AlphaBlogging.Models;
 using AlphaBlogging.Models.ViewModels;
 using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using AlphaBlogging.Services;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using AlphaBlogging.Models;
+using AlphaBlogging.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using AlphaBlogging.Data;
+using System.Linq;
+using AlphaBlogging.Data.Repos;
 
 namespace AlphaBlogging.Controllers
 {
     public class PostController : Controller
     {
+        private readonly ILogger<HomeController> _logger;
+        private readonly SignInManager<ApplicationUser> _SignInManager;
         private IPostServices _postservice;
         private ITagServices _tagservice;
         private readonly ApplicationDbContext _db;
-        public PostController(IPostServices repo, ApplicationDbContext context, ITagServices tagservice)
+        private readonly IUserServices _userServices;
+        public PostController(IUserServices us, IPostServices repo, ApplicationDbContext context, ITagServices tagservice, SignInManager<ApplicationUser> _SignInManager, ILogger<HomeController> _logger)
         {
             _postservice = repo;
             _tagservice = tagservice;   
             _db = context;
-            
-  
-      }
+            _logger = this._logger;
+            _SignInManager = this._SignInManager;
+            _userServices = us;
+        }
 
         // PostList only used for testing. TO BE REMOVED
 
@@ -44,6 +61,15 @@ namespace AlphaBlogging.Controllers
             
             //post.Tags = 
             return View(post); 
+        }
+
+        public IActionResult PostView(int Id) 
+        {            
+            var dbPost = _postservice.GetPost(Id);
+            //var post = new Post(dbPost.Title, dbPost.Body, 1);           
+            
+            //post.Tags = 
+            return View(dbPost);
         }
 
         [HttpGet]
@@ -206,7 +232,7 @@ namespace AlphaBlogging.Controllers
         //    try
         //    {
         //        _db.Posts.Remove(post);
-               
+
         //        return RedirectToAction(nameof(Index));
         //    }
         //    catch
@@ -214,7 +240,41 @@ namespace AlphaBlogging.Controllers
         //        return View();
         //    }
         //}
-    }
 
-   
+        public async Task<IActionResult> UserClicksOnLike(int Id) // id some hämtas är postID
+        {
+            //var CurrentUser = _userServices.GetCurrentApplicationUser();
+            //var cuid1 = _userServices.GetCurrentUserID();
+            //var hasLiked = (from x in CurrentUser.Likes
+            //                where x.PostId == Id
+            //                select x).First();
+
+            var cuid2 = User.Identity.Name;
+            //var CurrentUser = (from x in _db.Users
+            //                where x.UserName == cuid2
+            //                select x).First();
+            var CurrentUser = _userServices.GetCurrentApplicationUser(cuid2);
+            var v = _postservice.GetPost(Id);
+            bool hasLiked = CurrentUser.LikedPosts.Contains(v);
+
+            if (hasLiked == false)
+            {
+                CurrentUser.LikedPosts.Add(v);
+                _postservice.IncreaseLikesInPost(Id);
+
+                await _postservice.SaveChangesAsync();
+            }
+            else if (hasLiked == true)
+            {
+                CurrentUser.LikedPosts.Remove(v);
+                _postservice.DecreaseLikesInPost(Id);
+
+                await _postservice.SaveChangesAsync();
+            }
+            var t = _postservice.GetPost(Id);
+
+            return RedirectToAction("BlogView", "Blog", new {Id = t.BlogId});
+            //return Redirect($"~/Blog/BlogView/{t.BlogId}");
+        }
+    }   
 }

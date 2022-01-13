@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AlphaBlogging.Services
 {
-    public interface IBlogsService
+    public interface IBlogsServices
     {
         
         Blog GetBlog(int Id);

@@ -1,5 +1,5 @@
 @using AlphaBlogging.Models;
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @model Post
  <p class="created">Published @Model.Created.ToShortDateString() by @Model.Blog.Author.UserName</p>
  
@@ -10,13 +10,25 @@
   }
    <h1>@Model.Title</h1>
   <p>@Model.Body</p>
- 
-  
-  
+  <p>post ID: @Model.Id</p>
+
+@*<form asp-controller="Post" asp-action="UserClicksOnLike" method="post">
+
+    <button type="submit" class="glyphicon glyphicon-thumbs-up" >@Model.Likes Likes></button>
+    <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+
+</form>*@
+
+@* <partial name="_LikePartial" model="Model.Likes" />
+*@
+
+<button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077; @Model.Likes</button>
+
 
 <div class="">
 
     @{
+        
         if (Model.Tags != null)
         {
             <div class="rounded  mx-0 px-2 text-white-50 bg-opacity-75 bg-dark" style="border-width:1px; border-color:steelblue;">
@@ -60,4 +72,40 @@
             <h6>No comments yet</h6>        
         }
     }
+
 </div>
+    <script>
+        //function LikeIncrease()
+        //{
+        //    var xhttp = new XMLHttpRequest();
+        //    xhttp.onreadystatechange = function() 
+        //    {
+        //        if (this.readyState == 4 && this.status == 200) 
+        //        {
+        //            document.getElementById("demo").innerHTML =
+        //            this.responseText;
+        //        }
+        //    };
+        //    xhttp.open("GET", "ajax_info.txt", true);
+        //    xhttp.send();
+        //}
+        function UserclicksOnLikeJS(bla)
+        {
+            // it gets here
+                $(document).ready(function () {
+                    //but not here
+                $.ajax({
+                    url: '@Url.Action("UserClicksOnLike", "Post")',
+                    data: {Id:bla},
+                    type: 'GET',
+                    success: function(data) {
+                        if (data) {  // check if data is defined
+                            document.getElementById("LikeButton").innerHTML = "&#128077; " + (@Model.Likes);
+
+                        }
+                    }
+                });
+            });
+        }
+
+    </script>
