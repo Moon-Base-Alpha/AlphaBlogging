@@ -19,7 +19,7 @@ namespace AlphaBlogging.Models
 
         [Required, Display(Name = "Content")]
         public string Body { get; set; }
-        [Required(ErrorMessage = "Please choose blog image")]
+        
         public string BlogImage { get; set; } 
 
         [Required]

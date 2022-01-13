@@ -11,6 +11,7 @@ using System.Linq;
 using AlphaBlogging.Data.Repos;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using System.Net.Http.Headers;
 
 namespace AlphaBlogging.Controllers
 {
@@ -23,19 +24,19 @@ namespace AlphaBlogging.Controllers
         private readonly IBlogsService _bloggyService;
         private readonly IPostServices _postService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        
+        private readonly ApplicationDbContext _db;
 
         public BlogController(ISignedInService signedInService, 
             IBlogsService bloggy, 
             IPostServices posty, 
-            SignInManager<ApplicationUser> signInManager, IWebHostEnvironment hostEnvironment)
+            SignInManager<ApplicationUser> signInManager, IWebHostEnvironment hostEnvironment, ApplicationDbContext context)
         {
             _bloggyService = bloggy;
             _postService = posty;
             _signedInService = signedInService;
             _signInManager = signInManager; 
             _webHostEnvironment = hostEnvironment;
-            
+            _db = context;
         }
 
         public ApplicationUser GetSignedInId()
@@ -94,32 +95,80 @@ namespace AlphaBlogging.Controllers
         {            
             return View(new Blog());
         }
+        //-----------------Test to add image to blog, not working at the moment------------------------
+        //[Authorize]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,Title,Description,Body,BlogImage,Author,Visible")] Blog blog)
+        //{
+        //    blog.Author = GetSignedInId();
+
+
+        //    //if (ModelState.IsValid)
+        //    //{
+        //        var files = HttpContext.Request.Form.Files;
+        //        foreach (var Image in files)
+        //        {
+        //            if (Image != null && Image.Length > 0)
+        //            {
+        //                var file = Image;
+        //                var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "assets\\img");
+        //                if (file.Length > 0)
+        //                {
+        //                    var fileName = ContentDispositionHeaderValue.Parse
+        //                        (file.ContentDisposition).FileName.Trim('"');
+        //                    System.Console.WriteLine(fileName);
+        //                    using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+        //                    {
+        //                        await file.CopyToAsync(fileStream);
+        //                        blog.BlogImage = file.FileName;
+        //                    }
+        //                }
+        //            }
+        //        }
+
+
+
+        //        Blog bloggy = new Blog(blog.Title, blog.Description, blog.Body, blog.BlogImage, blog.Author, blog.Visible);
+
+        //        _bloggyService.AddBlog(bloggy);
+        //        //await _bloggyService.SaveChangesAsync();
+        //        //return RedirectToAction("Index", "Home");
+        //    //}
+        //    if (await _bloggyService.SaveChangesAsync())
+        //       return RedirectToAction("Index", "Home" );
+        //    else
+        //    {
+        //        var errors = ModelState.Values.SelectMany(v => v.Errors);
+        //    }
+        //    return View(bloggy);
+        //}
 
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(Blog blog)
-        {            
-            
+        {
+
             blog.Author = GetSignedInId();
 
-            Blog bloggy = new Blog(blog.Title,blog.Description,blog.Body,blog.BlogImage,blog.Author,blog.Visible);
+            Blog bloggy = new Blog(blog.Title, blog.Description, blog.Body, blog.BlogImage, blog.Author, blog.Visible);
 
             _bloggyService.AddBlog(bloggy);
 
             if (await _bloggyService.SaveChangesAsync())
-                return RedirectToAction("Index", "Home" );
+                return RedirectToAction("Index", "Home");
             else
                 return View(bloggy);
         }
-        private string UploadedFile(Blog blog)
-        {
-            string uniqueFileName = null;
-            if (blog.BlogImage != null)
-            {
-                string uploadsFolder = Path.Combine(webHostEnvironment)
-            }
-            return uniqueFileName;
-        }
+        //private string UploadedFile(Blog blog)
+        //{
+        //    string uniqueFileName = null;
+        //    if (blog.BlogImage != null)
+        //    {
+        //        string uploadsFolder = Path.Combine(_webHostEnvironment);
+        //    }
+        //    return uniqueFileName;
+        //}
 
         [Authorize]
         [HttpGet]
