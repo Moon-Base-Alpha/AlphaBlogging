@@ -11,17 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using AlphaBlogging.Services;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using AlphaBlogging.Models;
-using AlphaBlogging.Models.ViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using AlphaBlogging.Data;
-using System.Linq;
-using AlphaBlogging.Data.Repos;
+
 
 namespace AlphaBlogging.Controllers
 {

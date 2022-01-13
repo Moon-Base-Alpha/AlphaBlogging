@@ -1,0 +1,46 @@
+﻿@using AlphaBlogging.Models;
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@model Post
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+
+
+*@
+<button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077; @Model.Likes</button>
+
+
+    <script>
+        //function LikeIncrease()
+        //{
+        //    var xhttp = new XMLHttpRequest();
+        //    xhttp.onreadystatechange = function() 
+        //    {
+        //        if (this.readyState == 4 && this.status == 200) 
+        //        {
+        //            document.getElementById("demo").innerHTML =
+        //            this.responseText;
+        //        }
+        //    };
+        //    xhttp.open("GET", "ajax_info.txt", true);
+        //    xhttp.send();
+        //}
+        function UserclicksOnLikeJS(PostIDfromPage)
+        {
+            // it gets here
+                $(document).ready(function () {
+                    //but not here
+                $.ajax({
+                    url: '@Url.Action("UserClicksOnLike", "Post")',
+                    data: {Id:PostIDfromPage},
+                    type: 'GET',
+                    success: function() { // if you put data in the (), it loads the entire blog view, which makes the button work perfectly.
+                            //document.getElementById("LikeButton").innerHTML = "&#128077; " + (@Model.Likes);
+                            //$("#Likes").load("../Like/LikesViewPartial");
+                            location.reload();
+                        
+                    }
+                });
+            });
+        }
+
+    </script>
