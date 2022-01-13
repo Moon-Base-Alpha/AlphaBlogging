@@ -35,32 +35,27 @@ namespace AlphaBlogging.Controllers
         public async Task<IActionResult> DeleteRole(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
-            var result = await _roleManager.DeleteAsync(role);
-            return RedirectToAction("Index");
 
-            //var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await _roleManager.DeleteAsync(role);
 
-            //if (role == null)
-            //{
-            //    ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
-            //    return View("NotFound");
-            //}
-            //else
-            //{
-            //    var result = await _roleManager.DeleteAsync(role);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
 
-            //    if (result.Succeeded)
-            //    {
-            //        return RedirectToAction("Index");
-            //    }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
 
-            //    foreach (var error in result.Errors)
-            //    {
-            //        ModelState.AddModelError("", error.Description);
-            //    }
-
-            //    return View("Index");
-            //}
+                return View("Index");
+            }
         }
     }
 }

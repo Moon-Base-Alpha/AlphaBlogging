@@ -45,13 +45,12 @@ namespace AlphaBlogging.Controllers
             return new List<string>(await _userManager.GetRolesAsync(user));
         }
 
-        public async Task<IActionResult> Manage(string userId)
+        public async Task<IActionResult> Manage(string UserId)
         {
-            ViewBag.userId = userId;
-            var user = await _userManager.FindByIdAsync(userId);
+            ViewBag.userId = UserId;
+            var user = await _userManager.FindByIdAsync(UserId);
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
                 return View("NotFound");
             }
             ViewBag.UserName = user.UserName;
@@ -77,9 +76,9 @@ namespace AlphaBlogging.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Manage(List<ManageUserRolesVM> model, string userId)
+        public async Task<IActionResult> Manage(List<ManageUserRolesVM> model, string UserId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(UserId);
 
             if (user == null)
             {
@@ -102,6 +101,86 @@ namespace AlphaBlogging.Controllers
                 return View(model);
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string UserId)
+        {
+            var user = await _userManager.FindByIdAsync(UserId);
+
+            if (user == null)
+            {
+                return View("NotFound");
+            }
+
+            var model = new UserRolesVM
+            {
+                UserId = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                UserName = user.UserName,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserRolesVM model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+
+            if (user == null)
+            {
+                return View("NotFound");
+            }
+            else
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Email = model.Email;
+                user.UserName = model.UserName;
+
+                var result = await _userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
+            }
+        }
+
+       
+        public async Task<IActionResult> Delete(string UserId)
+        {
+            var user = await _userManager.FindByIdAsync(UserId);
+
+            if (user == null)
+            {
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("Index");
+            }
         }
     }
 }

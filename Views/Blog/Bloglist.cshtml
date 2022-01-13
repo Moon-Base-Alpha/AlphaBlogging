@@ -1,4 +1,7 @@
 ﻿@using AlphaBlogging.Models;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @model IEnumerable<AlphaBlogging.Models.Blog>
 
 @{
@@ -6,7 +9,7 @@
 }
 
 <div class="container-fluid px-4">
-<br />
+<h3 class="mt-4">Welcome back! @((await UserManager.GetUserAsync(User)).UserName)</h3>
 <h1>Blog list</h1>
 <a href="@Url.Action("Create", "Blog")" class="btn btn-primary"><i class="fas fa-pen"></i> Create new blog</a>
 <br /><br />
@@ -58,7 +61,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id })                 
                 @Html.ActionLink("Details", "BlogView",  new { id=item.Id }) 
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "Remove", new { id=item.Id })
             </td>
         </tr>
 }

@@ -101,8 +101,8 @@ div.login-form-icon {
 
 /*End for Login tab control*/
 
-/*  CSS for tag function  */
-*,
+/*  CSS for tag function -- move to styles.css/chi */ 
+/**,
 ::after,
 ::before {
     box-sizing: border-box;
@@ -171,7 +171,7 @@ div.login-form-icon {
             line-height: .5;
             margin: auto;
             font-size: 17pt;
-        }
+        }*/
 /*  END CSS for tag function  */
 
 
@@ -294,4 +294,9 @@ body {
 }
 .comment h1, .comment p {
         color: lightgray;
-    }
+}
+
+#specialBodyColor {
+    background-color: white;
+    color: black;
+}
