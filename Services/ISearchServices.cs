@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AlphaBlogging.Models;
+using System.Collections.Generic;
 
 namespace AlphaBlogging.Services
 {
@@ -12,5 +13,6 @@ namespace AlphaBlogging.Services
 
         // Return list of postIds
         public List<int> FindPostsByTagTerm(string term);
+        public List<Tag> FindTagsByTerm(string term);
     }
 }

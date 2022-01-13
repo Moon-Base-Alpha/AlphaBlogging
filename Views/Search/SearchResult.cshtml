@@ -1,6 +1,6 @@
 ﻿@model AlphaBlogging.Models.ViewModels.SearchResultsVM
 
-<div class="bg-white bg-opacity-50">
+<div class="bg-white bg-opacity-70">
 <table class="table">
     <thead>
         <tr>
@@ -11,14 +11,16 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var id in Model.BlogIds ) 
+@foreach (var blog in Model.Bloggies ) 
     {
         <tr>
-            <td>
-                @id
+            <td>                
+                <b>Created by : </b>@blog.Author.UserName<br>
+                <b>Creation Time : </b>@blog.Created.ToShortDateString() <b> : </b>@blog.Created.ToShortTimeString()<br>
+                <b>Blog Title : </b>@blog.Title
             </td>
             <td>               
-                @Html.ActionLink("View Blog","BlogView", "Blog", new { id = @id })                
+                @Html.ActionLink("View Blog","BlogView", "Blog", new { id = @blog.Id })                
             </td>
         </tr>
     }
@@ -36,13 +38,38 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var post in Model.PostIds) {
+@foreach (var post in Model.Posties) {
         <tr>
             <td>
-                post
+               <b>Created by : </b>@post.Blog.Author.UserName <br>
+                <b>Creation Time : </b>@post.Created.ToShortDateString() <b> : </b>@post.Created.ToShortTimeString()<br>
+                <b>Post Title : </b> @post.Title
             </td>
             <td>               
-                @Html.ActionLink("View Post","PostView", "Post", new { Id = post })                
+                @Html.ActionLink("View Post","PostView", "Post", new { Id = @post.Id })<br>
+                @Html.ActionLink("View Blog","BlogView", "Blog", new { id = @post.BlogId }) 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tags including the term: @Model.SearchTerm
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var tag in Model.Tags) {
+        <tr>
+            <td>               
+                <b>No Posts with This HashTag : </b> @tag.Posts.Count()
+            </td>
+            <td> 
             </td>
         </tr>
 }
