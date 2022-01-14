@@ -12,6 +12,10 @@
             </a>*@
             @if(SignInManager.IsSignedIn(User) && User.IsInRole("Superadmin"))
             {
+                <a class="nav-link" asp-controller="Blog" asp-action="Bloglist">
+                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                Manage all blogs
+                </a>
                 <a class="nav-link" asp-controller="ManageUsers" asp-action="Index">
                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                 Manage users
@@ -19,10 +23,6 @@
                 <a class="nav-link" asp-controller="RoleManager" asp-action="Index">
                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                 Create user roles
-                </a>
-                <a class="nav-link" asp-controller="Blog" asp-action="Bloglist">
-                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                Manage all blogs
                 </a>
                 <a class="nav-link" asp-controller="Post" asp-action="Postlist">
                 <div class="sb-nav-link-icon"><i class="fas fa-edit"></i></div>

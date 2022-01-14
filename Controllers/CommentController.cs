@@ -27,6 +27,7 @@ namespace AlphaBlogging.Controllers
 
         }
 
+        [Authorize(Roles = "Superadmin, Admin, Author")]
         public IActionResult CommentList()
         {
             
@@ -40,12 +41,14 @@ namespace AlphaBlogging.Controllers
             return View(comment);
         }
 
+        
         [HttpGet]
         public IActionResult Create(int postId)
         {
             return View(new Comment() { PostId = postId});
         }
 
+        
         [HttpPost]
         public async Task<IActionResult> Create(Comment comment)
         {

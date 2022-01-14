@@ -11,10 +11,16 @@
                 <a class="nav-link text-light" asp-controller="Blog" asp-action="Bloglist">Hello @User.Identity.Name!</a>
             </li>
         }
-        else
+        @if(SignInManager.IsSignedIn(User) && User.IsInRole("Author"))
         {
             <li class="nav-item">
                 <a  class="nav-link text-light" asp-controller="Blog" asp-action="MyBloglist">Hello @User.Identity.Name!</a>
+            </li>
+        }
+        @if(SignInManager.IsSignedIn(User) && User.IsInRole("User"))
+        {
+            <li class="nav-item">
+                <a  class="nav-link text-light" asp-controller="Admin" asp-action="Index">Hello @User.Identity.Name!</a>
             </li>
         }
 
