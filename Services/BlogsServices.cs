@@ -12,6 +12,7 @@ using AlphaBlogging.Services;
 using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace AlphaBlogging.Services
 {
@@ -95,6 +96,29 @@ namespace AlphaBlogging.Services
             }
 
             return resultList;
+        }
+        public void AddImage(Blog blog)
+        {
+            //var files = HttpContext.Request.Form.Files;
+            //foreach (var Image in files)
+            //{
+            //    if (Image != null && Image.Length > 0)
+            //    {
+            //        var file = Image;
+            //        var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "assets\\img");
+            //        if (file.Length > 0)
+            //        {
+            //            var fileName = ContentDispositionHeaderValue.Parse
+            //                (file.ContentDisposition).FileName.Trim('"');
+            //            System.Console.WriteLine(fileName);
+            //            using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+            //            {
+            //                await file.CopyToAsync(fileStream);
+            //                blog.BlogImage = file.FileName;
+            //            }
+            //        }
+            //    }
+            //}
         }
     }
 }

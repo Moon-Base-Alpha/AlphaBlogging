@@ -17,6 +17,6 @@ namespace AlphaBlogging.Services
         //List<Post> GetPostsFromBlogID(int BlogID);
 
         Task<bool> SaveChangesAsync();
-
+        void AddImage(Blog blog);
     }
 }

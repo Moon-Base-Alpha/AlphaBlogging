@@ -1,5 +1,6 @@
 ﻿using AlphaBlogging.Data;
 using AlphaBlogging.Models;
+using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,21 +17,33 @@ namespace AlphaBlogging.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly SignInManager<ApplicationUser> _SignInManager;
+        private readonly IBlogsService _bloggyService;
 
-
-        public HomeController(ILogger<HomeController> logger, SignInManager<ApplicationUser> SignInManager)
+       
+        public HomeController(ILogger<HomeController> logger, SignInManager<ApplicationUser> SignInManager, IBlogsService bloggy)
         {
             _logger = logger;
-            _SignInManager = SignInManager; 
-           
+            _SignInManager = SignInManager;
+            _bloggyService = bloggy;
+
         }
 
         public IActionResult Index()
         {
             var signedIn = _SignInManager.IsSignedIn(User);
 
-            return View();
-       
+            var blogs = _bloggyService.GetAllBlogs();
+            return View(blogs);
+            //return View();
+            //if (!signedIn)
+            //{
+            //    return View();
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "Admin");
+            //}
+
 
         }
         public IActionResult BlogCreate()

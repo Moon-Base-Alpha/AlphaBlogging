@@ -3,8 +3,10 @@
 
 @{
     ViewData["Title"] = "BlogView";
-    if(User.IsInRole("Admin") || User.IsInRole("Superadmin")){
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if(User.IsInRole("Admin")||User.IsInRole("Author")){
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+
     }
 }
 
@@ -41,7 +43,9 @@
 <br />
 <hr />
 
- @if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
+
+ @if (User.IsInRole("Admin")||User.IsInRole("Author"))
+
                         {
 <div>
    
