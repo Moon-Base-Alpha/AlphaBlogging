@@ -14,9 +14,9 @@ namespace AlphaBlogging.Services
             _db = context;
 
         }
-        public List<int> FindBlogsByTerm(string term)
+        public List<Blog> FindBlogsByTerm(string term)
         {
-            var query = _db.Blogs.Where(b =>b.Title.Contains(term)).Select(b => b.Id).ToList();
+            var query = _db.Blogs.Where(b =>b.Title.Contains(term)).ToList();
 
             return query;
             
@@ -33,9 +33,9 @@ namespace AlphaBlogging.Services
             //throw new System.NotImplementedException();
         }
 
-        public List<int> FindPostsByTerm(string term)
+        public List<Post> FindPostsByTerm(string term)
         {
-            var query = _db.Posts.Where(p => p.Title.Contains(term)).Select(p => p.Id).ToList();
+            var query = _db.Posts.Where(p => p.Title.Contains(term)).ToList();
 
             return query;
 

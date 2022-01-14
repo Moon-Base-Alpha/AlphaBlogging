@@ -28,22 +28,16 @@ namespace AlphaBlogging.Models
         public DateTime Updated { get; set; }
 
         [Required]
-        public ApplicationUser Author { get; set; }      
+        public virtual ApplicationUser Author { get; set; }      
 
         public bool Visible { get; set; }
         private ICollection<Post> _posts;
        
 
-        private Blog(ILazyLoader lazyLoader)
-        {
-            LazyLoader = lazyLoader;
-        }
-        private ILazyLoader LazyLoader { get; set; }
-        public ICollection<Post> Posts
-        {
-            get => LazyLoader.Load(this, ref _posts);
-            set => _posts = value;
-        }
+        
+      
+        public virtual ICollection<Post> Posts { get; set; }
+        
          public Blog()
         {
 

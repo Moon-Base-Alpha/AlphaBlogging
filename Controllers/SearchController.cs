@@ -3,6 +3,7 @@ using AlphaBlogging.Models;
 using AlphaBlogging.Models.ViewModels;
 using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace AlphaBlogging.Controllers
@@ -29,33 +30,19 @@ namespace AlphaBlogging.Controllers
             return View();
         }
 
-        [HttpPost]
+     
         public IActionResult Search(string searchTerm)
         {
-            var result = searchTerm;
 
-            return RedirectToAction("SearchResult","Search", new { searchTerm = result });
+            return RedirectToAction("SearchResult",new { searchTerm = searchTerm });
         }
         public IActionResult SearchResult(string searchTerm)
         {
+
             var blogResults = _searchservice.FindBlogsByTerm(searchTerm);
             var postsResults = _searchservice.FindPostsByTerm(searchTerm);
             var tagResults = _searchservice.FindTagsByTerm(searchTerm);
-
-            List<Blog> listBlogResults = new List<Blog>();
-
-            foreach (var blogPost in blogResults)
-                listBlogResults.Add(_blogsServices.GetBlog(blogPost));
-
-            List<Post> listPostsResults = new List<Post>();
-
-            foreach (var post in postsResults)
-                listPostsResults.Add(_postServices.GetPost(post));
-
-            var result = new SearchResultsVM(searchTerm, listBlogResults, listPostsResults, tagResults);
-            //result.BlogIds =_searchservice.FindBlogsByTerm(searchTerm);
-            //result.PostIds = _searchservice.FindPostsByTerm(searchTerm);
-
+            var result = new SearchResultsVM(searchTerm, blogResults, postsResults, tagResults);
             return View(result);
         }
     }

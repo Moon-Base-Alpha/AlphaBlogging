@@ -17,10 +17,10 @@ namespace AlphaBlogging.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly SignInManager<ApplicationUser> _SignInManager;
-        private readonly IBlogsService _bloggyService;
+        private readonly IBlogsServices _bloggyService;
 
        
-        public HomeController(ILogger<HomeController> logger, SignInManager<ApplicationUser> SignInManager, IBlogsService bloggy)
+        public HomeController(ILogger<HomeController> logger, SignInManager<ApplicationUser> SignInManager, IBlogsServices bloggy)
         {
             _logger = logger;
             _SignInManager = SignInManager;

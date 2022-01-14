@@ -27,9 +27,9 @@ namespace AlphaBlogging.Controllers
         private readonly ApplicationDbContext _db;
 
 
-        public BlogController(ISignedInService signedInService, 
-            IBlogsService bloggy, 
+        public BlogController(IUserServices userServices, 
             IPostServices posty, 
+            IBlogsServices bloggy,
             SignInManager<ApplicationUser> signInManager, IWebHostEnvironment hostEnvironment, ApplicationDbContext context)
 
         {
@@ -154,7 +154,7 @@ namespace AlphaBlogging.Controllers
             blog.Author = GetSignedInId();
 
 
-            Blog bloggy = new Blog(blog.Title,blog.Body,blog.Author,blog.Visible = true);
+            Blog bloggy = new Blog(blog.Title,blog.Description,blog.Body, blog.BlogImage,blog.Author,blog.Visible = true);
 
 
             _bloggyService.AddBlog(bloggy);

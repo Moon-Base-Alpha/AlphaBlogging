@@ -21,25 +21,14 @@ namespace AlphaBlogging.Models
         [Required]
         public DateTime Updated { get; set; }
 
-        public ApplicationUser Author { get; set; }
+        public virtual ApplicationUser Author { get; set; }
 
         public int PostId { get; set; }
 
-        private Comment(ILazyLoader lazyLoader)
-        {
-            LazyLoader = lazyLoader;
-        }
+       
 
-        private Post _posts;
 
-        private ILazyLoader LazyLoader { get; set; }
-
-        [BackingField(nameof(_posts))]
-        public Post Post
-        {
-            get => LazyLoader.Load(this, ref _posts);
-            set => _posts = value;
-        }
+        public virtual  Post Post { get; set; }
 
         public Comment()
         {

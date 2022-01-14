@@ -11,13 +11,6 @@ namespace AlphaBlogging.Models
     public class Post
     {
 
-        private Blog _blog;       
-
-        private Post(ILazyLoader lazyLoader)
-        {
-            LazyLoader = lazyLoader;
-        }
-        private ILazyLoader LazyLoader { get; set; }
         [Required]
 
         public int Id { get; set; }
@@ -40,11 +33,8 @@ namespace AlphaBlogging.Models
         public virtual ICollection<Tag> Tags { get; set; }
         public uint Likes { get; set; }
         public bool Visible { get; set; }
-        public Blog Blog
-        {
-            get => LazyLoader.Load(this, ref _blog);
-            set => _blog = value;
-        }
+        public virtual Blog Blog { get; set; }
+
         public Post()
         {
             Comments = new List<Comment>();

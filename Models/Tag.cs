@@ -19,17 +19,8 @@ namespace AlphaBlogging.Models
         {
                 
         }
-        private ICollection<Post> _posts;
-        private Tag(ILazyLoader lazyLoader)
-        {
-            LazyLoader = lazyLoader;
-        }
-        private ILazyLoader LazyLoader { get; set; }
-        public ICollection<Post> Posts
-        {
-            get => LazyLoader.Load(this, ref _posts);
-            set => _posts = value;
-        }
+        
+        public virtual ICollection<Post> Posts { get; set; }
         public Tag(int id, string hashTag, ICollection<Post> posts)
         {
             

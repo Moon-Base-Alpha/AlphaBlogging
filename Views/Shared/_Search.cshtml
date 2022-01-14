@@ -1,20 +1,19 @@
-﻿@model AlphaBlogging.Models.ViewModels.SearchResultsVM
+﻿@*@model AlphaBlogging.Models.ViewModels.SearchResultsVM*@
 
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Search" asp-action="Search">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="SearchTerm" class="control-label"></label>
-                    <input asp-for="SearchTerm" class="form-control" />
-                    <span asp-validation-for="SearchTerm" class="text-danger"></span>
+<ul class="navbar-nav">
+    <li class="nav-item">
+        <form asp-controller="Search" asp-action="SearchResult">
 
-                    <input type="submit" value="Search" class="btn btn-primary" />
-                </div>            
+                
+                <input name="searchTerm" id="searchTerm" class="form-control" />
+               
+
+                <input type="submit" value="Search" class="btn btn-primary" />
+            
         </form>
-    </div>
-</div>
+    </li>
+</ul>
 
 @* <div class="input-group rounded">
     <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
