@@ -1,6 +1,8 @@
-@using AlphaBlogging.Models;
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@using AlphaBlogging.Models;
 @model Post
+
  <p class="created">Published @Model.Created.ToShortDateString() by @Model.Blog.Author.UserName</p>
  
   @{ 
@@ -19,13 +21,13 @@
 
 </form>*@
 
- <div id="Likes">
-     <partial name="../Like/LikesViewPartial"/>
+ <div>
+     <button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077;</button>
+     <p id="LikesP">@Model.Likes</p>
  </div>
 
 
-@*<button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077; @Model.Likes</button>
-*@
+
 
 <div class="">
 
@@ -76,4 +78,19 @@
     }
 
 </div>
-
+    <script>
+        function UserclicksOnLikeJS(PostIDfromPage)
+        {
+                $.ajax({
+                    url: '@Url.Action("UserClicksOnLike", "Post")',
+                    data: {Id:PostIDfromPage},
+                    
+                    success: function(data) 
+                    {
+                        console.log(data);
+                        document.getElementById("LikesP").innerHTML = data;
+                    },
+                    
+                });            
+        }
+    </script>

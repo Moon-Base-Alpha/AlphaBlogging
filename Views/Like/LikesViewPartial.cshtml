@@ -33,10 +33,11 @@
                     url: '@Url.Action("UserClicksOnLike", "Post")',
                     data: {Id:PostIDfromPage},
                     type: 'GET',
-                    success: function() { // if you put data in the (), it loads the entire blog view, which makes the button work perfectly.
+                    success: function(data) { // if you put data in the (), it loads the entire blog view, which makes the button work perfectly.
+                        console.log(data)
                             //document.getElementById("LikeButton").innerHTML = "&#128077; " + (@Model.Likes);
                             //$("#Likes").load("../Like/LikesViewPartial");
-                            location.reload();
+                            //location.reload();
                         
                     }
                 });
