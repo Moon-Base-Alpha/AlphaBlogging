@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "BlogView";
     if(User.IsInRole("Admin") || User.IsInRole("Superadmin")){
-    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
 
@@ -31,10 +31,13 @@
   </figcaption>
 </figure>
 
+ @if (User.IsInRole("Admin") || User.IsInRole("Superadmin") || User.IsInRole("Author"))
+    {
+      <div>
+        <a href="@Url.Action("Edit", "Blog", new {id=@Model.Id} )" class="btn btn-secondary btn-sm"><i class="far fa-edit"></i> Edit Blog Info</a>    
+    </div>
+    }
 
-<div>
-<a href="@Url.Action("Edit", "Blog", new {id=@Model.Id} )" class="btn btn-secondary btn-sm"><i class="far fa-edit"></i> Edit Blog Info</a>    
-</div>
 <br />
 <hr />
 

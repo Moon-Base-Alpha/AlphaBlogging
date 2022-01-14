@@ -35,6 +35,7 @@ namespace AlphaBlogging.Controllers
 
         // PostList only used for testing. TO BE REMOVED
 
+        [Authorize(Roles = "Superadmin, Admin, Author")]
         public IActionResult Postlist(int blogid)
         {
             //var posts = _db.Blogs.Where(b => b.Id == blogid).FirstOrDefault().Posts;

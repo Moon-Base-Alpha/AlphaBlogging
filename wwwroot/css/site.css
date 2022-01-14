@@ -101,8 +101,8 @@ div.login-form-icon {
 
 /*End for Login tab control*/
 
-/*  CSS for tag function -- move to styles.css/chi */ 
-/**,
+/*  CSS for tag function */ 
+*,
 ::after,
 ::before {
     box-sizing: border-box;
@@ -171,25 +171,9 @@ div.login-form-icon {
             line-height: .5;
             margin: auto;
             font-size: 17pt;
-        }*/
+        }
 /*  END CSS for tag function  */
 
-
-/*.wrapper {
-    display: grid;
-    grid-template-columns: 100px 100px 100px;
-    grid-gap: 10px;
-    background-color: #fff;
-    color: #444;
-}
-
-.box {
-    background-color: #444;
-    color: #fff;
-    border-radius: 5px;
-    padding: 20px;
-    font-size: 150%;
-}*/
 
 body {
     background-color: black;
@@ -294,9 +278,4 @@ body {
 }
 .comment h1, .comment p {
         color: lightgray;
-}
-
-#specialBodyColor {
-    background-color: white;
-    color: black;
 }

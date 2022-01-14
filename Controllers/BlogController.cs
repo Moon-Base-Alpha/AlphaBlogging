@@ -100,9 +100,14 @@ namespace AlphaBlogging.Controllers
             _bloggyService.AddBlog(bloggy);
 
             if (await _bloggyService.SaveChangesAsync())
-                return RedirectToAction("MyBloglist");
-            else
-                return View(bloggy);
+                if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
+                {
+                    return RedirectToAction("Bloglist");
+                }
+            return RedirectToAction("MyBloglist");
+            //    return RedirectToAction("BlogView", new { id = blog.Id });
+            //else
+            //    return View(bloggy);
         }
 
         [Authorize]
@@ -139,7 +144,11 @@ namespace AlphaBlogging.Controllers
         {
             _bloggyService.DeleteBlog(id);
             await _bloggyService.SaveChangesAsync();
-            return RedirectToAction("MyBloglist");
+            if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
+            {
+                return RedirectToAction("Bloglist");
+            }
+                return RedirectToAction("MyBloglist");
         }
     }
 }
