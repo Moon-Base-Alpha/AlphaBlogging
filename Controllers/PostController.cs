@@ -231,40 +231,29 @@ namespace AlphaBlogging.Controllers
         //    }
         //}
 
-        public async Task<IActionResult> UserClicksOnLike(int Id) // id some hämtas är postID
+        public async Task<uint> UserClicksOnLike(int Id) // Id is from the post in which the likebutton was clicked
         {
-            //var CurrentUser = _userServices.GetCurrentApplicationUser();
-            //var cuid1 = _userServices.GetCurrentUserID();
-            //var hasLiked = (from x in CurrentUser.Likes
-            //                where x.PostId == Id
-            //                select x).First();
+            var CurrUserID = User.Identity.Name;
+            var CurrentUser = _userServices.GetCurrentApplicationUser(CurrUserID);
 
-            var cuid2 = User.Identity.Name;
-            //var CurrentUser = (from x in _db.Users
-            //                where x.UserName == cuid2
-            //                select x).First();
-            var CurrentUser = _userServices.GetCurrentApplicationUser(cuid2);
-            var v = _postservice.GetPost(Id);
-            bool hasLiked = CurrentUser.LikedPosts.Contains(v);
+            var currentPost = _postservice.GetPost(Id);
+
+            bool hasLiked = CurrentUser.LikedPosts.Contains(currentPost); // checks if the user has liked the selected post
 
             if (hasLiked == false)
             {
-                CurrentUser.LikedPosts.Add(v);
+                CurrentUser.LikedPosts.Add(currentPost);
                 _postservice.IncreaseLikesInPost(Id);
-
-                await _postservice.SaveChangesAsync();
             }
             else if (hasLiked == true)
             {
-                CurrentUser.LikedPosts.Remove(v);
+                CurrentUser.LikedPosts.Remove(currentPost);
                 _postservice.DecreaseLikesInPost(Id);
-
-                await _postservice.SaveChangesAsync();
             }
-            var t = _postservice.GetPost(Id);
+            await _postservice.SaveChangesAsync();
 
-            return RedirectToAction("BlogView", "Blog", new {Id = t.BlogId});
-            //return Redirect($"~/Blog/BlogView/{t.BlogId}");
+
+            return currentPost.Likes;
         }
     }   
 }
