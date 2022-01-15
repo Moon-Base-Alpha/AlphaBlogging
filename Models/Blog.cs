@@ -51,7 +51,7 @@ namespace AlphaBlogging.Models
             Visible = true;
 
             Description = "";
-            BlogImage = "assets/img/earthrise.jpg";
+            BlogImage = "earthrise.jpg";
 
         }
 
