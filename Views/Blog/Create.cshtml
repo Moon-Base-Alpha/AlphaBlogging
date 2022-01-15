@@ -1,17 +1,12 @@
 ﻿@model AlphaBlogging.Models.Blog
 
-@{
-     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<div class="container-fluid px-4">
-    <br />
-<h1>Create blog</h1>
+<h4>Blog</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           @* <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
                 <input asp-for="Id" class="form-control" />
                 <span asp-validation-for="Id" class="text-danger"></span>
@@ -21,31 +16,48 @@
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Body" class="text-danger"></span>
+               @* <input asp-for="Description" class="form-control" />*@
+                <textarea id="limitedtextarea" asp-for="Description" class="form-control bg-light" rows="5" placeholder="Type a short description of the blog here..." 
+                        onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,128);"
+                          onKeyUp="limitText(this.form.limitedtextarea,this.form.countdown,128);">
+                </textarea><br>
+                <font size="2">You have <input readonly type="text" name="countdown" size="1" value="128"> characters left.
+                </font>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Body" class="control-label"></label>
-                <textarea asp-for="Body" class="form-control" rows="5" valuedata-""></textarea>
+                @*<input asp-for="Body" class="form-control" />*@
+                <textarea id="limitedtextarea" asp-for="Body" class="form-control bg-light" rows="5" placeholder="Type the full blog description here..." 
+                        onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,1024);"
+                          onKeyUp="limitText(this.form.limitedtextarea,this.form.countdown,1024);">
+                </textarea><br>
+                <font size="2">You have <input readonly type="text" name="countdown" size="1" value="1024"> characters left.
+                </font>
                 <span asp-validation-for="Body" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
+            <div class="form-group">
                 <label asp-for="BlogImage" class="control-label"></label>
-                <input asp-for="BlogImage" type="file" accept="image" class="form-control" />
+                <input asp-for="BlogImage" class="form-control" />
                 <span asp-validation-for="BlogImage" class="text-danger"></span>
-            </div>*@
+            </div>
             @*<div class="form-group">
                 <label asp-for="Created" class="control-label"></label>
                 <input asp-for="Created" class="form-control" />
                 <span asp-validation-for="Created" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Updated" class="control-label"></label>
+                <input asp-for="Updated" class="form-control" />
+                <span asp-validation-for="Updated" class="text-danger"></span>
             </div>*@
-            @*<div class="form-group form-check">
+            <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Visible" /> @Html.DisplayNameFor(model => model.Visible)
                 </label>
-            </div>*@
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -53,10 +65,10 @@
     </div>
 </div>
 
-@*<div>
-    <a asp-action="MyBloglist">Back to List</a>
-</div>*@
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-} 
+}
