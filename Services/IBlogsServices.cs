@@ -18,5 +18,6 @@ namespace AlphaBlogging.Services
 
         Task<bool> SaveChangesAsync();
         void AddImage(Blog blog);
+        void DeleteImage(string oldImage);
     }
 }

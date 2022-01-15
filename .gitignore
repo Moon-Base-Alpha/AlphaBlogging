@@ -6,6 +6,7 @@
 
 #Ignore migrations folder
 Data/Migrations/
+wwwroot/image/
 
 #Ignore migrations folder
 Migrations/

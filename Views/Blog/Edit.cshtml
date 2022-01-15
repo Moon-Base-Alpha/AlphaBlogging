@@ -13,7 +13,7 @@
 <hr />
 <div class="row">
     <div class="col-md-6 ">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="form-group mb-3">
                 <h4>Title</h4>
                 <input asp-for="Title" class="form-control bg-light" />
@@ -42,6 +42,12 @@
                 <input asp-for="BlogImage" class="form-control" />
                 <span asp-validation-for="BlogImage" class="text-danger"></span>
             </div>
+            <div class="form-group mb-3">
+               
+                <img src="@("~/image/"+Model.BlogImage)" asp-append-version="true" width="300px" />
+                 <input asp-for="ImageFile" accept="image/*" />
+            </div>
+            
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input type="submit" name="name" value="Save" class="btn btn-primary" />

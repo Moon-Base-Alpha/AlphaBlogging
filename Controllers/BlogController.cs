@@ -98,74 +98,16 @@ namespace AlphaBlogging.Controllers
         {            
             return View(new Blog());
         }
-        //-----------------Test to add image to blog, not working at the moment------------------------
-        //[Authorize]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Title,Description,Body,BlogImage,Author,Visible")] Blog blog)
-        //{
-        //    blog.Author = GetSignedInId();
-
-
-        //    //if (ModelState.IsValid)
-        //    //{
-        //        var files = HttpContext.Request.Form.Files;
-        //        foreach (var Image in files)
-        //        {
-        //            if (Image != null && Image.Length > 0)
-        //            {
-        //                var file = Image;
-        //                var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "assets\\img");
-        //                if (file.Length > 0)
-        //                {
-        //                    var fileName = ContentDispositionHeaderValue.Parse
-        //                        (file.ContentDisposition).FileName.Trim('"');
-        //                    System.Console.WriteLine(fileName);
-        //                    using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
-        //                    {
-        //                        await file.CopyToAsync(fileStream);
-        //                        blog.BlogImage = file.FileName;
-        //                    }
-        //                }
-        //            }
-        //        }
-
-
-
-        //        Blog bloggy = new Blog(blog.Title, blog.Description, blog.Body, blog.BlogImage, blog.Author, blog.Visible);
-
-        //        _bloggyService.AddBlog(bloggy);
-        //        //await _bloggyService.SaveChangesAsync();
-        //        //return RedirectToAction("Index", "Home");
-        //    //}
-        //    if (await _bloggyService.SaveChangesAsync())
-        //       return RedirectToAction("Index", "Home" );
-        //    else
-        //    {
-        //        var errors = ModelState.Values.SelectMany(v => v.Errors);
-        //    }
-        //    return View(bloggy);
-        //}
+       
 
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(Blog blog)
         {
-
             blog.Author = GetSignedInId();
-            //Save image to wwwroot/image
-            string wwwRootPath = _webHostEnvironment.WebRootPath;
-            string fileName = Path.GetFileNameWithoutExtension(blog.ImageFile.FileName);
-            string extension = Path.GetExtension(blog.ImageFile.FileName);
-            blog.BlogImage = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            string path = Path.Combine(wwwRootPath + "/image/", fileName);
-            using (var fileStream = new FileStream(path, FileMode.Create))
-            {
-                await blog.ImageFile.CopyToAsync(fileStream);
-            }
+            _bloggyService.AddImage(blog);          
 
             Blog bloggy = new Blog(blog.Title,blog.Description,blog.Body, blog.BlogImage,blog.ImageFile,blog.Author,blog.Visible = true);
-
 
             _bloggyService.AddBlog(bloggy);
 
@@ -175,21 +117,9 @@ namespace AlphaBlogging.Controllers
                 {
                     return RedirectToAction("Bloglist");
                 }
-            return RedirectToAction("MyBloglist");
-            //    return RedirectToAction("BlogView", new { id = blog.Id });
-            //else
-            //    return View(bloggy);
+            return RedirectToAction("MyBloglist");           
 
-        }
-        //private string UploadedFile(Blog blog)
-        //{
-        //    string uniqueFileName = null;
-        //    if (blog.BlogImage != null)
-        //    {
-        //        string uploadsFolder = Path.Combine(_webHostEnvironment);
-        //    }
-        //    return uniqueFileName;
-        //}
+        }      
 
         [Authorize]
         [HttpGet]
@@ -207,10 +137,14 @@ namespace AlphaBlogging.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Blog blog)
         {
-            if (blog.Id > 0)
+            if (blog.Id > 0) 
+            {
+                _bloggyService.AddImage(blog);
                 _bloggyService.UpdateBlog(blog);
+            }
             else
             {
+                _bloggyService.AddImage(blog);
                 _bloggyService.AddBlog(blog);
             }
 
@@ -223,6 +157,7 @@ namespace AlphaBlogging.Controllers
         [HttpGet]
         public async Task<IActionResult> Remove(int id)
         {
+
             _bloggyService.DeleteBlog(id);
             await _bloggyService.SaveChangesAsync();
             if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
