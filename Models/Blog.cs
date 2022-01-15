@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlphaBlogging.Models
 {
@@ -19,9 +22,13 @@ namespace AlphaBlogging.Models
 
         [Required, Display(Name = "Content")]
         public string Body { get; set; }
-        
-        public string BlogImage { get; set; } 
 
+        [Column(TypeName = "nvarchar(100)")]
+        [DisplayName("Image Name")]
+        public string BlogImage { get; set; }
+        [NotMapped]
+        [DisplayName("Upload File")]
+        public IFormFile ImageFile { get; set; }
         [Required]
         public DateTime Created { get; set; }
         [Required]
@@ -44,7 +51,9 @@ namespace AlphaBlogging.Models
             Visible = true;
 
             Description = "";
-            BlogImage = "wwwroot/assets/img/earthrise.jpg";
+
+            BlogImage = "earthrise.jpg";
+
 
         }
 
@@ -55,13 +64,14 @@ namespace AlphaBlogging.Models
 
 
 
-        public Blog(string title, string description, string body, string blogImage, ApplicationUser author, bool visible = true)
+        public Blog(string title, string description, string body, string blogImage, IFormFile imageFile,  ApplicationUser author, bool visible = true)
 
         {
             Title = title;
             Description = description;
             Body = body;
             BlogImage = blogImage;
+            ImageFile = imageFile;
             Created = DateTime.Now;
             Updated = DateTime.Now;
             Author = author;
