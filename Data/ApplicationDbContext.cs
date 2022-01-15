@@ -21,6 +21,7 @@ namespace AlphaBlogging.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Tag> Tags { get; set; }
+       
 
         //public DbSet<Like> Likes { get; set; }
 
@@ -33,7 +34,7 @@ namespace AlphaBlogging.Data
         //            eb.ToView("Post");
         //            eb.Property(v => v.TagsId).HasColumnName("Title");
         //        });
-                
+
         //}
         //public DbSet<PostTag> PostTag { get; set; }
     }
