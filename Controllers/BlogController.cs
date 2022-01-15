@@ -12,6 +12,7 @@ using AlphaBlogging.Data.Repos;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
+using System;
 
 namespace AlphaBlogging.Controllers
 {
@@ -152,9 +153,18 @@ namespace AlphaBlogging.Controllers
         {
 
             blog.Author = GetSignedInId();
+            //Save image to wwwroot/image
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(blog.ImageFile.FileName);
+            string extension = Path.GetExtension(blog.ImageFile.FileName);
+            blog.BlogImage = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            string path = Path.Combine(wwwRootPath + "/image/", fileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await blog.ImageFile.CopyToAsync(fileStream);
+            }
 
-
-            Blog bloggy = new Blog(blog.Title,blog.Description,blog.Body, blog.BlogImage,blog.Author,blog.Visible = true);
+            Blog bloggy = new Blog(blog.Title,blog.Description,blog.Body, blog.BlogImage,blog.ImageFile,blog.Author,blog.Visible = true);
 
 
             _bloggyService.AddBlog(bloggy);
