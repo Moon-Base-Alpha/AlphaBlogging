@@ -23,19 +23,20 @@ namespace AlphaBlogging.Controllers
             _postServices = postServices; 
         }
 
-        [HttpGet]
-        public IActionResult Search()
-        {            
+        //[HttpGet]
+        //public IActionResult Search()
+        //{            
             
-            return View();
-        }
+        //    return View();
+        //}
 
      
-        public IActionResult Search(string searchTerm)
-        {
+        //public IActionResult Search(string searchTerm)
+        //{
 
-            return RedirectToAction("SearchResult",new { searchTerm = searchTerm });
-        }
+        //    return RedirectToAction("SearchResult",new { searchTerm = searchTerm });
+        //}
+
         public IActionResult SearchResult(string searchTerm)
         {
 
