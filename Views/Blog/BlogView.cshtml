@@ -44,8 +44,7 @@
 <hr />
 
 
- @if (User.IsInRole("Admin")||User.IsInRole("Author"))
-
+ @if ( User.IsInRole("Superadmin") || User.IsInRole("Admin") || User.IsInRole("Author"))
                         {
 <div>
    
@@ -64,7 +63,7 @@
                     <div  class="postcontainer mb-0 mb-3 p-3">
                         @*<div style="border-color:black; margin-block:7px; background-color:beige">*@
 
-                        @if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
+                        @if (User.IsInRole("Admin") || User.IsInRole("Superadmin") || User.IsInRole("Author"))
                         {
                             @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} ) @: | 
                             @Html.ActionLink("Remove this Post", "Remove", "Post", new {id = post.Id, blogId = post.BlogId})

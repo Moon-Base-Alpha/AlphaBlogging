@@ -1,0 +1,33 @@
+﻿@using AlphaBlogging.Models;
+
+@{
+    ViewBag.Title = "Not found";
+    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+@*@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-warning" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}*@
+
+<div class="container-fluid px-4">
+        <br /><br />
+    <div style="text-align: center;">
+        <h3 class="text-danger">Oops!</h3><br />
+        <i class="far fa-flushed fa-9x text-secondary"></i>
+        <br /><br />
+        <h1 class="text-danger">@ViewData["Title"]</h1>
+        <h4 class="text-danger">You do not have access to this resource.</h4>
+    </div>
+
+
+@*    <br />
+    <div>
+        <h4>The resource you are looking for cannot be found.</h4>
+            <a asp-page="/Admin" class="btn btn-primary">
+            return
+            </a>
+    </div>*@
+</div>

@@ -34,6 +34,7 @@ namespace AlphaBlogging.Controllers
             _userServices = us;
         }
 
+
         // PostList only used for testing. TO BE REMOVED
 
         [Authorize(Roles = "Superadmin, Admin, Author")]
@@ -49,8 +50,8 @@ namespace AlphaBlogging.Controllers
             //post.Id = Id;
             var dbPpost = _postservice.GetPost(Id);
             post.Title = dbPpost.Title;
-            post.Body = dbPpost.Body; 
-            
+            post.Body = dbPpost.Body;
+
             //post.Tags = 
             return View(post); 
         }
@@ -122,13 +123,41 @@ namespace AlphaBlogging.Controllers
                 post.BlogId = (int)id;
                 var dbPpost = _postservice.GetPost((int)id);
                 post.Title = dbPpost.Title;
-                post.Body = dbPpost.Body;               
+                post.Body = dbPpost.Body;
                 post.Visible = true;
 
+                //List<Tag> resultList = new List<Tag>();
+
+                //var temp = (from p in _db.Posts
+                //            where p.Id == id
+                //            select p.Tags).First();
+
+                //if (temp != null)
+                //{
+                //    resultList = temp.ToList();
+                //}
+
                 return View(post);
-                //string tagg = _db.Tags.Find().HashTag;
-                //return View(tag);
-            }           
+                
+            }
+
+            //List<Tag> resultList = new List<Tag>();
+
+            //var temp = (from p in _db.Posts
+            //            where p.Id == id
+            //            select p.Tags).First();
+
+            //if (temp != null)
+            //{
+            //    resultList = temp.ToList();
+            //}
+            //return resultList;
+
+
+            //return View(post);
+            //string tagg = _db.Tags.Find().HashTag;
+            //return View(tag);
+
         }
 
         [HttpPost]

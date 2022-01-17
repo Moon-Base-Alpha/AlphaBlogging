@@ -26,5 +26,7 @@ namespace AlphaBlogging.Data.Repos
         public string GetCurrentUsername();
         public string GetCurrentUserID();
         public ApplicationUser GetCurrentApplicationUser(string username);
+
+        public string GetAuthorEmail(string userName);
     }
 }

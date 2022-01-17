@@ -61,7 +61,9 @@
 
                     @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} ) | 
 
-                     @if (User.IsInRole("Admin") || User.IsInRole("Author"))
+
+                     @if (User.IsInRole("Superadmin") || User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("User"))
+
 
                         {
                     @Html.ActionLink("Edit Comment", "Edit", "Comment", new {postId = Model.Id} ) @: | 
