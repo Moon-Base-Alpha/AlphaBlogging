@@ -62,6 +62,8 @@ namespace AlphaBlogging
             //Adding DbInitializer Service
             services.AddAsyncInitializer<DbInitializer>();
             services.AddRazorPages();
+
+            services.Configure<HttpRequestSettings>(Configuration.GetSection("HttpRequestSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

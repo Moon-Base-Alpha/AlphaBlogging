@@ -45,6 +45,18 @@ namespace AlphaBlogging.Data.Services
 
             return userId;
         }
+
+        public string GetAuthorEmail(string userName)
+        {
+
+            var userEmail = (from x in _db.Users
+                          where x.UserName == userName
+                          select x.Email).ToString();
+
+            return userEmail;
+        }
+
+
         public ApplicationUser GetCurrentApplicationUser(string userName)
         {
             var userObj = (from x in _db.Users
