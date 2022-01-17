@@ -105,6 +105,7 @@ namespace AlphaBlogging.Controllers
         public async Task<IActionResult> Create(Blog blog)
         {
             blog.Author = GetSignedInId();
+            if(blog.ImageFile != null)
             _bloggyService.AddImage(blog);          
 
             Blog bloggy = new Blog(blog.Title,blog.Description,blog.Body, blog.BlogImage,blog.ImageFile,blog.Author,blog.Visible = true);
