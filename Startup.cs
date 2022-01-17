@@ -33,6 +33,7 @@ namespace AlphaBlogging
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options
+                .UseLazyLoadingProxies()
                 .UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();

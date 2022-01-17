@@ -15,13 +15,33 @@
     {
         <tr>
             <td>                
-                <b>Created by : </b>@blog.Author.UserName<br>
+                @*<b>Created by : </b>@blog.Author.UserName<br>
                 <b>Creation Time : </b>@blog.Created.ToShortDateString() <b> : </b>@blog.Created.ToShortTimeString()<br>
-                <b>Blog Title : </b>@blog.Title
+                <b>Blog Title : </b>@blog.Title*@
+
+
+                <div class="card flex-row flex-wrap postcontainer mb-2 text-light">
+                    <div class="card-header border-0">
+                        <img src="~/image/@Html.DisplayFor(modelItem => blog.BlogImage)" alt="" width="300">
+                    </div>
+                    <div class="card-block px-2 p-3 d-flex flex-column">
+                        <h4 class="m-0 card-title">@Html.DisplayFor(modelItem => blog.Title)</h4>
+                        <p class="m-0 font-italic"><b>Created by : </b>@Html.DisplayFor(modelItem => blog.Author.UserName)</p>
+                        <p class="m-0 font-italic"><b>Creation at : </b>@blog.Created.ToShortDateString() <b> : </b>@blog.Created.ToShortTimeString()</p>
+                        <p class="mt-3 card-text d-inline-block text-truncate" style="max-width: 300px;">
+                            @Html.DisplayFor(modelItem => blog.Description)
+                        </p>
+                        <a href="#" class="btn btn-primary mt-auto">Läs mer...</a>
+                    </div>
+                    <div class="w-100"></div>
+                 </div>
             </td>
             <td>               
                 @Html.ActionLink("View Blog","BlogView", "Blog", new { id = @blog.Id })                
             </td>
+
+
+
         </tr>
     }
     </tbody>
@@ -49,6 +69,7 @@
                 @Html.ActionLink("View Post","PostView", "Post", new { Id = @post.Id })<br>
                 @Html.ActionLink("View Blog","BlogView", "Blog", new { id = @post.BlogId }) 
             </td>
+
         </tr>
 }
     </tbody>

@@ -14,6 +14,11 @@ using System.Net.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Net.Http.Headers;
+using System;
+
 
 namespace AlphaBlogging.Controllers
 {
@@ -28,14 +33,23 @@ namespace AlphaBlogging.Controllers
         private static readonly HttpClient httpClient = new HttpClient();
         private HttpRequestSettings _requestSettings;
         
-
         public BlogController(IUserServices userServices, IBlogsServices bloggy, IPostServices posty, SignInManager<ApplicationUser> signInManager, IOptions<HttpRequestSettings> requestSettings)
+
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ApplicationDbContext _db;
+        public BlogController(IUserServices userServices, 
+            IPostServices posty, 
+            IBlogsServices bloggy,
+            SignInManager<ApplicationUser> signInManager, IWebHostEnvironment hostEnvironment, ApplicationDbContext context)
+
         {
             _bloggyService = bloggy;
             _postService = posty;
             _userServices = userServices;
             _signInManager = signInManager;
             _requestSettings = requestSettings.Value;  
+            _webHostEnvironment = hostEnvironment;
+            _db = context;
         }
 
         public ApplicationUser GetSignedInId()
@@ -94,19 +108,22 @@ namespace AlphaBlogging.Controllers
         {            
             return View(new Blog());
         }
+       
 
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(Blog blog)
-        {            
-            
+        {
             blog.Author = GetSignedInId();
+            if(blog.ImageFile != null)
+            _bloggyService.AddImage(blog);          
 
-            Blog bloggy = new Blog(blog.Title,blog.Body,blog.Author,blog.Visible = true);
+            Blog bloggy = new Blog(blog.Title,blog.Description,blog.Body, blog.BlogImage,blog.ImageFile,blog.Author,blog.Visible = true);
 
             _bloggyService.AddBlog(bloggy);
 
             if (await _bloggyService.SaveChangesAsync())
+
             {
                 string userEmail = _userServices.GetAuthorEmail(User.Identity.Name);
                 ConfirmMessage sendMsg = new ConfirmMessage()
@@ -120,10 +137,12 @@ namespace AlphaBlogging.Controllers
                 TempData["EmailStatus"] = await SendConfirmation(sendMsg);
 
                 //return RedirectToAction("BlogView", new { id = blog.Id });
+
                 if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
                 {
                     return RedirectToAction("Bloglist");
                 }
+
                 return RedirectToAction("MyBloglist");
             }
             else
@@ -141,6 +160,7 @@ namespace AlphaBlogging.Controllers
             //else
             //    return View(bloggy);
         }
+
 
         private async Task<string> SendConfirmation(ConfirmMessage sendMsg)
         {
@@ -203,10 +223,14 @@ namespace AlphaBlogging.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Blog blog)
         {
-            if (blog.Id > 0)
+            if (blog.Id > 0) 
+            {
+                _bloggyService.AddImage(blog);
                 _bloggyService.UpdateBlog(blog);
+            }
             else
             {
+                _bloggyService.AddImage(blog);
                 _bloggyService.AddBlog(blog);
             }
 
@@ -219,6 +243,7 @@ namespace AlphaBlogging.Controllers
         [HttpGet]
         public async Task<IActionResult> Remove(int id)
         {
+
             _bloggyService.DeleteBlog(id);
             await _bloggyService.SaveChangesAsync();
             if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
@@ -227,5 +252,6 @@ namespace AlphaBlogging.Controllers
             }
                 return RedirectToAction("MyBloglist");
         }
+
     }
 }

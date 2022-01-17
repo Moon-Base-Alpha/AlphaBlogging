@@ -197,7 +197,9 @@ namespace AlphaBlogging.Services
                         "a splinter in your mind, driving you mad.",
                         Created = DateTime.ParseExact("2021-11-21 00:00:21", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
-                    },
+                        BlogImage = "earthrise.jpg"
+
+            },
                     new Blog
                     {
                         Author = _db.Users.Where(x => x.UserName == "Lisa").FirstOrDefault(),
@@ -208,6 +210,7 @@ namespace AlphaBlogging.Services
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-02 07:44:12", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
+                        BlogImage = "earthrise.jpg"
                     },
                     new Blog
                     {
@@ -219,6 +222,7 @@ namespace AlphaBlogging.Services
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-10 12:44:12", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
+                        BlogImage = "earthrise.jpg"
                     },
                     new Blog
                     {
@@ -229,6 +233,7 @@ namespace AlphaBlogging.Services
                         "a splinter in your mind, driving you mad.",
                         Created = DateTime.ParseExact("2021-12-12 12:12:12", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
+                        BlogImage = "earthrise.jpg"
                     },
                     new Blog
                     {
@@ -240,6 +245,7 @@ namespace AlphaBlogging.Services
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-14 11:22:00", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
+                        BlogImage = "earthrise.jpg"
                     },
                     new Blog
                     {
@@ -251,6 +257,7 @@ namespace AlphaBlogging.Services
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-15 10:01:35", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
+                        BlogImage = "earthrise.jpg"
                     },
                     new Blog
                     {
@@ -261,6 +268,7 @@ namespace AlphaBlogging.Services
                         "a splinter in your mind, driving you mad.",
                         Created = DateTime.ParseExact("2021-12-16 00:00:00", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
+                        BlogImage = "earthrise.jpg"
                     },
                     new Blog
                     {
@@ -272,6 +280,7 @@ namespace AlphaBlogging.Services
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-18 08:12:32", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
+                        BlogImage = "earthrise.jpg"
                     },
                     new Blog
                     {
@@ -283,6 +292,7 @@ namespace AlphaBlogging.Services
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-20 03:22:33", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
+                        BlogImage = "earthrise.jpg"
                     }
            };
                 await _db.Blogs.AddRangeAsync(blogs);

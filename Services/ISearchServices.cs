@@ -6,10 +6,10 @@ namespace AlphaBlogging.Services
     public interface ISearchServices
     {
         // Return list of blogIds
-        public List<int> FindBlogsByTerm(string term);
+        public List<Blog> FindBlogsByTerm(string term);
 
         // Return list of postIds
-        public List<int> FindPostsByTerm(string term);
+        public List<Post> FindPostsByTerm(string term);
 
         // Return list of postIds
         public List<int> FindPostsByTagTerm(string term);

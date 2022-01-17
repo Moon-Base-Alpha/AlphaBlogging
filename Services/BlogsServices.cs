@@ -12,16 +12,21 @@ using AlphaBlogging.Services;
 using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace AlphaBlogging.Services
 {
     public class BlogsServices : IBlogsServices
     {
-        private ApplicationDbContext _db;        
+        private ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public BlogsServices(ApplicationDbContext context)
+        public BlogsServices(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
-            _db = context;            
+            _db = context;
+            _webHostEnvironment = hostEnvironment;
         }
         
         public void AddBlog(Blog blog)
@@ -30,8 +35,14 @@ namespace AlphaBlogging.Services
             _db.Blogs.Add(blog);
         }
 
-        public void DeleteBlog(int id)
+        public async void DeleteBlog(int id)
         {
+            var imageModel = await _db.Blogs.FindAsync(id);
+
+            //delete image from wwwroot/image
+            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "image", imageModel.BlogImage);
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);
             _db.Blogs.Remove(GetBlog(id));
         }
 
@@ -95,6 +106,29 @@ namespace AlphaBlogging.Services
             }
 
             return resultList;
+        }
+        public async void AddImage(Blog blog)
+        {
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(blog.ImageFile.FileName);
+            string extension = Path.GetExtension(blog.ImageFile.FileName);
+            blog.BlogImage = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            //string path = Path.Combine(wwwRootPath + "/image/", fileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\image", fileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await blog.ImageFile.CopyToAsync(fileStream);
+            }
+           
+            return;
+        }
+        public async void DeleteImage(string oldImage)
+        {
+            var imageModel = await _db.Blogs.FindAsync(oldImage);
+            //delete image from wwwroot/image
+            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "image", oldImage);
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);            
         }
     }
 }
