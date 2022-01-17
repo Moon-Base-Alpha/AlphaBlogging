@@ -113,7 +113,8 @@ namespace AlphaBlogging.Services
             string fileName = Path.GetFileNameWithoutExtension(blog.ImageFile.FileName);
             string extension = Path.GetExtension(blog.ImageFile.FileName);
             blog.BlogImage = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            string path = Path.Combine(wwwRootPath + "/image/", fileName);
+            //string path = Path.Combine(wwwRootPath + "/image/", fileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\image", fileName);
             using (var fileStream = new FileStream(path, FileMode.Create))
             {
                 await blog.ImageFile.CopyToAsync(fileStream);
