@@ -30,7 +30,7 @@ namespace AlphaBlogging.Controllers
 
         public IActionResult Index()
         {
-            var signedIn = _SignInManager.IsSignedIn(User);
+            //var signedIn = _SignInManager.IsSignedIn(User);
 
             var blogs = _bloggyService.GetAllBlogs();
             return View(blogs);
