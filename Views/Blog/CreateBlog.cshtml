@@ -1,61 +1,82 @@
 ﻿@model AlphaBlogging.Models.Blog
+@using System.IO;
 
-<h4>Blog</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateBlog" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-               @* <input asp-for="Description" class="form-control" />*@
-                <textarea id="limitedtextarea" asp-for="Description" class="form-control bg-light" rows="5" placeholder="Type a short description of the blog here..." 
-                        onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,128);"
-                          onKeyUp="limitText(this.form.limitedtextarea,this.form.countdown,128);">
-                </textarea><br>
-                <font size="2">You have <input readonly type="text" name="countdown" size="1" value="128"> characters left.
-                </font>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Body" class="control-label"></label>
-                @*<input asp-for="Body" class="form-control" />*@
-                <textarea id="limitedtextarea" asp-for="Body" class="form-control bg-light" rows="5" placeholder="Type the full blog description here..." 
-                        onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,1024);"
-                          onKeyUp="limitText(this.form.limitedtextarea,this.form.countdown,1024);">
-                </textarea><br>
-                <font size="2">You have <input readonly type="text" name="countdown" size="1" value="1024"> characters left.
-                </font>
-                <span asp-validation-for="Body" class="text-danger"></span>
-            </div>
-            <div class="form-group">
 
-                <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" accept="image/*" />
-                <span asp-validation-for="ImageFile" class="text-danger"></span>
+    <form asp-action="CreateBlog" enctype="multipart/form-data">
+        <div class="row postcontainer p-3  text-center">
+            <h4>Create a new Blog</h4>
+            <hr / style="padding:0;">
+            <div class="col-sm">
+                <div asp-validation-summary="ModelOnly" class="text-danger  text-center "></div>
+                @*<div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label text-center"></label>
+                    <input asp-for="Title" class="form-control  bg-dark text-light" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label  text-center"></label>
+                    @* <input asp-for="Description" class="form-control" />*@
+                    <textarea id="limitedtextarea" asp-for="Description" class="form-control bg-dark  text-light" rows="5" placeholder="Type a short description of the blog here..."
+                              onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,128);"
+                              onKeyUp="limitText(this.form.limitedtextarea,this.form.countdown,128);">
+                </textarea>
+                    <font size="2">
+                        You have <input class="bg-transparent border-0 text-light" readonly type="text" name="countdown" size="1" value="128"> characters left.
+                    </font>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Body" class="control-label text-center "></label>
+                    @*<input asp-for="Body" class="form-control" />*@
+                    <textarea id="limitedtextarea" asp-for="Body" class="form-control  text-light bg-dark mb-0" rows="5" placeholder="Type the full blog description here..."
+                              onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,1024);"
+                              onKeyUp="limitText(this.form.limitedtextarea,this.form.countdown,1024);">
+                </textarea>
+                    <font size="2">
+                        You have <input readonly class="bg-transparent border-0 text-light " type="text" name="countdown" size="1" value="1024"> characters left.
+                    </font>
+                    <span asp-validation-for="Body" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm  text-center" >
+               <p>Select a header image</p> 
+                @*<div class="form-group">*@
 
+                @*<label asp-for="ImageFile" class="control-label"></label>*@
+                @*<input asp-for="ImageFile" accept="image/*" />*@
+                @* <select asp-for="BlogImage">
+                    <option style="background-image:url(moon2.png);" value="moon2.png">moon</option>
+                    <option value="mars2.png">mars2</option>
+                    <option value="jorden.png">jorden</option>
+                    <option value="earthrise.jpg">earthrise</option>
+                    </select>*@
+                <div class="form-group overflow-auto" style="max-height:30em;" id="image-list">
+                     
+                    @{
+                        DirectoryInfo d = new DirectoryInfo(@"wwwroot\image");
+
+                        FileInfo[] Files = d.GetFiles("*.png"); //Getting png files
+                        string str = "";
+
+                        foreach (FileInfo file in Files)
+                        {
+                            <label class="image-radio">
+                                <input asp-for="BlogImage" type="radio" name="BlogImage" value="@file.Name" >
+                                <img class="image-radio-img" src="~/image/@file.Name">
+                            </label>
+                            str = str + ", " + file.Name;
+                        }
+                    }
+                </div>             
+               
             </div>
-            @*<div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Updated" class="control-label"></label>
-                <input asp-for="Updated" class="form-control" />
-                <span asp-validation-for="Updated" class="text-danger"></span>
-            </div>*@
-            <div class="form-group form-check">
+            <div class="form-group form-check ml-3">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Visible" /> @Html.DisplayNameFor(model => model.Visible)
                 </label>
@@ -63,14 +84,18 @@
             <div class="form-group">
                 <input type="submit" value="Create Blog" class="btn btn-primary" />
             </div>
-        </form>
-    </div>
+
+        </div>
+    </form>
 </div>
 
+@*
 <div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

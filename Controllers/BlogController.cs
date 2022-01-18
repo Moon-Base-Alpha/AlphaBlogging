@@ -107,6 +107,7 @@ namespace AlphaBlogging.Controllers
         [HttpGet]
         public IActionResult CreateBlog()
         {
+
             return View(new Blog());
         }
 
@@ -116,7 +117,7 @@ namespace AlphaBlogging.Controllers
         public async Task<IActionResult> CreateBlog(Blog blog)
         {
             blog.Author = GetSignedInId();
-            _bloggyService.AddImage(blog);
+           // _bloggyService.AddImage(blog);
 
             Blog bloggy = new Blog(blog.Title, blog.Description, blog.Body, blog.BlogImage, blog.ImageFile, blog.Author, blog.Visible = true);
 
