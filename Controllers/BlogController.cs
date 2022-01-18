@@ -106,6 +106,35 @@ namespace AlphaBlogging.Controllers
         [Authorize]
         [HttpGet]
         public IActionResult CreateBlog()
+        {
+            return View(new Blog());
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreateBlog(Blog blog)
+        {
+            blog.Author = GetSignedInId();
+            _bloggyService.AddImage(blog);
+
+            Blog bloggy = new Blog(blog.Title, blog.Description, blog.Body, blog.BlogImage, blog.ImageFile, blog.Author, blog.Visible = true);
+
+            _bloggyService.AddBlog(bloggy);
+
+            if (await _bloggyService.SaveChangesAsync())
+
+                if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
+                {
+                    return RedirectToAction("Bloglist");
+                }
+            return RedirectToAction("MyBloglist");
+
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Create()
         {            
             return View(new Blog());
         }
@@ -113,7 +142,7 @@ namespace AlphaBlogging.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CreateBlog(Blog blog)
+        public async Task<IActionResult> Create(Blog blog)
         {
             blog.Author = GetSignedInId();
             if(blog.ImageFile != null)
