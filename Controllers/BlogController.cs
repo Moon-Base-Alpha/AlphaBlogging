@@ -33,14 +33,15 @@ namespace AlphaBlogging.Controllers
         private static readonly HttpClient httpClient = new HttpClient();
         private HttpRequestSettings _requestSettings;
         
-        public BlogController(IUserServices userServices, IBlogsServices bloggy, IPostServices posty, SignInManager<ApplicationUser> signInManager, IOptions<HttpRequestSettings> requestSettings)
-
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ApplicationDbContext _db;
         public BlogController(IUserServices userServices, 
             IPostServices posty, 
             IBlogsServices bloggy,
-            SignInManager<ApplicationUser> signInManager, IWebHostEnvironment hostEnvironment, ApplicationDbContext context)
+            SignInManager<ApplicationUser> signInManager, 
+            IWebHostEnvironment hostEnvironment, 
+            ApplicationDbContext context,
+            IOptions<HttpRequestSettings> requestSettings)
 
         {
             _bloggyService = bloggy;
