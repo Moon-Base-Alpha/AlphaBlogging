@@ -104,7 +104,7 @@ namespace AlphaBlogging.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateBlog()
         {            
             return View(new Blog());
         }
@@ -112,7 +112,7 @@ namespace AlphaBlogging.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create(Blog blog)
+        public async Task<IActionResult> CreateBlog(Blog blog)
         {
             blog.Author = GetSignedInId();
             if(blog.ImageFile != null)
