@@ -37,8 +37,8 @@ namespace AlphaBlogging.Controllers
         public BlogController(IUserServices userServices,
             IPostServices posty,
             IBlogsServices bloggy,
-            SignInManager<ApplicationUser> signInManager,
-            IWebHostEnvironment hostEnvironment,
+            SignInManager<ApplicationUser> signInManager, 
+            IWebHostEnvironment hostEnvironment, 
             ApplicationDbContext context,
             IOptions<HttpRequestSettings> requestSettings)
 
@@ -101,6 +101,35 @@ namespace AlphaBlogging.Controllers
             return View();
         }
 
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult CreateBlog()
+        {
+            return View(new Blog());
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreateBlog(Blog blog)
+        {
+            blog.Author = GetSignedInId();
+            _bloggyService.AddImage(blog);
+
+            Blog bloggy = new Blog(blog.Title, blog.Description, blog.Body, blog.BlogImage, blog.ImageFile, blog.Author, blog.Visible = true);
+
+            _bloggyService.AddBlog(bloggy);
+
+            if (await _bloggyService.SaveChangesAsync())
+
+                if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
+                {
+                    return RedirectToAction("Bloglist");
+                }
+            return RedirectToAction("MyBloglist");
+
+        }
 
         [Authorize]
         [HttpGet]
