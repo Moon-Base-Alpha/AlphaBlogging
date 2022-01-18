@@ -49,11 +49,11 @@ namespace AlphaBlogging.Data.Services
         public string GetAuthorEmail(string userName)
         {
 
-            var userEmail = (from x in _db.Users
+            var user = (from x in _db.Users
                           where x.UserName == userName
-                          select x.Email).ToString();
+                          select x).FirstOrDefault();
 
-            return userEmail;
+            return user.Email;
         }
 
 

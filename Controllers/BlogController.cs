@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
 using System;
 
-
 namespace AlphaBlogging.Controllers
 {
     //[Authorize(Roles = "Superadmin, Admin, Author")]
@@ -27,16 +26,16 @@ namespace AlphaBlogging.Controllers
     {
         //Dependency Inject of BlogService and SignIn
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IUserServices _userServices; 
+        private readonly IUserServices _userServices;
         private readonly IBlogsServices _bloggyService;
         private readonly IPostServices _postService;
         private static readonly HttpClient httpClient = new HttpClient();
         private HttpRequestSettings _requestSettings;
-        
+
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly ApplicationDbContext _db;
-        public BlogController(IUserServices userServices, 
-            IPostServices posty, 
+        public BlogController(IUserServices userServices,
+            IPostServices posty,
             IBlogsServices bloggy,
             SignInManager<ApplicationUser> signInManager, 
             IWebHostEnvironment hostEnvironment, 
@@ -48,7 +47,7 @@ namespace AlphaBlogging.Controllers
             _postService = posty;
             _userServices = userServices;
             _signInManager = signInManager;
-            _requestSettings = requestSettings.Value;  
+            _requestSettings = requestSettings.Value;
             _webHostEnvironment = hostEnvironment;
             _db = context;
         }
