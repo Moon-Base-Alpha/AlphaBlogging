@@ -15,6 +15,8 @@ namespace AlphaBlogging.Models.ViewModels
         public string Body { get; set; }      
        
         public bool Visible { get; set; }
+        public int PostId { get; set; }
+
         public int BlogId { get; set; }
         public string HashTag { get; set; }
         public ApplicationUser Author { get; set; }

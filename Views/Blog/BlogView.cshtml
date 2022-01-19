@@ -7,7 +7,6 @@
     if (Model.Author.UserName == User.Identity.Name /*User.IsInRole("Admin")||User.IsInRole("Author")*/)
     {
         Layout = "~/Views/Admin/_AdminLayout.cshtml";
-
     }
 }
 <div class="postcontainer pb-3">
@@ -69,8 +68,8 @@
 
                             @if (Model.Author.UserName == User.Identity.Name)
                             {
-                                @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} ) @: |
-                                @Html.ActionLink("Remove this Post", "Remove", "Post", new {id = post.Id, blogId = post.BlogId})
+                            @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id} ) <span>|</span>  
+                            @Html.ActionLink("Remove this Post", "Remove", "Post", new {id = post.Id, blogId = post.BlogId})
                             }
                             else
                             {
