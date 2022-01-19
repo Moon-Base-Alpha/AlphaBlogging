@@ -6,7 +6,7 @@
     <form asp-action="CreateBlog" enctype="multipart/form-data">
         <div class="row postcontainer p-3  text-center">
             <h4>Create a new Blog</h4>
-            <hr / style="padding:0;">
+            <hr  style="padding:0;" />
             <div class="col-sm">
                 <div asp-validation-summary="ModelOnly" class="text-danger  text-center "></div>
                 @*<div class="form-group">
@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label asp-for="Body" class="control-label text-center "></label>
                     @*<input asp-for="Body" class="form-control" />*@
-                    <textarea id="limitedtextarea" asp-for="Body" class="form-control  text-light bg-dark mb-0" rows="5" placeholder="Type the full blog description here..."
+                    <textarea id="limitedtextarea" asp-for="Body" class="form-control text-light bg-dark mb-0" rows="5" placeholder="Type the full blog description here..."
                               onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,1024);"
                               onKeyUp="limitText(this.form.limitedtextarea,this.form.countdown,1024);">
                 </textarea>

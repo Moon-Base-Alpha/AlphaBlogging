@@ -255,12 +255,12 @@ namespace AlphaBlogging.Controllers
         {
             if (blog.Id > 0) 
             {
-                _bloggyService.AddImage(blog);
+                //_bloggyService.AddImage(blog);
                 _bloggyService.UpdateBlog(blog);
             }
             else
             {
-                _bloggyService.AddImage(blog);
+                //_bloggyService.AddImage(blog);
                 _bloggyService.AddBlog(blog);
             }
 
