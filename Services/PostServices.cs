@@ -58,7 +58,8 @@ namespace AlphaBlogging.Data.Repos
         }
         public Post GetPost(int id)
         {
-            return _db.Posts.FirstOrDefault(p => p.Id == id);
+            var post = _db.Posts.FirstOrDefault(p => p.Id == id);
+            return post;
 
         }
 

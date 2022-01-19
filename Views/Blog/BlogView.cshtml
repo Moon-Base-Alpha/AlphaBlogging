@@ -5,7 +5,7 @@
     ViewData["Title"] = "BlogView";
 
     if(User.IsInRole("Admin")||User.IsInRole("Author")){
-    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
     }
 }
@@ -65,7 +65,7 @@
 
                         @if (User.IsInRole("Admin") || User.IsInRole("Superadmin") || User.IsInRole("Author"))
                         {
-                            @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id, blogId = post.BlogId} ) @: | 
+                            @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id} ) <span>|</span>  
                             @Html.ActionLink("Remove this Post", "Remove", "Post", new {id = post.Id, blogId = post.BlogId})
                         }
                         else

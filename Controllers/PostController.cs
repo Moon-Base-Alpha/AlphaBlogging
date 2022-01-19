@@ -74,7 +74,7 @@ namespace AlphaBlogging.Controllers
         
 
         [HttpPost]
-        public async Task<IActionResult> Create(PostVM post, int blogId /*, Tag tag, string tags*/)
+        public async Task<IActionResult> Create(PostVM post /*, Tag tag, string tags*/)
         {
 
             if (ModelState.IsValid )
@@ -86,7 +86,7 @@ namespace AlphaBlogging.Controllers
                 //               where x.Author == user
                 //               select x).First();
                 //post.BlogId = blogid;
-                Post newPost = new Post(post.Title,post.Body,blogId);
+                Post newPost = new Post(post.Title,post.Body,post.BlogId);
 
 
                 if (post.HashTag != null)
@@ -102,77 +102,69 @@ namespace AlphaBlogging.Controllers
                     }
                 }
                 _postservice.AddPost(newPost);
-            }   
+            }
             if (await _postservice.SaveChangesAsync())
                 //return RedirectToAction("Edit");
-                return Redirect($"~/Blog/BlogView/{post.BlogId}");
+                return RedirectToAction("BlogView", "Blog", new { Id = post.BlogId });
 
             else
                 return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id, Tag tag)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
                 return View(new PostVM());
             else
             {
                 //var post = _postservice.GetPost((int)id);
-                var post = new PostVM();
-                post.BlogId = (int)id;
+                var postVm = new PostVM();
+                postVm.PostId = (int)id;
                 var dbPpost = _postservice.GetPost((int)id);
-                post.Title = dbPpost.Title;
-                post.Body = dbPpost.Body;
-                post.Visible = true;
+                postVm.Title = dbPpost.Title;
+                postVm.Body = dbPpost.Body;
+                postVm.Visible = true;
 
-                //List<Tag> resultList = new List<Tag>();
-
-                //var temp = (from p in _db.Posts
-                //            where p.Id == id
-                //            select p.Tags).First();
-
-                //if (temp != null)
-                //{
-                //    resultList = temp.ToList();
-                //}
-
-                return View(post);
-                
+                foreach (var item in dbPpost.Tags)
+                {
+                    postVm.HashTag += item.HashTag;
+                    postVm.HashTag += " ";
+                }
+                return View(postVm);
             }
-
-            //List<Tag> resultList = new List<Tag>();
-
-            //var temp = (from p in _db.Posts
-            //            where p.Id == id
-            //            select p.Tags).First();
-
-            //if (temp != null)
-            //{
-            //    resultList = temp.ToList();
-            //}
-            //return resultList;
-
-
-            //return View(post);
-            //string tagg = _db.Tags.Find().HashTag;
-            //return View(tag);
-
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Post post, int blogId, Tag tag)
+        public async Task<IActionResult> Edit(PostVM postVm)
         {
-            if (post.Id > 0)
-                _postservice.UpdatePost(post);
-            else
+            
+                Post post = _postservice.GetPost(postVm.PostId);
+            if (post != null)
             {
-                _postservice.AddPost(post);
+                post.Title = postVm.Title;
+                post.Body = postVm.Body;
+                post.Tags.Clear();
+                if (postVm.HashTag != null)
+                {
+                    string[] tagArr = postVm.HashTag.Split(' ');
+                    foreach (string item in tagArr)
+                    {
+                        Tag foundTag = _tagservice.FindTag(item);
+                        if (foundTag != null && item.Length != 0)
+                            post.Tags.Add(foundTag);
+                        else if (item.Length != 0)
+                            post.Tags.Add(new Tag() { HashTag = item });
+                    }
+                }
+                _postservice.UpdatePost(post);
             }
+                
+            
             if (await _postservice.SaveChangesAsync())
                 return Redirect($"~/Blog/BlogView/{post.BlogId}");
             else
-                return View(post);
+                return View(postVm);
         }
 
         [HttpGet]
