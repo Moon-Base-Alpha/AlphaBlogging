@@ -13,15 +13,7 @@
         Why not start your own blog? It’s easy-peasy, just register an account and start blogging!
     </p>
 </div>
-@*<div class="jumbotron-fluid bg-dark bg-gradient d-flex ">
-    <div class="col-5"><img src="assets/img/mars2.png" class="img-fluid"></div>
-    <div class="col-7 p-3">
-    <h4 class="">BlogRubrik</h4>
-    <p class=" font-italic">En blogg skapad av Author</p>
-    <p style="">Blogbeskrivning i kort format</p>
-    <button>Läs mer...</button>
-    </div>
-    </div>*@
+
     @foreach (var item in Model)
    {
        <div class="card flex-row flex-wrap postcontainer mb-2 text-light">
@@ -35,75 +27,12 @@
         <p class="mt-3 card-text d-inline-block text-truncate" style="max-width: 300px;">
             @Html.DisplayFor(modelItem => item.Description)
 </p>
-        <a href="#" class="btn btn-primary mt-auto">Läs mer...</a>
+        <a href="Blog/BlogView/@item.Id" class="btn btn-primary mt-auto">Läs mer...</a>
+        @* @Html.ActionLink("Details", "BlogView",  new { id=item.Id }) *@
     </div>
     <div class="w-100"></div>
 </div>
 
    }
-<div class="card flex-row flex-wrap postcontainer mb-2 text-light">
-    <div class="card-header border-0">
-        <img src="assets/img/mars2.png" alt="" width="300">
-    </div>
-    <div class="card-block px-2 p-3 d-flex flex-column">
-        <h4 class="m-0 card-title">MarsBlogg</h4>
-        <p class="m-0 font-italic">En blogg skapad av Author</p>
-        <p class="mt-3 card-text">Blogbeskrivning i kort format. Trunkterad text på slutet kanske...</p>
-        <a href="#" class="btn btn-primary mt-auto">Läs mer...</a>
-    </div>
-    <div class="w-100"></div>
-</div>
-<div class="card flex-row flex-wrap postcontainer mb-2 text-light">
-    <div class="card-header border-0" >
-        
-        <img src="assets/img/earth500.png" alt=""  style="width: 300px; height: 200px; object-fit: cover; object-position: 100% 0;">
-    </div>
-    <div class="card-block px-2 p-3 d-flex flex-column">
-        <h4 class="m-0 card-title">EarthBlogg</h4>
-        <p class="m-0 font-italic">En blogg skapad av Author</p>
-        <p class="mt-3 card-text">Blogbeskrivning i kort format. Trunkterad text på slutet kanske...</p>
-        <a href="#" class="btn btn-primary mt-auto">Läs mer...</a>
-    </div>
-    <div class="w-100"></div>
-</div>
-<div class="card flex-row flex-wrap postcontainer mb-2 text-light">
-    <div class="card-header border-0">
-        <img src="assets/img/moon2.png" alt="" width="300">
-    </div>
-    <div class="card-block px-2 p-3 d-flex flex-column">
-        <h4 class="m-0 card-title">MoonBlogg</h4>
-        <p class="m-0 font-italic">En blogg skapad av Author</p>
-        <p class="mt-3 card-text">Blogbeskrivning i kort format. Trunkterad text på slutet kanske...</p>
-        <a href="#" class="btn btn-primary mt-auto">Läs mer...</a>
-    </div>
-    <div class="w-100"></div>
-</div>
 
-@*<!-- First Parallax Section -->
-    <div class="jumbotron paral paralsec">
-    <h1 class="display-3">Here is a heading 1</h1>
-    <p class="lead">Here is a short description 1</p>
-    <p class="lead">
-    <a class="btn btn-info btn-lg btn-md" href="#" role="button">Here is a button 1</a>
-    </p>
-    </div>
 
-    <!-- Second Parallax Section -->
-    <div class="jumbotron paral paralsec1">
-    <h1 class="display-3">Here is a heading 2</h1>
-    <p class="lead">Here is a short description 2</p>
-    <p class="lead">
-    <a class="btn btn-warning btn-lg btn-md" href="widgets.html" role="button">Here is a button 2</a>
-    </p>
-    </div>
-
-    <!-- Third Parallax Section -->
-    <div class="jumbotron paral paralsec2">
-    <h1 class="display-3">Here is a heading 3</h1>
-    <p class="lead">Here is a short description 2</p>
-    <p class="lead">
-    <a class="btn btn-primary btn-lg btn-md" href="themes.html" role="button">Here is a button 3</a>
-    </p>
-    </div>*@
-
-<!-- Add More Parallax Sections Here -->

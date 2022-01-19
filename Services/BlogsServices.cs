@@ -37,12 +37,12 @@ namespace AlphaBlogging.Services
 
         public async void DeleteBlog(int id)
         {
-            var imageModel = await _db.Blogs.FindAsync(id);
+            //var imageModel = await _db.Blogs.FindAsync(id);
 
             //delete image from wwwroot/image
-            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "image", imageModel.BlogImage);
-            if (System.IO.File.Exists(imagePath))
-                System.IO.File.Delete(imagePath);
+            //var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "image", imageModel.BlogImage);
+            //if (System.IO.File.Exists(imagePath))
+            //    System.IO.File.Delete(imagePath);
             _db.Blogs.Remove(GetBlog(id));
         }
 
