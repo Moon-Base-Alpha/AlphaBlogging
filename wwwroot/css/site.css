@@ -115,6 +115,8 @@ div.login-form-icon {
 }
 
     .keyHandler > button {
+       /* display: inline-flex;
+        align-items: center;*/
         float: left;
         height: 100%;
         width: 40px;
@@ -125,6 +127,8 @@ div.login-form-icon {
         color: white;
         cursor: pointer;
         font-size: 26pt;
+        line-height:0;
+        
     }
 
     .keyHandler > input {
