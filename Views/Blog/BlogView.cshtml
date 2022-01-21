@@ -1,14 +1,14 @@
 @using AlphaBlogging.Models;
 @model AlphaBlogging.Models.Blog
 
-@{
+@*@{
     ViewData["Title"] = "BlogView";
 
     if (Model.Author.UserName == User.Identity.Name /*User.IsInRole("Admin")||User.IsInRole("Author")*/)
     {
         Layout = "~/Views/Admin/_AdminLayout.cshtml";
     }
-}
+}*@
 <div class="postcontainer pb-3">
     <div class="container-fluid px-4 ">
         <br />
@@ -39,7 +39,7 @@
         @if (Model.Author.UserName == User.Identity.Name)
         {
             <div>
-                <a href="@Url.Action("Edit", "Blog", new {id=@Model.Id} )" class="btn btn-secondary btn-sm"><i class="far fa-edit"></i> Edit Blog Info</a>
+                <a href="@Url.Action("Edit", "Blog", new {id=@Model.Id} )" class="btn btn-primary btn-sm text-light"><i class="far fa-edit"></i> Edit Blog Info</a>
             </div>
         }
 
@@ -51,7 +51,7 @@
         {
             <div>
 
-                <a href="@Url.Action("Create", "Post", new {blogId = Model.Id} )" class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i> Add Post</a>
+                <a href="@Url.Action("Create", "Post", new {blogId = Model.Id} )" class="btn btn-primary btn-sm text-light"><i class="fas fa-plus"></i> Add Post</a>
                 @*@Html.ActionLink("Add Post", "Create", "Post", new {blogId = Model.Id} ) *@
             </div>
         }
@@ -68,7 +68,7 @@
 
                             @if (Model.Author.UserName == User.Identity.Name)
                             {
-                            @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id} ) <span>|</span>  
+                            @Html.ActionLink("Edit this Post", "Edit", "Post", new {id = post.Id} ) <span class="text-primary">|</span>  
                             @Html.ActionLink("Remove this Post", "Remove", "Post", new {id = post.Id, blogId = post.BlogId})
                             }
                             else
@@ -77,9 +77,11 @@
                             }
 
                             <partial name="_Post" model="post" />
-                             @if (User.IsInRole("Admin") || User.IsInRole("Superadmin") || User.IsInRole("Author"))
-                            @Html.ActionLink("Add a Comment", "Create", "Comment", new {postId = post.Id} )
-
+                            @if (User.IsInRole("Admin") || User.IsInRole("Superadmin") || User.IsInRole("Author"))
+                            {
+                                <a href="@Url.Action("Create", "Comment", new {postId = post.Id} )" class="btn btn-primary btn-sm text-light"><i class="fas fa-plus"></i> Add a Comment</a>
+                                //@Html.ActionLink("Add a Comment", "Create", "Comment", new {postId = post.Id} )
+                            }
                         </div>
 
 
