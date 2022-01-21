@@ -138,8 +138,7 @@ namespace AlphaBlogging.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(PostVM postVm)
         {
-            
-                Post post = _postservice.GetPost(postVm.PostId);
+            Post post = _postservice.GetPost(postVm.PostId);
             if (post != null)
             {
                 post.Title = postVm.Title;
@@ -159,8 +158,6 @@ namespace AlphaBlogging.Controllers
                 }
                 _postservice.UpdatePost(post);
             }
-                
-            
             if (await _postservice.SaveChangesAsync())
                 return Redirect($"~/Blog/BlogView/{post.BlogId}");
             else

@@ -17,7 +17,6 @@ using System.Text;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
-using System;
 
 namespace AlphaBlogging.Controllers
 {

@@ -22,18 +22,20 @@
                 <label>Content</label>
                 <textarea asp-for="Body" class="form-control bg-light" rows="5" valuedata-""></textarea>
             </div>
-            <div class="form-group mb-3">
+            @*<div class="form-group mb-3">
                 <label>Tags</label>
-                @*<input asp-for="Tags" class="form-control bg-light" />*@
-            </div>
-             <div class="keyHandler">
+                <input asp-for="Tags" class="form-control bg-light" />
+            </div>*@
+            @*<div class="keyHandler">
                 <button type="button" id="addKey">+</button>
                 <input type="text" placeholder="Keyword + Enter" id="keysInput">
-            </div>
-            <div class="addedKeysHolder"></div>
+            </div>*@
+            <label>Tags</label>
+            @*<div class="addedKeysHolder"></div>*@
+            
             <!-- Just give this input the name="etc" attribute -->
-            <input asp-for="HashTag"  class="form-control bg-light" id="lkey" name="HashTag">
-
+            <input asp-for="HashTag" class="form-control bg-light" id="lkey" name="HashTag">
+            
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input type="submit" name="name" value="Save" class="btn btn-primary" />
@@ -66,12 +68,11 @@
 
     <!--------------------------------------------------->
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-
+<script type="text/javascript" src="~/js/site.js"></script>
 
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
-<script type="text/javascript" src="~/js/site.js"></script>
 }
 

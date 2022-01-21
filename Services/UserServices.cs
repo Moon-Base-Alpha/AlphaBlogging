@@ -4,15 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using AlphaBlogging.Data.Repos;
-using Microsoft.AspNetCore.Mvc;
 using AlphaBlogging.Services;
 using System.Collections.Generic;
-using AlphaBlogging.Models;
 using AlphaBlogging.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using AlphaBlogging.Data;
-using System.Linq;
 
 
 namespace AlphaBlogging.Data.Services
