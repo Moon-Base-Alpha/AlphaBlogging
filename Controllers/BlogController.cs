@@ -91,7 +91,8 @@ namespace AlphaBlogging.Controllers
         //[Authorize]
         public IActionResult BlogView(int id)
         {           
-            var blog = _bloggyService.GetBlog(id);           
+            var blog = _bloggyService.GetBlog(id);
+            _bloggyService.IncreaseViewCountOfAllPostsInBlog(id);
             return View(blog);  
         }
         public IActionResult BlogPostView(int Id)

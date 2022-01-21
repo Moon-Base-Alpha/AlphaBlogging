@@ -130,5 +130,21 @@ namespace AlphaBlogging.Services
             if (System.IO.File.Exists(imagePath))
                 System.IO.File.Delete(imagePath);            
         }
+        public void IncreaseViewCountOfAllPostsInBlog(int Id)
+        {
+            //Post post = (from x in _db.Posts
+            //            where x.Id == Id
+            //            select x).SingleOrDefault();
+
+
+            var blogs = _db.Blogs.Find(Id);
+            foreach (var item in blogs.Posts)
+            {
+                item.Views++;
+            }
+            _db.Update(blogs);
+            _db.SaveChangesAsync();
+
+        }
     }
 }

@@ -60,8 +60,10 @@ namespace AlphaBlogging.Controllers
         {            
             var dbPost = _postservice.GetPost(Id);
             //var post = new Post(dbPost.Title, dbPost.Body, 1);           
-            
+
             //post.Tags = 
+
+            
             return View(dbPost);
         }
 
@@ -275,14 +277,7 @@ namespace AlphaBlogging.Controllers
 
             return currentPost.Likes;
         }
-        public int IncreaseViewsInPost(int Id)
-        {
-            _postservice.IncreaseBlogViewCount(Id);
-            _postservice.SaveChangesAsync();
-            
-            int temp = _postservice.GetViewsOfPost(Id);
-            return temp;
-        }
+      
     }
     
 
