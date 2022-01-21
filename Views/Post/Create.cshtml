@@ -41,16 +41,17 @@
                 <input asp-for="HashTag" class="form-control" />
                 <span asp-validation-for="HashTag" class="text-danger"></span>
             </div>*@
-             <div class="keyHandler">
-                <button type="button" id="addKey">+</button>
+             <div class="keyHandler mr-5">
+                
                 <input type="text" placeholder="Keyword + Enter" id="keysInput">
+                <button type="button" id="addKey">+</button>
             </div>
             <div class="addedKeysHolder"></div>
 
             <!-- Just give this input the name="etc" attribute -->
             <input asp-for="HashTag" type="hidden" id="lkey" name="HashTag">
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group ml-3">
+                <input type="submit" value="Create Post" class="btn btn-primary" />
             </div>
         </form>
     </div>
