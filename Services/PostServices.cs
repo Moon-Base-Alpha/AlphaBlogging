@@ -93,5 +93,22 @@ namespace AlphaBlogging.Data.Repos
             }
             return false;           
         }
+        public async void IncreaseBlogViewCount(int Id)
+        {
+            //Post post = (from x in _db.Posts
+            //            where x.Id == Id
+            //            select x).SingleOrDefault();
+
+            var post = _db.Posts.Find(Id);
+
+            post.Views++;
+            _db.Posts.Update(post);
+        }
+
+        public int GetViewsOfPost(int Id)
+        {
+            var post = _db.Posts.Find(Id);
+            return post.Views;
+        }
     }
 }

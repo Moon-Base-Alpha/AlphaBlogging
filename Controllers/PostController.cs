@@ -275,5 +275,15 @@ namespace AlphaBlogging.Controllers
 
             return currentPost.Likes;
         }
-    }   
+        public int IncreaseViewsInPost(int Id)
+        {
+            _postservice.IncreaseBlogViewCount(Id);
+            _postservice.SaveChangesAsync();
+            
+            int temp = _postservice.GetViewsOfPost(Id);
+            return temp;
+        }
+    }
+    
+
 }
