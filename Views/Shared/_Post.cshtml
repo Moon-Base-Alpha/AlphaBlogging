@@ -25,7 +25,9 @@
      <button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077;</button>
      <p id="LikesP">@Model.Likes</p>
  </div>
-
+ <div>
+     <p id="ViewsID">Views: @Model.Views</p>
+ </div>
 
 
 
@@ -82,7 +84,13 @@
     }
 
 </div>
+   
+    
+
+
     <script>
+
+        
         function UserclicksOnLikeJS(PostIDfromPage)
         {
                 $.ajax({
@@ -97,4 +105,32 @@
                     
                 });            
         }
+        
+
     </script>
+
+    <script>
+    window.onload = function() 
+    {
+        var postID = @Model.Id;
+            
+        $.ajax({
+                url: '@Url.Action("IncreaseViewsInPost", "Post")',
+                data: {Id:postID},
+                    
+                success: function(data) 
+                {
+                    //alert("success" + @Model.Views);
+                    //document.getElementById("ViewsID").innerHTML = data;
+                },
+                error: function(data) 
+                {
+                    //alert("error");
+                },
+                    
+            });  
+
+    }
+    </script>
+
+
