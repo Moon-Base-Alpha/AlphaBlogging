@@ -239,7 +239,8 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #0a58ca;
+  color: #a9aeb4;
+  text-decoration: none;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -4063,6 +4064,17 @@ textarea.form-control-lg {
   flex-wrap: inherit;
   align-items: center;
   justify-content: space-between;
+}
+.navbar-brand-logo {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    color: #FFF;
+    font-size: 2.5rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.6rem;
+    white-space: nowrap;
+    text-decoration: none;
+    padding-right: 10px;
 }
 .navbar-brand {
   padding-top: 0.3125rem;
