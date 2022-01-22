@@ -13,18 +13,17 @@
    <h1>@Model.Title</h1>
   <p>@Model.Body</p>
   <p>post ID: @Model.Id</p>
-
-@*<form asp-controller="Post" asp-action="UserClicksOnLike" method="post">
-
-    <button type="submit" class="glyphicon glyphicon-thumbs-up" >@Model.Likes Likes></button>
-    <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
-
-</form>*@
-
  <div>
-     <button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077;</button>
-     <p id="LikesP">@Model.Likes</p>
+    @{
+        string temp = "LikesID" + @Model.Id;
+    }
+    <button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077;</button>
+     <p id="@temp">@Model.Likes</p>
+       <script>
+       alert("Created elements with IDs: " + "@temp")
+       </script>
  </div>
+
  <div>
      <p id="ViewsID">Views: @Model.Views</p>
  </div>
@@ -100,7 +99,9 @@
                     success: function(data) 
                     {
                         console.log(data);
-                        document.getElementById("LikesP").innerHTML = data;
+                        alert("altering this element: " + document.getElementById("@temp").outerHTML);
+
+                        document.getElementById(target).innerHTML = data;
                     },
                     
                 });            
