@@ -1,0 +1,38 @@
+﻿@*@model IEnumerable<AlphaBlogging.Models.Post>*@
+    @using AlphaBlogging.Models;
+@model Blog
+<h3>Archive</h3>
+@{
+    @foreach (var group in Model.Posts.GroupBy(m => m.Created.Year))
+    {
+        <h4 class="natrigger" data-toggle="collapse" data-target="#collapse-4">@group.Key</h4>
+        <div>
+            @foreach (var item in group.GroupBy(m => m.Created))
+            {
+                 var Heading = "heading" + item.FirstOrDefault().Id.ToString();
+                var Collapse = "collapse" + item.FirstOrDefault().Id.ToString();
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        
+                            <button class="accordion-button collapsed bg-dark  text-white" type="button" data-bs-toggle="#@Collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="@Collapse">
+                                @item.Key.ToString("MMMM").ToUpper()
+                            </button>
+                       
+                        <div id="@Collapse" class="accordion-collapse collapse" aria-labelledby="@Heading" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                @foreach (var post in item)
+                                {
+                                <a href="~/Blog/BlogView/@post.Id"> @post.Title</a>
+                                }
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            }
+
+        </div>
+    }
+}

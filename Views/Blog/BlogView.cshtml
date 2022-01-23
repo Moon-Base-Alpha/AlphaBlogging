@@ -9,10 +9,10 @@
         Layout = "~/Views/Admin/_AdminLayout.cshtml";
     }
 }
-<div class="postcontainer pb-3">
-    <div class="container-fluid px-4 ">
+<div class="postcontainer pb-3 row">
+    <div class="container-fluid px-4 col-sm-10">
         <br />
-        <div class="jumbotron text-center text-sh" style="display:flex; flex-direction:column; justify-content:space-between; min-height:250px; background-image: url('../../image/@Model.BlogImage'); background-size: cover;">
+        <div class="jumbotron text-center text-sh bg-dark" style="display:flex; flex-direction:column; justify-content:space-between; min-height:250px; background-image: url('../../image/@Model.BlogImage'); background-size: cover;">
             @*<img src="~/image/@Model.BlogImage"  class="mb-4" />*@
             <div>
             <h1 style=" text-shadow: 2px 2px 2px #000;">@Html.DisplayFor(model => model.Title)</h1>
@@ -55,8 +55,6 @@
                 @*@Html.ActionLink("Add Post", "Create", "Post", new {blogId = Model.Id} ) *@
             </div>
         }
-
-
         <div>
             @{
                 if (Model.Posts != null && Model.Posts.Count() > 0)
@@ -81,8 +79,6 @@
                             @Html.ActionLink("Add a Comment", "Create", "Comment", new {postId = post.Id} )
 
                         </div>
-
-
                     }
 
                 }
@@ -94,13 +90,11 @@
             }
         </div>
 
-
-
-
         @*<div>
             @Html.ActionLink("Add post", "Create", "Post", new { blogid = Model.Id }) |
             <a asp-action="MyBloglist">Back to List</a>
             </div>*@
-
     </div>
+    <div  class="container-fluid px-4 col-sm-2"> <partial name="PostArchive" /> </div>
 </div>
+

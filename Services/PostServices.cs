@@ -18,6 +18,13 @@ namespace AlphaBlogging.Data.Repos
 
         public List<Post> Posts { get;}
 
+        public IEnumerable<Post> GetPostsByDate(int id)
+        {
+            //List<Post> posts = new List<Post>();
+                      
+            return _db.Posts.Where(p=>p.Id == id).ToList().OrderBy(p=>p.Created);
+        }
+
         public IEnumerable<Post> GetPostsFromBlogID(int Id) // returns all blogs as a list
         {
             List<Post> resultList = new List<Post>();

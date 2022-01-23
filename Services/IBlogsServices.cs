@@ -20,6 +20,6 @@ namespace AlphaBlogging.Services
         void AddImage(Blog blog);
         void DeleteImage(string oldImage);
         public void IncreaseViewCountOfAllPostsInBlog(int Id);
-
+        IEnumerable<Post> GetPostsByDate();
     }
 }
