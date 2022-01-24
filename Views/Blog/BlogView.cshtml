@@ -114,7 +114,7 @@
                         console.log("Response: " + "["+data.nofLikes+","+data.postid+"]");
                         console.log("altering this element: " + document.getElementById(target).outerHTML) + "to a lieks number of " + data.nofLikes;
                         
-                        document.getElementById(target).innerHTML = data.nofLikes;
+                        document.getElementById(target).innerHTML = data.nofLikes+" likes";
                     },
                     
                 });            
