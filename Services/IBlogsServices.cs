@@ -21,5 +21,6 @@ namespace AlphaBlogging.Services
         void DeleteImage(string oldImage);
         public void IncreaseViewCountOfAllPostsInBlog(int Id);
         IEnumerable<Post> GetPostsByDate();
+        public List<Post> GetLatestPostFromAllBlogs();
     }
 }

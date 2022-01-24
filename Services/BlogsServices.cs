@@ -152,5 +152,22 @@ namespace AlphaBlogging.Services
 
             return _db.Posts.ToList().OrderBy(p => p.Created);
         }
+
+        public List<Post> GetLatestPostFromAllBlogs()
+        {
+            var result = (from x in _db.Blogs
+                          select x).ToList();
+
+            List<Post> postsList = new List<Post>();
+            foreach (var item in result)
+            {
+                if (item.Posts.LastOrDefault() != null)
+                {
+                    postsList.Add(item.Posts.LastOrDefault()); // maybe solve this with LINQ instead?
+                }
+            }
+
+            return postsList;
+        }
     }
 }
