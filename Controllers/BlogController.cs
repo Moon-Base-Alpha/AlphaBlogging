@@ -107,11 +107,40 @@ namespace AlphaBlogging.Controllers
         }
 
 
+        //[Authorize]
+        //[HttpGet]
+        //public IActionResult CreateBlog()
+        //{
+
+        //    return View(new Blog());
+        //}
+
+
+        //[Authorize]
+        //[HttpPost]
+        //public async Task<IActionResult> CreateBlog(Blog blog)
+        //{
+        //    blog.Author = GetSignedInId();
+        //    // _bloggyService.AddImage(blog);
+
+        //    Blog bloggy = new Blog(blog.Title, blog.Description, blog.Body, blog.BlogImage, blog.ImageFile, blog.Author, blog.Visible = true);
+
+        //    _bloggyService.AddBlog(bloggy);
+
+        //    if (await _bloggyService.SaveChangesAsync())
+
+        //        if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
+        //        {
+        //            return RedirectToAction("Bloglist");
+        //        }
+        //    return RedirectToAction("MyBloglist");
+
+        //}
+
         [Authorize]
         [HttpGet]
         public IActionResult CreateBlog()
         {
-
             return View(new Blog());
         }
 
@@ -121,39 +150,10 @@ namespace AlphaBlogging.Controllers
         public async Task<IActionResult> CreateBlog(Blog blog)
         {
             blog.Author = GetSignedInId();
-           // _bloggyService.AddImage(blog);
+            if (blog.ImageFile != null)
+                _bloggyService.AddImage(blog);
 
             Blog bloggy = new Blog(blog.Title, blog.Description, blog.Body, blog.BlogImage, blog.ImageFile, blog.Author, blog.Visible = true);
-
-            _bloggyService.AddBlog(bloggy);
-
-            if (await _bloggyService.SaveChangesAsync())
-
-                if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
-                {
-                    return RedirectToAction("Bloglist");
-                }
-            return RedirectToAction("MyBloglist");
-
-        }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult Create()
-        {            
-            return View(new Blog());
-        }
-       
-
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> Create(Blog blog)
-        {
-            blog.Author = GetSignedInId();
-            if(blog.ImageFile != null)
-            _bloggyService.AddImage(blog);          
-
-            Blog bloggy = new Blog(blog.Title,blog.Description,blog.Body, blog.BlogImage,blog.ImageFile,blog.Author,blog.Visible = true);
 
             _bloggyService.AddBlog(bloggy);
 
@@ -200,8 +200,8 @@ namespace AlphaBlogging.Controllers
         private async Task<string> SendConfirmation(ConfirmMessage sendMsg)
         {
             //string funcUrl = "https://alphablogqueuefunction.azurewebsites.net/api/HttpTrigger1?code=54KCQAvWXKb6qcuogze/uNfIlwnaQUpz120AiNjQI5VD/3ogmqla7Q==";
-            //string funcUrl = _requestSettings.MyAzureFunctionUrl;  //Azure url
-            string funcUrl = _requestSettings.MyLocalFunctionUrl;  // For testing function locally(localhost://)
+            string funcUrl = _requestSettings.MyAzureFunctionUrl;  //Azure url
+            //string funcUrl = _requestSettings.MyLocalFunctionUrl;  // For testing function locally(localhost://)
             string statusMsg = "";
 
             using (var myrequest = new HttpRequestMessage(HttpMethod.Post, funcUrl))
