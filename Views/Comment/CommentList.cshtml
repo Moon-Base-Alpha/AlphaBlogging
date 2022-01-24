@@ -1,26 +1,33 @@
 ﻿@model IEnumerable<AlphaBlogging.Models.Comment>
 
 @{
-  }
-  <h2>List of comments</h2>
+   Layout = "~/Views/Admin/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <br />
+  <h1>List of comments</h1>
   <hr />
   <div>
       <ul>
-           @foreach (var comment in Model)
+           @foreach (var comment in Model.Reverse())
     {
         <li>
-            <span style="font-weight:500">Author: </span>@Html.DisplayFor(modelItem => comment.Author)
+            <span style="font-weight:500">Author: </span>@Html.DisplayFor(modelItem => comment.Author.UserName)
             <br />
-            <span style="font-weight:500">Post ID: </span>@Html.DisplayFor(modelItem => comment.PostId)
+            <span style="font-weight:500">Post title: </span>@Html.DisplayFor(modelItem => comment.PostTitle)
             <br />
             <span style="font-weight:500">Comment: </span>@Html.DisplayFor(modelItem => comment.Body)
             <br />
+            <span style="font-weight:500">Created: </span>@Html.DisplayFor(modelItem => comment.Created)
+            <br />
              @Html.ActionLink("Edit", "Edit", new { id=comment.Id }) |
-             @Html.ActionLink("Details", "CommentView",  new { id=comment.Id }) |
+             @*@Html.ActionLink("Details", "CommentView",  new { id=comment.Id }) |*@
              @Html.ActionLink("Delete", "Remove", new { id=comment.Id })
             <br />
             <hr />
         </li>
     }
       </ul>
+  </div>
   </div>
