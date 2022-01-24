@@ -20,7 +20,7 @@
     <button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077;</button>
      <p id="@temp">@Model.Likes</p>
        <script>
-       alert("Created elements with IDs: " + "@temp")
+       console.log("Created elements with IDs: " + "@temp")
        </script>
  </div>
 
@@ -87,28 +87,7 @@
     
 
 
-    <script>
 
-        
-        function UserclicksOnLikeJS(PostIDfromPage)
-        {
-                $.ajax({
-                    url: '@Url.Action("UserClicksOnLike", "Post")',
-                    data: {Id:PostIDfromPage},
-                    
-                    success: function(data) 
-                    {
-                        console.log(data);
-                        alert("altering this element: " + document.getElementById("@temp").outerHTML);
-
-                        document.getElementById(target).innerHTML = data;
-                    },
-                    
-                });            
-        }
-        
-
-    </script>
 
 
 

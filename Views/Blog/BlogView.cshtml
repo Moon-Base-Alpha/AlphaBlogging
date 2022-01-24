@@ -104,3 +104,27 @@
 
     </div>
 </div>
+    <script>
+
+        
+        function UserclicksOnLikeJS(PostIDfromPage)
+        {
+                $.ajax({
+                    url: '@Url.Action("UserClicksOnLike", "Post")',
+                    data: {Id:PostIDfromPage},
+                    dataType: 'json',
+                    //data is the return value from the PostController method
+                    success: function(data) 
+                    {
+                        var target = "LikesID" + data.postid;
+                        console.log("Response: " + "["+data.nofLikes+","+data.postid+"]");
+                        console.log("altering this element: " + document.getElementById(target).outerHTML) + "to a lieks number of " + data.nofLikes;
+                        
+                        document.getElementById(target).innerHTML = data.nofLikes;
+                    },
+                    
+                });            
+        }
+        
+
+    </script>
