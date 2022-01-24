@@ -54,7 +54,7 @@ namespace AlphaBlogging.Controllers
         {
                 var user = User.Identity.Name;
 
-                Comment newComment = new Comment(comment.Body, _userServices.GetCurrentApplicationUser(user), comment.PostId);
+                Comment newComment = new Comment(comment.Body, _userServices.GetCurrentApplicationUser(user), comment.PostId, comment.PostTitle);
 
                 _commentservice.AddComment(newComment);
 

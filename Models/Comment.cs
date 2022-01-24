@@ -25,23 +25,22 @@ namespace AlphaBlogging.Models
 
         public int PostId { get; set; }
 
-       
+        public string PostTitle { get; set; } 
 
-
-        public virtual  Post Post { get; set; }
+        public virtual Post Post { get; set; }
 
         public Comment()
         {
             
         }
 
-        public Comment( string body, ApplicationUser author, int postId)
-
+        public Comment(string body, ApplicationUser author, int postId, string postTitle)
         {            
             Body = body;
             Created = DateTime.Now;
             Author = author;
             PostId = postId;
+            PostTitle = postTitle;
         }
     }
 }

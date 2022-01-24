@@ -403,39 +403,15 @@ namespace AlphaBlogging.Services
             {
                 new Comment
                 {
-                    Author = _db.Users.Where(x => x.UserName == "Neo").FirstOrDefault(),
+                    Author = _db.Users.Where(x => x.UserName == "Diana").FirstOrDefault(),
                     Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
                     "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
                     " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
                     "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
                     "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
                     "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
-                    Created = DateTime.ParseExact("2021-12-01 12:33:12", "yyyy-MM-dd hh:mm:ss", null),
-                    PostId = 1
-                },
-                new Comment
-                {
-                    Author = _db.Users.Where(x => x.UserName == "Bruce").FirstOrDefault(),
-                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
-                    "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
-                    " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
-                    "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
-                    "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
-                    "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
-                    Created = DateTime.ParseExact("2021-12-03 04:11:56", "yyyy-MM-dd hh:mm:ss", null),
-                    PostId = 2
-                },
-                new Comment
-                {
-                    Author = _db.Users.Where(x => x.UserName == "Admin").FirstOrDefault(),
-                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
-                    "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
-                    " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
-                    "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
-                    "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
-                    "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
-                    Created = DateTime.ParseExact("2021-12-05 11:11:56", "yyyy-MM-dd hh:mm:ss", null),
-                    PostId = 3
+                    Created = DateTime.ParseExact("2021-12-08 02:50:24", "yyyy-MM-dd hh:mm:ss", null),
+                    PostId = 5
                 },
                 new Comment
                 {
@@ -451,15 +427,39 @@ namespace AlphaBlogging.Services
                 },
                 new Comment
                 {
-                    Author = _db.Users.Where(x => x.UserName == "Diana").FirstOrDefault(),
+                    Author = _db.Users.Where(x => x.UserName == "Admin").FirstOrDefault(),
                     Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
                     "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
                     " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
                     "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
                     "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
                     "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
-                    Created = DateTime.ParseExact("2021-12-08 02:50:24", "yyyy-MM-dd hh:mm:ss", null),
-                    PostId = 5
+                    Created = DateTime.ParseExact("2021-12-05 11:11:56", "yyyy-MM-dd hh:mm:ss", null),
+                    PostId = 3
+                },
+                new Comment
+                {
+                    Author = _db.Users.Where(x => x.UserName == "Bruce").FirstOrDefault(),
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
+                    " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
+                    "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
+                    "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
+                    Created = DateTime.ParseExact("2021-12-03 04:11:56", "yyyy-MM-dd hh:mm:ss", null),
+                    PostId = 2
+                },
+                new Comment
+                {
+                    Author = _db.Users.Where(x => x.UserName == "Neo").FirstOrDefault(),
+                    Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesenti mvoluptatum deleniti atque corrupti quos dolores et quas molestias excepturi" +
+                    " sint occaecati , similique sunt in culpa qui officia deserunt mollitia animi, facilis est " +
+                    "et expedita distinctio. At vero eos et accusmus et iusto odio dignissimos ducimus qui blanditiis " +
+                    "praesentiu voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint " +
+                    "occaecati, similique sunt in culpa qui officia deserunt mollitia animi. ",
+                    Created = DateTime.ParseExact("2021-12-01 12:33:12", "yyyy-MM-dd hh:mm:ss", null),
+                    PostId = 1
                 },
             };
                 await _db.Comments.AddRangeAsync(comments);
