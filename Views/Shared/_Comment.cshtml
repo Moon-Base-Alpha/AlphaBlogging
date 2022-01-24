@@ -9,6 +9,7 @@
     @*<h6>Comment</h6>*@
     <p class="created">Comment @Model.Created.ToShortDateString() by @Model.Author.UserName</p>
     <p>@Model.Body</p>
+    @Html.ActionLink("Delete Comment", "Remove", "Comment", new {id = Model.Id} )
    
 </div>
 
