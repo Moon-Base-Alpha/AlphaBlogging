@@ -146,5 +146,11 @@ namespace AlphaBlogging.Services
             _db.SaveChangesAsync();
 
         }
+        public IEnumerable<Post> GetPostsByDate()
+        {
+            //List<Post> posts = new List<Post>();
+
+            return _db.Posts.ToList().OrderBy(p => p.Created);
+        }
     }
 }

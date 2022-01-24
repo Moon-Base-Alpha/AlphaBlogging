@@ -20,6 +20,6 @@ namespace AlphaBlogging.Data.Repos
         IEnumerable<Post> GetPostsFromBlogID(int Id);
         public int GetViewsOfPost(int Id);
         Task<bool> SaveChangesAsync();
-       
+        IEnumerable<Post> GetPostsByDate(int id);
     }
 }

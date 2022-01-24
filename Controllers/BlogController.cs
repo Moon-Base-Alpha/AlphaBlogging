@@ -51,6 +51,11 @@ namespace AlphaBlogging.Controllers
             _db = context;
         }
 
+        public IActionResult PostArchive(int id)
+        {
+            var query = _postService.GetPostsByDate(id);
+                return View(query);
+        }
         public ApplicationUser GetSignedInId()
         {
             var signedIn = _signInManager.IsSignedIn(User);
