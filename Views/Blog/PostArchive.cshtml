@@ -1,38 +1,43 @@
 ﻿@*@model IEnumerable<AlphaBlogging.Models.Post>*@
     @using AlphaBlogging.Models;
 @model Blog
-<h3>Archive</h3>
+ <script src="~/Scripts/jquery-3.6.0.min.js"></script> 
+<div class="pt-3 ">
+<h4 class="ml-3">Archive</h4>
+
 @{
     @foreach (var group in Model.Posts.GroupBy(m => m.Created.Year))
     {
-        <h4 class="natrigger" data-toggle="collapse" data-target="#collapse-4">@group.Key</h4>
-        <div>
+        <h5 class="ml-3" >@group.Key</h5>
+        <div class="">
             @foreach (var item in group.GroupBy(m => m.Created))
             {
-                 var Heading = "heading" + item.FirstOrDefault().Id.ToString();
+                var Heading = "heading" + item.FirstOrDefault().Id.ToString();
                 var Collapse = "collapse" + item.FirstOrDefault().Id.ToString();
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        
-                            <button class="accordion-button collapsed bg-dark  text-white" type="button" data-bs-toggle="#@Collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="@Collapse">
+                <div class="accordion accordion-flush" id="accordionExample">
+                    <div class="accordion-item bg-dark">
+                        <h3 class="accordion-header" id="@Heading">
+                            <button class="accordion-button collapsed bg-dark text-white border-top" type="button" data-bs-toggle="collapse" data-bs-target="#@Collapse" aria-expanded="false" aria-controls="@Collapse">
                                 @item.Key.ToString("MMMM").ToUpper()
                             </button>
-                       
-                        <div id="@Collapse" class="accordion-collapse collapse" aria-labelledby="@Heading" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
+                       </h3>
+                        <div id="@Collapse" class="accordion-collapse collapse bg-light bg-opacity-25 text-white" aria-labelledby="@Heading" data-bs-parent="#accordionExample">
+                             
+                            <div class="p-1">
                                 @foreach (var post in item)
                                 {
-                                <a href="~/Blog/BlogView/@post.Id"> @post.Title</a>
-                                }
-
-                                }
+                                <a href="~/Post/PostView/@post.Id" class="text-white p-3"> @post.Title</a>
+                                }                                
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr />
+                
             }
 
         </div>
     }
 }
+</div> 
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js referrerpolicy="no-referrer"></script>
+<script src=https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
