@@ -21,11 +21,11 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Description" class="control-label  text-center"></label>
-                    @* <input asp-for="Description" class="form-control" />*@
+                     @*<input asp-for="Description" class="form-control" />*@
                     <textarea id="limitedtextarea" asp-for="Description" class="form-control bg-dark  text-light" rows="5" placeholder="Type a short description of the blog here..."
                               onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,128);"
                               onKeyUp="limitText(this.form.limitedtextarea,this.form.countdown,128);">
-                </textarea>
+                          </textarea>
                     <font size="2">
                         You have <input class="bg-transparent border-0 text-light" readonly type="text" name="countdown" size="1" value="128"> characters left.
                     </font>
@@ -46,11 +46,11 @@
             </div>
             <div class="col-sm  text-center" >
                <p>Select a header image</p> 
-                @*<div class="form-group">*@
+               @* <div class="form-group">
 
-                @*<label asp-for="ImageFile" class="control-label"></label>*@
-                @*<input asp-for="ImageFile" accept="image/*" />*@
-                @* <select asp-for="BlogImage">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" accept="image/*" />
+                 <select asp-for="BlogImage">
                     <option style="background-image:url(moon2.png);" value="moon2.png">moon</option>
                     <option value="mars2.png">mars2</option>
                     <option value="jorden.png">jorden</option>
@@ -89,8 +89,8 @@
     </form>
 </div>
 
-@*
-<div>
+
+@*<div>
     <a asp-action="Index">Back to List</a>
 </div>*@
 
