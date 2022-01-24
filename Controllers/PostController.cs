@@ -253,7 +253,7 @@ namespace AlphaBlogging.Controllers
         //    }
         //}
 
-        public async Task<uint> UserClicksOnLike(int Id) // Id is from the post in which the likebutton was clicked
+        public async Task<JsonResult> UserClicksOnLike(int Id) // Id is from the post in which the likebutton was clicked
         {
             var CurrUserID = User.Identity.Name;
             var CurrentUser = _userServices.GetCurrentApplicationUser(CurrUserID);
@@ -275,7 +275,7 @@ namespace AlphaBlogging.Controllers
             await _postservice.SaveChangesAsync();
 
 
-            return currentPost.Likes;
+            return Json(new {nofLikes= currentPost.Likes, postid= currentPost.Id});
         }
       
     }
