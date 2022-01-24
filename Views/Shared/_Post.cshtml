@@ -15,14 +15,36 @@
   <p>post ID: @Model.Id</p>
  <div>
     @{
-        string temp = "LikesID" + @Model.Id;
+        string RazorLikesID = "LikesID" + @Model.Id;
     }
-    <button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077;</button>
-     <p id="@temp">@Model.Likes</p>
+
+    @{
+               if(@User.Identity.IsAuthenticated == false)
+                {                    
+                    <div class="btn btn-primary " id="LikeButton"><i class="fa fa-thumbs-up"></i>
+                    <span id="@RazorLikesID">@Model.Likes Likes</span>
+                    </div>
+                }
+                else if(@User.Identity.IsAuthenticated == true)
+                {                    
+                    <div class="btn btn-primary " id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)"><i class="fa fa-thumbs-up"></i>
+                    <span id="@RazorLikesID">@Model.Likes Likes</span>   
+                    </div>
+                }
+           }
+
+   
        <script>
-       console.log("Created elements with IDs: " + "@temp")
+       console.log("Created elements with IDs: " + "@RazorLikesID")
+       console.log("Created elements with IDs: " + "@RazorLikesID")
        </script>
- </div>
+
+           
+    
+    
+
+    
+</div>
 
  <div>
      <p id="ViewsID">Views: @Model.Views</p>
