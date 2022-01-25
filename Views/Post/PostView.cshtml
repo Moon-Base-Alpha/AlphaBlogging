@@ -88,9 +88,15 @@
             {
                 <h6>No comments yet</h6>
             }
+           
         }
+         @if (User.IsInRole("Admin") || User.IsInRole("Superadmin") || User.IsInRole("Author"))
+            {
+                <a href="@Url.Action("Create", "Comment", new {postId = Model.Id} )" class="btn  btn-outline-light text-light btn-sm"><i class="far fa-edit"></i> Add a Comment</a>
+            }
+    
+    <a href="~/Blog/BlogView/@Model.BlogId" class="btn  btn-outline-light text-light btn-sm"> <i class="fas fa-reply"> </i> Back to the Blog</a>
     </div>
-    <a href="~/Blog/BlogView/@Model.BlogId"> Back to the Blog</a>
 </div>
 
 
