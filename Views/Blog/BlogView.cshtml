@@ -4,10 +4,10 @@
 @{
     ViewData["Title"] = "BlogView";
 
-    if (Model.Author.UserName == User.Identity.Name /*User.IsInRole("Admin")||User.IsInRole("Author")*/)
-    {
-        Layout = "~/Views/Admin/_AdminLayout.cshtml";
-    }
+    //if (Model.Author.UserName == User.Identity.Name /*User.IsInRole("Admin")||User.IsInRole("Author")*/)
+    //{
+    //    Layout = "~/Views/Admin/_AdminLayout.cshtml";
+    //}
 }
 <div class="postcontainer pb-3 row">
     <div class="container-fluid px-4 col-sm-10">
@@ -39,7 +39,7 @@
         @if (Model.Author.UserName == User.Identity.Name)
         {
             <div>
-                <a href="@Url.Action("Edit", "Blog", new {id=@Model.Id} )" class="btn btn-secondary btn-sm"><i class="far fa-edit"></i> Edit Blog Info</a>
+                <a href="@Url.Action("Edit", "Blog", new {id=@Model.Id} )" class="btn btn-primary text-light btn-sm"><i class="far fa-edit"></i> Edit Blog Info</a>
             </div>
         }
 
@@ -51,7 +51,7 @@
         {
             <div>
 
-                <a href="@Url.Action("Create", "Post", new {blogId = Model.Id} )" class="btn btn-secondary btn-sm"><i class="fas fa-plus"></i> Add Post</a>
+                <a href="@Url.Action("Create", "Post", new {blogId = Model.Id} )" class="btn btn-secondary btn-sm btn-primary text-light "><i class="fas fa-plus"></i> Add Post</a>
                 @*@Html.ActionLink("Add Post", "Create", "Post", new {blogId = Model.Id} ) *@
             </div>
         }
@@ -75,9 +75,10 @@
                             }
 
                             <partial name="_Post" model="post" />
-                             @if (User.IsInRole("Admin") || User.IsInRole("Superadmin") || User.IsInRole("Author"))
-                            @Html.ActionLink("Add a Comment", "Create", "Comment", new {postId = post.Id} )
-
+                             @if (User.IsInRole("Admin") || User.IsInRole("Superadmin") || User.IsInRole("Author")) {                         
+                            <a href="@Url.Action("Create", "Comment", new {postId = post.Id} )" class="btn  btn-outline-light text-light btn-sm"><i class="far fa-edit"></i> Add a Comment</a>
+                            //@Html.ActionLink("Add a Comment", "Create", "Comment", new {postId = post.Id} )
+                            } 
                         </div>
                     }
 
