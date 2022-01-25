@@ -36,7 +36,7 @@ namespace AlphaBlogging.Controllers
 
         //    return RedirectToAction("SearchResult",new { searchTerm = searchTerm });
         //}
-
+        //[HttpGet]
         public IActionResult SearchResult(string searchTerm)
         {
 
