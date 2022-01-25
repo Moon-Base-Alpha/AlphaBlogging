@@ -21,5 +21,6 @@ namespace AlphaBlogging.Data.Repos
         public int GetViewsOfPost(int Id);
         Task<bool> SaveChangesAsync();
         IEnumerable<Post> GetPostsByDate(int id);
+        public void IncreaseViewCountOfPost(int id);
     }
 }
