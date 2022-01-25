@@ -59,7 +59,7 @@ namespace AlphaBlogging.Controllers
                 _commentservice.AddComment(newComment);
 
                 if (await _commentservice.SaveChangesAsync())
-                    return RedirectToAction("Edit");
+                    return RedirectToAction("Post", "Post",new {id = comment.PostId});
                 else
                     return View(newComment);
             
