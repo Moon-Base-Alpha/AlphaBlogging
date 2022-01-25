@@ -21,7 +21,7 @@
     @{
                if(@User.Identity.IsAuthenticated == false)
                 {                    
-                    <div class="btn btn-primary " id="LikeButton"><i class="fa fa-thumbs-up"></i>
+                    <div class="btn btn-secondary opacity-50" id="LikeButton"><i class="fa fa-thumbs-up"></i>
                     <span id="@RazorLikesID">@Model.Likes Likes</span>
                     </div>
                 }
@@ -35,7 +35,6 @@
 
    
        <script>
-       console.log("Created elements with IDs: " + "@RazorLikesID")
        console.log("Created elements with IDs: " + "@RazorLikesID")
        </script>
 
