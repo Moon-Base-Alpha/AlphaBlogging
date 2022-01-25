@@ -9,6 +9,56 @@
 <h1>Edit comment</h1>
 <hr />
 <div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            
+             <div class="form-group">
+
+                <textarea id="limitedtextarea" asp-for="Body" class="form-control bg-light" rows="5"
+                        onKeyDown="limitText(this.form.limitedtextarea,this.form.countdown,512);"
+                          onKeyUp="limitText(this.form.limitedtextarea,this.form.countdown,512);">
+                </textarea><br>
+
+                @*(Maximum characters: 512)<br>*@
+
+                <font size="2">You have <input readonly type="text" name="countdown" size="1" value="512"> characters left.
+                </font>
+
+                @*<textarea asp-for="Body" class="form-control bg-light" rows="3" valuedata-""></textarea>*@
+            </div> 
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+            <div class="form-group">
+                <input type="submit" name="name" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+@*<div>
+    <a asp-action="CommentList">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script language="javascript" type="text/javascript">
+function limitText(limitField, limitCount, limitNum) {
+	if (limitField.value.length > limitNum) {
+		limitField.value = limitField.value.substring(0, limitNum);
+	} else {
+		limitCount.value = limitNum - limitField.value.length;
+	}
+}
+</script>
+
+
+@*<div class="row">
     <div class="col-md-6 ">
         <form method="post">
              <div class="form-group mb-3">
@@ -21,11 +71,12 @@
         </form>
     </div>
 </div>
-</div>
+</div>*@
 @*<div>
     <a asp-action="Commentlist">Back to List</a>
 </div>*@
 
-@section Scripts {
+@*@section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+*@
