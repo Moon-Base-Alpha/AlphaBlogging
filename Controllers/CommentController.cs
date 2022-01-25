@@ -16,15 +16,15 @@ namespace AlphaBlogging.Controllers
         private ICommentServices _commentservice;
         private IPostServices _postService;
         private readonly IUserServices _userServices;
-        
+        private readonly ApplicationDbContext _db;
 
-        public CommentController(ICommentServices repo, IPostServices postServices, IUserServices userServices)
+        public CommentController(ICommentServices repo, IPostServices postServices, IUserServices userServices, ApplicationDbContext context)
         {
 
             _commentservice = repo;
             _postService = postServices;
             _userServices = userServices;
-
+            _db = context;  
         }
 
         [Authorize(Roles = "Superadmin, Admin, Author")]
@@ -103,9 +103,11 @@ namespace AlphaBlogging.Controllers
         [HttpGet]
         public async Task<IActionResult> Remove(int id)
         {
+            var entry = _db.Comments.Single(r => r.Id == id);
             _commentservice.DeleteComment(id);
             await _commentservice.SaveChangesAsync();
-            return RedirectToAction("CommentList");
+            return RedirectToAction("PostView", "Post", new { id = entry.PostId });
+           
         }
     }
 }

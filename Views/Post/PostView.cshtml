@@ -67,18 +67,7 @@
                     <div class="comment container p-3 my-3 ">
                         @*<div  style="border-color:black; margin-block:7px; background-color:lightblue">*@
                         <partial name="_Comment" model="comment" />
-
-                        @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} ) |
-
-
-                        @if (User.IsInRole("Superadmin") || User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("User"))
-
-
-                        {
-                            @Html.ActionLink("Edit Comment", "Edit", "Comment", new {postId = Model.Id} ) @: |
-                            @Html.ActionLink("Delete Comment", "Remove", "Comment", new {postId = Model.Id} )
-                        }
-
+                       
                     </div>
                     <hr />
 
