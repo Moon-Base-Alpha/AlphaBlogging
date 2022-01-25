@@ -192,10 +192,12 @@ namespace AlphaBlogging.Services
                     {
                         Author = _db.Users.Where(x => x.UserName == "Neo").FirstOrDefault(),
                         Title = "What is real? How do you define real?",
+                        Description = "Vini,Vidi,Vici",
                         Body = "What you know you can't explain, but you feel it. You've felt it your entire life, " +
                         "that there's something wrong with the world. You don't know what it is, but it's there, like " +
                         "a splinter in your mind, driving you mad.",
                         Created = DateTime.ParseExact("2021-11-21 00:00:21", "yyyy-MM-dd hh:mm:ss", null),
+                        Updated = DateTime.ParseExact("2021-11-21 00:00:21", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
                         BlogImage = "earthrise.jpg"
 
@@ -204,11 +206,13 @@ namespace AlphaBlogging.Services
                     {
                         Author = _db.Users.Where(x => x.UserName == "Lisa").FirstOrDefault(),
                         Title = "Something about Bart...",
+                        Description = "Vini,Vidi,Vici",
                         Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
                         "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-02 07:44:12", "yyyy-MM-dd hh:mm:ss", null),
+                        Updated = DateTime.ParseExact("2021-12-02 07:44:12", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
                         BlogImage = "earthrise.jpg"
                     },
@@ -216,11 +220,13 @@ namespace AlphaBlogging.Services
                     {
                         Author = _db.Users.Where(x => x.UserName == "Peter").FirstOrDefault(),
                         Title = "Bla bla bla!",
+                        Description = "Vini,Vidi,Vici",
                         Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
                         "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-10 12:44:12", "yyyy-MM-dd hh:mm:ss", null),
+                        Updated = DateTime.ParseExact("2021-12-10 12:44:12", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
                         BlogImage = "earthrise.jpg"
                     },
@@ -228,10 +234,12 @@ namespace AlphaBlogging.Services
                     {
                         Author = _db.Users.Where(x => x.UserName == "Neo").FirstOrDefault(),
                         Title = "Mad mad world!",
+                        Description = "Vini,Vidi,Vici",
                         Body = "What you know you can't explain, but you feel it. You've felt it your entire life, " +
                         "that there's something wrong with the world. You don't know what it is, but it's there, like " +
                         "a splinter in your mind, driving you mad.",
                         Created = DateTime.ParseExact("2021-12-12 12:12:12", "yyyy-MM-dd hh:mm:ss", null),
+                        Updated = DateTime.ParseExact("2021-12-12 12:12:12", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
                         BlogImage = "earthrise.jpg"
                     },
@@ -239,11 +247,13 @@ namespace AlphaBlogging.Services
                     {
                         Author = _db.Users.Where(x => x.UserName == "Lisa").FirstOrDefault(),
                         Title = "Something about Robin...",
+                        Description = "Vini,Vidi,Vici",
                         Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
                         "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-14 11:22:00", "yyyy-MM-dd hh:mm:ss", null),
+                        Updated = DateTime.ParseExact("2021-12-14 11:22:00", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
                         BlogImage = "earthrise.jpg"
                     },
@@ -251,11 +261,13 @@ namespace AlphaBlogging.Services
                     {
                         Author = _db.Users.Where(x => x.UserName == "Diana").FirstOrDefault(),
                         Title = "Shut up!",
+                        Description = "Vini,Vidi,Vici",
                         Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
                         "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-15 10:01:35", "yyyy-MM-dd hh:mm:ss", null),
+                        Updated = DateTime.ParseExact("2021-12-15 10:01:35", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
                         BlogImage = "earthrise.jpg"
                     },
@@ -263,10 +275,12 @@ namespace AlphaBlogging.Services
                     {
                         Author = _db.Users.Where(x => x.UserName == "Neo").FirstOrDefault(),
                         Title = "What is real? Part 2",
+                        Description = "Vini,Vidi,Vici",
                         Body = "What you know you can't explain, but you feel it. You've felt it your entire life, " +
                         "that there's something wrong with the world. You don't know what it is, but it's there, like " +
                         "a splinter in your mind, driving you mad.",
                         Created = DateTime.ParseExact("2021-12-16 00:00:00", "yyyy-MM-dd hh:mm:ss", null),
+                        Updated = DateTime.ParseExact("2021-12-16 00:00:00", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
                         BlogImage = "earthrise.jpg"
                     },
@@ -274,11 +288,13 @@ namespace AlphaBlogging.Services
                     {
                         Author = _db.Users.Where(x => x.UserName == "MaryJ").FirstOrDefault(),
                         Title = "Something about Peter...",
+                        Description = "Vini,Vidi,Vici",
                         Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
                         "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-18 08:12:32", "yyyy-MM-dd hh:mm:ss", null),
+                        Updated = DateTime.ParseExact("2021-12-18 08:12:32", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
                         BlogImage = "earthrise.jpg"
                     },
@@ -286,11 +302,13 @@ namespace AlphaBlogging.Services
                     {
                         Author = _db.Users.Where(x => x.UserName == "Clark").FirstOrDefault(),
                         Title = "I can fly!",
+                        Description = "Vini,Vidi,Vici",
                         Body = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium " +
                         "voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati " +
                         "cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id " +
                         "est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.",
                         Created = DateTime.ParseExact("2021-12-20 03:22:33", "yyyy-MM-dd hh:mm:ss", null),
+                        Updated = DateTime.ParseExact("2021-12-20 03:22:33", "yyyy-MM-dd hh:mm:ss", null),
                         Visible = true,
                         BlogImage = "earthrise.jpg"
                     }
@@ -328,7 +346,7 @@ namespace AlphaBlogging.Services
                     Created = DateTime.ParseExact("2021-12-03 07:23:12", "yyyy-MM-dd hh:mm:ss", null),
                     Views = 3,
                     Visible = true,
-                    BlogId = 3
+                    BlogId = 2
                 },
                 new Post
                 {
@@ -340,7 +358,7 @@ namespace AlphaBlogging.Services
                     Created = DateTime.ParseExact("2021-12-05 03:11:56", "yyyy-MM-dd hh:mm:ss", null),
                     Views = 5,
                     Visible = true,
-                    BlogId = 6
+                    BlogId = 2
                 },
                 new Post
                 {
@@ -352,7 +370,7 @@ namespace AlphaBlogging.Services
                     Created = DateTime.ParseExact("2021-12-06 09:13:12", "yyyy-MM-dd hh:mm:ss", null),
                     Views = 1,
                     Visible = true,
-                    BlogId = 9
+                    BlogId = 2
                 },
                 new Post
                 {
