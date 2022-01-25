@@ -63,7 +63,7 @@ namespace AlphaBlogging.Controllers
 
             //post.Tags = 
 
-            
+            _postservice.IncreaseViewCountOfPost(Id);
             return View(dbPost);
         }
       
@@ -201,7 +201,13 @@ namespace AlphaBlogging.Controllers
 
             return Json(new {nofLikes= currentPost.Likes, postid= currentPost.Id});
         }
-      
+        public void IncreaseViewCountOfPost(int Id)
+        {
+            _postservice.GetViewsOfPost(Id);
+            _db.SaveChangesAsync();
+
+        }
+
     }
     
 
