@@ -16,7 +16,7 @@
     @if (Model.Author.UserName == User.Identity.Name || User.IsInRole("Superadmin"))
     {
         @: |
-        @Html.ActionLink("Edit Comment", "Edit", "Comment", new {postId = Model.Id} ) @: |
+        @Html.ActionLink("Edit Comment", "Edit", "Comment", new {id = Model.Id} ) @: |
        @Html.ActionLink("Delete Comment", "Remove", "Comment", new {id = Model.Id} )
     }
    

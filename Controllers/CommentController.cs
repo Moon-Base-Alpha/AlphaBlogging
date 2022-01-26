@@ -67,9 +67,9 @@ namespace AlphaBlogging.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
+            if (id == 0)
                 return View(new Comment());
             else
             {
@@ -95,7 +95,7 @@ namespace AlphaBlogging.Controllers
             }
 
             if (await _commentservice.SaveChangesAsync())
-                return RedirectToAction("Edit");
+                return RedirectToAction("PostView","Post",new { Id = comment.PostId});
             else
                 return View(comment);
         }
