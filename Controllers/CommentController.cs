@@ -1,10 +1,12 @@
-﻿using AlphaBlogging.Data;
-using AlphaBlogging.Data.Repos;
+﻿using AlphaBlogging.Data.Repos;
 using AlphaBlogging.Models;
 using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AlphaBlogging.Controllers
@@ -13,31 +15,30 @@ namespace AlphaBlogging.Controllers
     public class CommentController : Controller
     {
 
-        private ICommentServices _commentservice;
-        private IPostServices _postService;
+        private readonly ICommentServices _commentService;
         private readonly IUserServices _userServices;
-        
+        private readonly ISMSServices _smssService; 
 
-        public CommentController(ICommentServices repo, IPostServices postServices, IUserServices userServices)
+
+        public CommentController(ICommentServices commentService, IUserServices userServices, ISMSServices smssService)
         {
 
-            _commentservice = repo;
-            _postService = postServices;
+            _commentService = commentService;
             _userServices = userServices;
-
+            _smssService = smssService; 
         }
 
         [Authorize(Roles = "Superadmin, Admin, Author")]
         public IActionResult CommentList()
         {
             
-            var comments = _commentservice.GetAllComments();
+            var comments = _commentService.GetAllComments();
             return View(comments);
         }
 
         public IActionResult CommentView (int id)
         {
-            var comment = _commentservice.GetComment(id);
+            var comment = _commentService.GetComment(id);
             return View(comment);
         }
 
@@ -54,11 +55,11 @@ namespace AlphaBlogging.Controllers
         {
                 var user = User.Identity.Name;
 
-                Comment newComment = new Comment(comment.Body, _userServices.GetCurrentApplicationUser(user), comment.PostId);
+                Comment newComment = new(comment.Body, _userServices.GetCurrentApplicationUser(user), comment.PostId);
 
-                _commentservice.AddComment(newComment);
+                _commentService.AddComment(newComment);
 
-                if (await _commentservice.SaveChangesAsync())
+                if (await _commentService.SaveChangesAsync())
                     return RedirectToAction("Edit");
                 else
                     return View(newComment);
@@ -72,7 +73,7 @@ namespace AlphaBlogging.Controllers
                 return View(new Comment());
             else
             {
-                var comment = _commentservice.GetComment((int)id);
+                var comment = _commentService.GetComment((int)id);
                 return View(comment);
             }
         }
@@ -85,26 +86,66 @@ namespace AlphaBlogging.Controllers
             if (comment.Id > 0)
             {
                 comment.Author = _userServices.GetCurrentApplicationUser(user);
-                _commentservice.UpdateComment(comment);
+                _commentService.UpdateComment(comment);
             }
             
             else
             {
-                _commentservice.AddComment(comment);
+                _commentService.AddComment(comment);
             }
 
-            if (await _commentservice.SaveChangesAsync())
+            if (await _commentService.SaveChangesAsync())
                 return RedirectToAction("Edit");
             else
                 return View(comment);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> Remove(int commentId)
         {
-            _commentservice.DeleteComment(id);
-            await _commentservice.SaveChangesAsync();
+            // Commenting the SMS functionality below. It works but sends me a SMS for each deleted comment. Anoying!!!!
+            /*
+            int introLength = 33;
+            string userName = _commentService.GetCommentOwner(commentId);
+            string commentStart = _commentService.GetFirstPartOfComment(commentId, introLength);
+            //string mobileNum = _userServices.GetAuthorMobile(userName);
+
+            var sendMsg = "Dear " + userName + "\nYour comment \"" + commentStart + "\" has been erased due to infringement of the site rules!";
+
+            _smssService.SendSMS(sendMsg); */
+
+            _commentService.DeleteComment(commentId);
+            await _commentService.SaveChangesAsync();
             return RedirectToAction("CommentList");
         }
+
+
+        //private async Task<string> SendSMSToCommenter(ConfirmMessage sendMsg)
+        //{
+            
+        //    //string funcUrl = _requestSettings.MyAzureSMSFunctionUrl;  //Azure url
+        //    string funcUrl = _requestSettings.MyLocalSMSFunctionUrl;  // For testing function locally(localhost://)
+        //    string statusMsg = "";
+
+        //    using (var myrequest = new HttpRequestMessage(HttpMethod.Post, funcUrl))
+        //    {
+        //        var json = JsonConvert.SerializeObject(sendMsg);
+        //        var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+        //        myrequest.Content = httpContent;
+
+        //        using (var newresponse = await httpClient
+        //            .SendAsync(myrequest)
+        //            .ConfigureAwait(false))
+        //        {
+        //            if (newresponse.IsSuccessStatusCode)
+        //            {
+        //                statusMsg = "The comment has been created. A message has been sent by SMS to the commenter.";
+        //            }
+        //            else
+        //                statusMsg = "Ooops!";
+        //        }
+        //    }
+        //    return statusMsg;
+        //}
     }
 }

@@ -52,6 +52,16 @@ namespace AlphaBlogging.Data.Services
             return user.Email;
         }
 
+        public string GetAuthorMobile(string userName)
+        {
+
+            var user = (from x in _db.Users
+                        where x.UserName == userName
+                        select x).FirstOrDefault();
+
+            return user.PhoneNumber;
+        }
+
 
         public ApplicationUser GetCurrentApplicationUser(string userName)
         {

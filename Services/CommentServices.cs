@@ -9,7 +9,8 @@ namespace AlphaBlogging.Data.Repos
 {
     public class CommentServices : ICommentServices
     {
-        private ApplicationDbContext _db;
+        private const int StartIndex = 0;
+        private readonly ApplicationDbContext _db;
 
         public CommentServices(ApplicationDbContext db)
         {
@@ -18,12 +19,12 @@ namespace AlphaBlogging.Data.Repos
 
         public List<Comment> Comments { get;}
 
-        public IEnumerable<Comment> GetCommentsFromPostID(int Id)
+        public IEnumerable<Comment> GetCommentsFromPostID(int commentId)
         {
-            List<Comment> resultList = new List<Comment>();
+            List<Comment> resultList = new();
 
             var temp = (from x in _db.Posts
-                        where x.Id == Id
+                        where x.Id == commentId
                         select x.Comments).First();
 
             if (temp != null)
@@ -31,6 +32,19 @@ namespace AlphaBlogging.Data.Repos
                 resultList = temp.ToList();
             }
             return resultList;
+        }
+        public string GetFirstPartOfComment(int commentId, int introLength)
+        {
+            var commentIntro = _db.Comments.Where(c => c.Id == commentId).Select(c => c.Body).FirstOrDefault();
+
+            return commentIntro[..introLength];
+        }
+
+
+        public string GetCommentOwner(int commentId)
+        {            
+            var userName = _db.Comments.Where(c => c.Id == commentId).Select(c => c.Author).ToList();
+            return userName.ElementAt(0).UserName;    
         }
 
         public void AddComment(Comment comment)

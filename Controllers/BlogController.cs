@@ -1,22 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlphaBlogging.Services;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using AlphaBlogging.Models;
-using AlphaBlogging.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using AlphaBlogging.Data;
-using System.Linq;
 using AlphaBlogging.Data.Repos;
-using System;
 using System.Net.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Text;
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
-using System.Net.Http.Headers;
+
 
 namespace AlphaBlogging.Controllers
 {
@@ -24,31 +19,23 @@ namespace AlphaBlogging.Controllers
     public class BlogController : Controller
     {
         //Dependency Inject of BlogService and SignIn
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IUserServices _userServices;
         private readonly IBlogsServices _bloggyService;
         private readonly IPostServices _postService;
-        private static readonly HttpClient httpClient = new HttpClient();
-        private HttpRequestSettings _requestSettings;
-
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly ApplicationDbContext _db;
-        public BlogController(IUserServices userServices,
+        private static readonly HttpClient httpClient = new();
+        private readonly HttpRequestSettings _requestSettings;
+        public BlogController(
+            IUserServices userServices,
             IPostServices posty,
             IBlogsServices bloggy,
-            SignInManager<ApplicationUser> signInManager, 
-            IWebHostEnvironment hostEnvironment, 
-            ApplicationDbContext context,
-            IOptions<HttpRequestSettings> requestSettings)
+            IOptions<HttpRequestSettings> requestSettings
+            )
 
         {
             _bloggyService = bloggy;
             _postService = posty;
             _userServices = userServices;
-            _signInManager = signInManager;
             _requestSettings = requestSettings.Value;
-            _webHostEnvironment = hostEnvironment;
-            _db = context;
         }
 
         public IActionResult PostArchive(int id)
@@ -58,7 +45,7 @@ namespace AlphaBlogging.Controllers
         }
         public ApplicationUser GetSignedInId()
         {
-            var signedIn = _signInManager.IsSignedIn(User);
+            //var signedIn = _signInManager.IsSignedIn(User);
             var user = User.Identity.Name;
 
             ApplicationUser authorId = _userServices.GetCurrentApplicationUser(user);
@@ -78,7 +65,7 @@ namespace AlphaBlogging.Controllers
         public IActionResult MyBloglist()
         {
             
-            var user = User.Identity.Name;
+            //var user = User.Identity.Name;
 
             ApplicationUser authorId = GetSignedInId();
 
@@ -100,11 +87,12 @@ namespace AlphaBlogging.Controllers
             _bloggyService.IncreaseViewCountOfAllPostsInBlog(id);
             return View(blog);  
         }
-        public IActionResult BlogPostView(int Id)
-        {
-            //var blog = _bloggyService.GetPostsFromBlogID(Id);
-            return View();
-        }
+
+        //public IActionResult BlogPostView(int Id)
+        //{
+        //    //var blog = _bloggyService.GetPostsFromBlogID(Id);
+        //    return View();
+        //}
 
 
         //[Authorize]
@@ -153,7 +141,7 @@ namespace AlphaBlogging.Controllers
             if (blog.ImageFile != null)
                 _bloggyService.AddImage(blog);
 
-            Blog bloggy = new Blog(blog.Title, blog.Description, blog.Body, blog.BlogImage, blog.ImageFile, blog.Author, blog.Visible = true);
+            Blog bloggy = new(blog.Title, blog.Description, blog.Body, blog.BlogImage, blog.ImageFile, blog.Author, blog.Visible = true);
 
             _bloggyService.AddBlog(bloggy);
 
@@ -161,9 +149,11 @@ namespace AlphaBlogging.Controllers
 
             {
                 string userEmail = _userServices.GetAuthorEmail(User.Identity.Name);
-                ConfirmMessage sendMsg = new ConfirmMessage()
+
+                ConfirmMessage sendMsg = new()
                 {
                     Email = userEmail,
+                    MobileNumber = "0",
                     BlogTitle = blog.Title,
                     ConfirmText = "<html><body><h2>Dear " + User.Identity.Name
                     + "!</h2><h3> Your blog " + blog.Title + " is now ready to use!</h3>"
@@ -210,17 +200,15 @@ namespace AlphaBlogging.Controllers
                 var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                 myrequest.Content = httpContent;
 
-                using (var newresponse = await httpClient
+                using var newresponse = await httpClient
                     .SendAsync(myrequest)
-                    .ConfigureAwait(false))
+                    .ConfigureAwait(false);
+                if (newresponse.IsSuccessStatusCode)
                 {
-                    if (newresponse.IsSuccessStatusCode)
-                    {
-                        statusMsg = "Your blog has been created. A confirmation has been sent by email.";
-                    }
-                    else
-                        statusMsg = "Ooops!";
+                    statusMsg = "Your blog has been created. A confirmation has been sent by email.";
                 }
+                else
+                    statusMsg = "Ooops!";
             }
             return statusMsg;
         }
