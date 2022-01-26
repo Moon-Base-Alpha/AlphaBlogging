@@ -32,7 +32,7 @@ namespace AlphaBlogging.Controllers
         {
             //var signedIn = _SignInManager.IsSignedIn(User);
 
-            var blogs = _bloggyService.GetAllBlogs();
+            var blogs = _bloggyService.GetlatestBlogs();
             return View(blogs);
             //return View();
             //if (!signedIn)

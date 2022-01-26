@@ -22,5 +22,6 @@ namespace AlphaBlogging.Services
         public void IncreaseViewCountOfAllPostsInBlog(int Id);
         IEnumerable<Post> GetPostsByDate();
         public List<Post> GetLatestPostFromAllBlogs();
+        List<Blog> GetlatestBlogs();
     }
 }
