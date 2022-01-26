@@ -5,5 +5,6 @@
         public string MyAzureFunctionUrl { get; set; }
 
         public string MyLocalFunctionUrl { get; set; }
+
     }
 }

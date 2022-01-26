@@ -40,7 +40,7 @@ namespace AlphaBlogging
 
             services.AddTransient<IBlogsServices, BlogsServices>();
             services.AddTransient<ISearchServices, SearchServices>();
-
+            
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
@@ -59,6 +59,9 @@ namespace AlphaBlogging
              
             services.AddTransient<ITagServices, TagServices>();
             services.AddTransient<IUserServices, UserServices>();
+
+            // Adding the SMS service
+            services.AddTransient<ISMSServices, SMSServices>();
 
             //Adding DbInitializer Service
             services.AddAsyncInitializer<DbInitializer>();

@@ -8,6 +8,7 @@
     @*<h6>Comment</h6>*@
     <p class="created">Comment @Model.Created.ToShortDateString() by @Model.Author.UserName</p>
     <p>@Model.Body</p>
+
     @if (User.IsInRole("Superadmin") || User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("User"))
     {
         @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} )
@@ -16,8 +17,9 @@
     {
         @: |
         @Html.ActionLink("Edit Comment", "Edit", "Comment", new {id = Model.Id} ) @: |
-       @Html.ActionLink("Delete Comment", "Remove", "Comment", new {id = Model.Id} )
+       @Html.ActionLink("Delete Comment", "Remove", "Comment", new {commentId = Model.Id} )
     }
+
    
 
 </div>
