@@ -18,19 +18,19 @@ namespace AlphaBlogging.Controllers
         private readonly ICommentServices _commentService;
         private readonly IUserServices _userServices;
         private readonly ISMSServices _smssService; 
+        private readonly ApplicationDbContext _db;
 
-
-        public CommentController(ICommentServices commentService, IUserServices userServices, ISMSServices smssService)
+        public CommentController(ICommentServices commentService,  ISMSServices smssService, IUserServices userServices, ApplicationDbContext context)
         {
 
             _commentService = commentService;
             _userServices = userServices;
-            _smssService = smssService; 
+            _smssService = smssService;
+            _db = context;  
         }
 
         [Authorize(Roles = "Superadmin, Admin, Author")]
-        public IActionResult CommentList()
-        {
+        public IActionResult CommentList()        {
             
             var comments = _commentService.GetAllComments();
             return View(comments);
@@ -59,17 +59,20 @@ namespace AlphaBlogging.Controllers
 
                 _commentService.AddComment(newComment);
 
-                if (await _commentService.SaveChangesAsync())
-                    return RedirectToAction("Edit");
+
+                if (await _commentservice.SaveChangesAsync())
+                    return RedirectToAction("PostView", "Post",new {id = comment.PostId});
+                    //return RedirectToAction("BlogView", "Blog", new { Id = post.BlogId });
+
                 else
                     return View(newComment);
             
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
+            if (id == 0)
                 return View(new Comment());
             else
             {
@@ -94,8 +97,10 @@ namespace AlphaBlogging.Controllers
                 _commentService.AddComment(comment);
             }
 
-            if (await _commentService.SaveChangesAsync())
-                return RedirectToAction("Edit");
+
+            if (await _commentservice.SaveChangesAsync())
+                return RedirectToAction("PostView","Post",new { Id = comment.PostId});
+
             else
                 return View(comment);
         }
@@ -103,6 +108,7 @@ namespace AlphaBlogging.Controllers
         [HttpGet]
         public async Task<IActionResult> Remove(int commentId)
         {
+
             // Commenting the SMS functionality below. It works but sends me a SMS for each deleted comment. Anoying!!!!
             /*
             int introLength = 33;
@@ -114,9 +120,12 @@ namespace AlphaBlogging.Controllers
 
             _smssService.SendSMS(sendMsg); */
 
-            _commentService.DeleteComment(commentId);
-            await _commentService.SaveChangesAsync();
-            return RedirectToAction("CommentList");
+
+            var entry = _db.Comments.Single(r => r.Id == commentId);
+            _commentservice.DeleteComment(commentId);
+            await _commentservice.SaveChangesAsync();
+            return RedirectToAction("PostView", "Post", new { id = entry.PostId });
+
         }
 
 

@@ -16,8 +16,24 @@
     <p>post ID: @Model.Id</p>
 
     <div>
-        <button id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)">&#128077;</button>
-        <p id="LikesP">@Model.Likes</p>
+          @{
+        string RazorLikesID = "LikesID" + @Model.Id;
+    }
+
+    @{
+               if(@User.Identity.IsAuthenticated == false)
+                {                    
+                    <div class="btn btn-secondary opacity-50" id="LikeButton"><i class="fa fa-thumbs-up"></i>
+                    <span id="@RazorLikesID">@Model.Likes Likes</span>
+                    </div>
+                }
+                else if(@User.Identity.IsAuthenticated == true)
+                {                    
+                    <div class="btn btn-primary " id="LikeButton" onclick="UserclicksOnLikeJS(@Model.Id)"><i class="fa fa-thumbs-up"></i>
+                    <span id="@RazorLikesID">@Model.Likes Likes</span>   
+                    </div>
+                }
+           }
     </div>
     <div>
         <p id="ViewsID">Views: @Model.Views</p>
@@ -51,18 +67,7 @@
                     <div class="comment container p-3 my-3 ">
                         @*<div  style="border-color:black; margin-block:7px; background-color:lightblue">*@
                         <partial name="_Comment" model="comment" />
-
-                        @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} ) |
-
-
-                        @if (User.IsInRole("Superadmin") || User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("User"))
-
-
-                        {
-                            @Html.ActionLink("Edit Comment", "Edit", "Comment", new {postId = Model.Id} ) @: |
-                            @Html.ActionLink("Delete Comment", "Remove", "Comment", new {postId = Model.Id} )
-                        }
-
+                       
                     </div>
                     <hr />
 
@@ -72,29 +77,42 @@
             {
                 <h6>No comments yet</h6>
             }
+           
         }
+         @if (User.IsInRole("Admin") || User.IsInRole("Superadmin") || User.IsInRole("Author"))
+            {
+                <a href="@Url.Action("Create", "Comment", new {postId = Model.Id} )" class="btn  btn-outline-light text-light btn-sm"><i class="far fa-edit"></i> Add a Comment</a>
+            }
+    
+    <a href="~/Blog/BlogView/@Model.BlogId" class="btn  btn-outline-light text-light btn-sm"> <i class="fas fa-reply"> </i> Back to the Blog</a>
     </div>
-    <a href="~/Blog/BlogView/@Model.BlogId"> Back to the Blog</a>
 </div>
 
-<script>
 
+    <script>
 
-    function UserclicksOnLikeJS(PostIDfromPage)
-    {
-            $.ajax({
-                url: '@Url.Action("UserClicksOnLike", "Post")',
-                data: {Id:PostIDfromPage},
+        
+        function UserclicksOnLikeJS(PostIDfromPage)
+        {
+                $.ajax({
+                    url: '@Url.Action("UserClicksOnLike", "Post")',
+                    data: {Id:PostIDfromPage},
+                    dataType: 'json',
+                    //data is the return value from the PostController method
+                    success: function(data) 
+                    {
+                        var target = "LikesID" + data.postid;
+                        console.log("Response: " + "["+data.nofLikes+","+data.postid+"]");
+                        console.log("altering this element: " + document.getElementById(target).outerHTML) + "to a lieks number of " + data.nofLikes;
+                        
+                        document.getElementById(target).innerHTML = data.nofLikes+" likes";
+                    },
+                    
+                });            
+        }
+        
 
-                success: function(data)
-                {
-                    console.log(data);
-                    document.getElementById("LikesP").innerHTML = data;
-                },
-
-            });
-    }
-</script>
+    </script>
 
 
 

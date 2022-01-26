@@ -45,13 +45,14 @@
                 @*<div  style="border-color:black; margin-block:7px; background-color:lightblue">*@
                      <partial name="_Comment"  model="comment"/>                  
 
-                    @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} ) | 
-                     @if (User.IsInRole("Admin") || User.IsInRole("User"))
+                    @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} );
+                     @{
+                        if (User.IsInRole("Admin") || User.IsInRole("User"))
                         {
-                    @Html.ActionLink("Edit Comment", "Edit", "Comment", new {postId = Model.Id} ) @: | 
-                    @Html.ActionLink("Delete Comment", "Remove", "Comment", new {postId = Model.Id} )
+                            //@Html.ActionLink("Edit Comment", "Edit", "Comment", new {Id = comment.Id} );
+                            //@Html.ActionLink("Delete Comment", "Remove", "Comment", new {Id = comment.Id} );
                         }
-
+                     }
                 </div>
                 <hr />
            

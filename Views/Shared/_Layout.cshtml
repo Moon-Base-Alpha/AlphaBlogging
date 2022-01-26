@@ -29,33 +29,19 @@
                         </button>
                         <div class="navbar-collapse collapse  d-sm-inline-flex justify-content-between">
                             <ul class="navbar-nav flex-grow-1">
-                               
+                               @if (User.IsInRole("SuperAdmin")||User.IsInRole("Admin")||User.IsInRole("Author")){
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-controller="Blog" asp-action="CreateBlog">Create new Blog</a>
                                 </li>
+                               }
+                                @if (User.IsInRole("SuperAdmin")||User.IsInRole("Admin")){
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-controller="Blog" asp-action="Bloglist">List of Blogs</a>
-                                </li>
-                                @* <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="MyBloglist">My Blogs</a>
-                                    </li>  *@
-
-                                @* <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Create">Create post</a>
-                                    </li>*@
+                                </li>                               
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-controller="Post" asp-action="Postlist">List of posts</a>
                                 </li>
-                                 @*<li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Search" asp-action="Search">Search Terms</a>
-                                </li>*@
-@*
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Comment" asp-action="Create">Create comment</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Comment" asp-action="Commentlist">List of comments</a>
-                                </li>*@
+                                }
                                                           
                             </ul>
                             <div class="pt-3"><partial name="_Search" /></div>

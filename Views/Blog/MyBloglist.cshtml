@@ -8,24 +8,30 @@
 }
 
 <div class="container-fluid px-4">
-<h3 class="mt-4">Welcome back! @((await UserManager.GetUserAsync(User)).UserName)</h3>
+<h3 class="mt-4">Welcome @((await UserManager.GetUserAsync(User)).UserName)!</h3>
 <h1>Blog list</h1>
 <a href="@Url.Action("CreateBlog", "Blog")" class="btn btn-primary"><i class="fas fa-pen"></i> Create new blog</a>
 <br /><br />
 <table id="datatablesSimple">
     <thead>
         <tr>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.Id)
-            </th>*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author.UserName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.Body)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updated)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Visible)
@@ -36,17 +42,23 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-           @* <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Id)
-            </td>*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.FirstName) @Html.DisplayFor(modelItem => item.Author.LastName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.Body)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updated)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Visible)

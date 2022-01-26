@@ -76,7 +76,7 @@ namespace AlphaBlogging.Data.Repos
         public void UpdateComment(Comment comment)
         {
             comment.Updated = DateTime.Now;
-            comment.Created = (from x in _db.Blogs
+            comment.Created = (from x in _db.Comments
                             where x.Id == comment.Id
                             select x.Created).First();
 

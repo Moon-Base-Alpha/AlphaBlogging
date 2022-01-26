@@ -107,5 +107,12 @@ namespace AlphaBlogging.Data.Repos
             var post = _db.Posts.Find(Id);
             return post.Views;
         }
+
+        public void IncreaseViewCountOfPost(int id)
+        {
+            var post = _db.Posts.Find(id);
+            post.Likes++;
+            _db.Posts.Update(post);
+        }
     }
 }
