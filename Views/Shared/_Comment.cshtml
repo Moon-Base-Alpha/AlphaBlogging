@@ -11,11 +11,10 @@
 
     @if (User.IsInRole("Superadmin") || User.IsInRole("Admin") || User.IsInRole("Author") || User.IsInRole("User"))
     {
-        @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} )
-          }
+@*        @Html.ActionLink("Add Comment", "Create", "Comment", new {postId = Model.Id} )
+*@          }
     @if (Model.Author.UserName == User.Identity.Name || User.IsInRole("Superadmin"))
     {
-        @: |
         @Html.ActionLink("Edit Comment", "Edit", "Comment", new {id = Model.Id} ) @: |
        @Html.ActionLink("Delete Comment", "Remove", "Comment", new {commentId = Model.Id} )
     }
