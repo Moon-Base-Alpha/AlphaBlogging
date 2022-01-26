@@ -1,13 +1,13 @@
 ﻿@model AlphaBlogging.Models.ViewModels.SearchResultsVM
 
-<div class="bg-white bg-opacity-70">
-<table class="table">
+<div class="bg-dark bg-opacity-75 text-light  p-1">
+<table class="table text-light table-bordered">
     <thead>
         <tr>
             <th>
-                Blog titles including the term: @Model.SearchTerm
+                <h3>Blog titles including the term: @Model.SearchTerm</h3>
             </th>
-            <th></th>
+            
         </tr>
     </thead>
     <tbody>
@@ -20,81 +20,71 @@
                 <b>Blog Title : </b>@blog.Title*@
 
 
-                <div class="card flex-row flex-wrap postcontainer mb-2 text-light">
+                <div class="card flex-row flex-wrap bg-transparent mb-2 text-light">
                     <div class="card-header border-0">
                         <img src="~/image/@Html.DisplayFor(modelItem => blog.BlogImage)" alt="" width="300">
                     </div>
                     <div class="card-block px-2 p-3 d-flex flex-column">
                         <h4 class="m-0 card-title">@Html.DisplayFor(modelItem => blog.Title)</h4>
-                        <p class="m-0 font-italic"><b>Created by : </b>@Html.DisplayFor(modelItem => blog.Author.UserName)</p>
-                        <p class="m-0 font-italic"><b>Creation at : </b>@blog.Created.ToShortDateString() <b> : </b>@blog.Created.ToShortTimeString()</p>
+                        <p class="m-0 font-italic">By: @Html.DisplayFor(modelItem => blog.Author.UserName) | 
+                        Created : @blog.Created.ToShortDateString() <b> : </b>@blog.Created.ToShortTimeString()</p>
                         <p class="mt-3 card-text d-inline-block text-truncate" style="max-width: 300px;">
                             @Html.DisplayFor(modelItem => blog.Description)
                         </p>
-                        <a href="#" class="btn btn-primary mt-auto">Läs mer...</a>
-                        <a href="Blog/BlogView/@Model.Bloggies." class="btn btn-primary mt-auto">Läs mer...</a>
+                        <a href="~/Blog/BlogView/@blog.Id" class="btn btn-primary mt-auto text-white">Read More...</a>
                     </div>
                     <div class="w-100"></div>
                  </div>
             </td>
-            <td>               
-                @Html.ActionLink("View Blog","BlogView", "Blog", new { id = @blog.Id })                
-            </td>
-
-
-
         </tr>
     }
     </tbody>
 </table>
 
 
-<table class="table">
+<table class="table text-light table-bordered">
     <thead>
         <tr>
-            <th>
-                Post titles including the term: @Model.SearchTerm
+            <th colspan="2">
+                <h3>Post titles including the term: @Model.SearchTerm</h3>
             </th>
-            <th></th>
+            
         </tr>
     </thead>
     <tbody>
 @foreach (var post in Model.Posties) {
         <tr>
             <td>
-               <b>Created by : </b>@post.Blog.Author.UserName <br>
-                <b>Creation Time : </b>@post.Created.ToShortDateString() <b> : </b>@post.Created.ToShortTimeString()<br>
-                <b>Post Title : </b> @post.Title
+               Created by : <b>@post.Blog.Author.UserName </b><br>
+                Creation Time : <b>@post.Created.ToShortDateString()  : @post.Created.ToShortTimeString()</b><br>
+                Post Title : <b> @post.Title</b>
             </td>
-            <td>               
-                @Html.ActionLink("View Post","PostView", "Post", new { Id = @post.Id })<br>
-                @Html.ActionLink("View Blog","BlogView", "Blog", new { id = @post.BlogId }) 
+            <td >               
+                <h5>@Html.ActionLink("View Post","PostView", "Post", new { Id = @post.Id })</h5>
+                <h5>@Html.ActionLink("View Blog","BlogView", "Blog", new { id = @post.BlogId }) </h5>
             </td>
-
         </tr>
 }
     </tbody>
 </table>
 
-<table class="table">
+<table class="table text-light table-bordered">
     <thead>
         <tr>
             <th>
-                Tags including the term: @Model.SearchTerm
+               <h5> Tags including the term: @Model.SearchTerm</h5>
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var tag in Model.Tags) {
-        <tr>
-            <td>               
-                <b>No Posts with This HashTag : </b> @tag.Posts.Count()
-            </td>
-            <td> 
-            </td>
-        </tr>
-}
+            @foreach (var tag in Model.Tags)
+            {
+            <tr>
+                <td>               
+                    <h5>Number of Posts with This HashTag :  @tag.Posts.Count()</h5>
+                </td>   
+            </tr>
+            }
     </tbody>
 </table>
 </div>
