@@ -49,9 +49,13 @@ namespace AlphaBlogging.Services
         public List<Blog> GetAllBlogs()
         {           
 
-            return _db.Blogs.OrderByDescending(b=>b.Updated).Take(5).ToList();
+            return _db.Blogs.OrderByDescending(b=>b.Updated).ToList();
         }
+        public List<Blog> GetlatestBlogs()
+        {
 
+            return _db.Blogs.OrderByDescending(b => b.Updated).Take(5).ToList();
+        }
         public List<Blog> GetMyBlogs(ApplicationUser authorId)
         {
             var allBlogs = GetAllBlogs();
