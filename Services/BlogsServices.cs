@@ -49,7 +49,7 @@ namespace AlphaBlogging.Services
         public List<Blog> GetAllBlogs()
         {           
 
-            return _db.Blogs.ToList();
+            return _db.Blogs.OrderByDescending(b=>b.Updated).Take(5).ToList();
         }
 
         public List<Blog> GetMyBlogs(ApplicationUser authorId)
