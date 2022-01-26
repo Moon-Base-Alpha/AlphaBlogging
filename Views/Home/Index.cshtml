@@ -13,7 +13,7 @@
         Why not start your own blog? It’s easy-peasy, just register an account and start blogging!
     </p>
 </div>
-
+<h1>Recent Blog Updates</h1>
     @foreach (var item in Model)
    {
        <div class="card flex-row flex-wrap postcontainer mb-2 text-light">
@@ -23,7 +23,7 @@
     </div>
     <div class="card-block px-2 p-3 d-flex flex-column">
         <h4 class="m-0 card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
-        <p class="m-0 font-italic">En blogg skapad av @Html.DisplayFor(modelItem => item.Author.UserName)</p>
+        <p class="m-0 font-italic">En blogg skapad av @Html.DisplayFor(modelItem => item.Author.UserName) | Updated: @Html.DisplayFor(modelItem => item.Updated)</p>
         <p class="mt-3 card-text d-inline-block text-truncate" style="max-width: 300px;">
             @Html.DisplayFor(modelItem => item.Description)
 </p>
