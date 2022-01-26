@@ -238,7 +238,7 @@ namespace AlphaBlogging.Controllers
             {
                 var blog = _bloggyService.GetBlog((int)id);
 
-                if (blog.Author.UserName == User.Identity.Name)
+                if (User.IsInRole("Superadmin") || User.IsInRole("Admin") || blog.Author.UserName == User.Identity.Name)
                 {
                     return View(blog); 
                 }
@@ -278,14 +278,27 @@ namespace AlphaBlogging.Controllers
         [HttpGet]
         public async Task<IActionResult> Remove(int id)
         {
+            var blog = _bloggyService.GetBlog((int)id);
 
-            _bloggyService.DeleteBlog(id);
-            await _bloggyService.SaveChangesAsync();
+            if (User.IsInRole("Admin") || User.IsInRole("Superadmin") || blog.Author.UserName == User.Identity.Name)
+            {
+                _bloggyService.DeleteBlog(id);
+                await _bloggyService.SaveChangesAsync();
+            }
+
             if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
             {
                 return RedirectToAction("Bloglist");
             }
-                return RedirectToAction("MyBloglist");
+            return RedirectToAction("MyBloglist");
+
+            //_bloggyService.DeleteBlog(id);
+            //await _bloggyService.SaveChangesAsync();
+            //if (User.IsInRole("Admin") || User.IsInRole("Superadmin"))
+            //{
+            //    return RedirectToAction("Bloglist");
+            //}
+            //    return RedirectToAction("MyBloglist");
         }
 
     }
