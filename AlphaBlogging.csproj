@@ -18,6 +18,7 @@
     <Compile Remove="Services\IAsyncInitializer.cs" />
     <Content Remove="Views\Post\Create_old.cshtml" />
     <Content Remove="Views\Shared\_Edit.cshtml" />
+    <Content Remove="wwwroot\image\rickMorty.jfif" />
     <PackageReference Include="Azure.Storage.Queues" Version="12.8.0" />
 
     <PackageReference Include="bootstrap" Version="5.1.3" />

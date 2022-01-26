@@ -3,11 +3,9 @@ using AlphaBlogging.Models;
 using AlphaBlogging.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Text;
+using AlphaBlogging.Data;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace AlphaBlogging.Controllers
 {
@@ -60,7 +58,7 @@ namespace AlphaBlogging.Controllers
                 _commentService.AddComment(newComment);
 
 
-                if (await _commentservice.SaveChangesAsync())
+                if (await _commentService.SaveChangesAsync())
                     return RedirectToAction("PostView", "Post",new {id = comment.PostId});
                     //return RedirectToAction("BlogView", "Blog", new { Id = post.BlogId });
 
@@ -98,7 +96,7 @@ namespace AlphaBlogging.Controllers
             }
 
 
-            if (await _commentservice.SaveChangesAsync())
+            if (await _commentService.SaveChangesAsync())
                 return RedirectToAction("PostView","Post",new { Id = comment.PostId});
 
             else
@@ -122,8 +120,8 @@ namespace AlphaBlogging.Controllers
 
 
             var entry = _db.Comments.Single(r => r.Id == commentId);
-            _commentservice.DeleteComment(commentId);
-            await _commentservice.SaveChangesAsync();
+            _commentService.DeleteComment(commentId);
+            await _commentService.SaveChangesAsync();
             return RedirectToAction("PostView", "Post", new { id = entry.PostId });
 
         }
