@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using AlphaBlogging.Data;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace AlphaBlogging.Controllers
 {
@@ -17,14 +21,23 @@ namespace AlphaBlogging.Controllers
         private readonly IUserServices _userServices;
         private readonly ISMSServices _smssService; 
         private readonly ApplicationDbContext _db;
+        private static readonly HttpClient httpClient = new();
+        private readonly HttpRequestSettings _requestSettings;
 
-        public CommentController(ICommentServices commentService,  ISMSServices smssService, IUserServices userServices, ApplicationDbContext context)
+        public CommentController(
+            IOptions<HttpRequestSettings> requestSettings,
+            ICommentServices commentService, 
+            ISMSServices smssService, 
+            IUserServices userServices, 
+            ApplicationDbContext context
+            )
         {
 
             _commentService = commentService;
             _userServices = userServices;
             _smssService = smssService;
-            _db = context;  
+            _db = context;
+            _requestSettings = requestSettings.Value;
         }
 
         [Authorize(Roles = "Superadmin, Admin, Author")]
@@ -109,15 +122,16 @@ namespace AlphaBlogging.Controllers
 
             // Commenting the SMS functionality below. It works but sends me a SMS for each deleted comment. Anoying!!!!
 
-            int introLength = 33;
-            string userName = _commentService.GetCommentOwner(commentId);
-            string commentStart = _commentService.GetFirstPartOfComment(commentId, introLength);
-            //string mobileNum = _userServices.GetAuthorMobile(userName);
+            //int introLength = 10;
+            //string userName = _commentService.GetCommentOwner(commentId);
+            //string commentStart = _commentService.GetFirstPartOfComment(commentId, introLength);
+            ////string mobileNum = _userServices.GetAuthorMobile(userName);
 
-            var sendMsg = "Dear " + userName + "\nYour comment \"" + commentStart + "\" has been erased due to infringement of the site rules!";
+            //var sendMsg = "Dear " + userName + "\nYour comment \"" + commentStart + "\" has been erased due to infringement of the site rules!";
 
-            _smssService.SendSMS(sendMsg);
+            //_smssService.SendSMS(sendMsg);
 
+            //TempData["EmailStatus"] = await SendSMSToCommenter(sendMsg);
 
             var entry = _db.Comments.Single(r => r.Id == commentId);
             _commentService.DeleteComment(commentId);
@@ -127,32 +141,32 @@ namespace AlphaBlogging.Controllers
         }
 
 
-        //private async Task<string> SendSMSToCommenter(ConfirmMessage sendMsg)
-        //{
-            
-        //    //string funcUrl = _requestSettings.MyAzureSMSFunctionUrl;  //Azure url
-        //    string funcUrl = _requestSettings.MyLocalSMSFunctionUrl;  // For testing function locally(localhost://)
-        //    string statusMsg = "";
+        private async Task<string> SendSMSToCommenter(string sendMsg)
+        {
 
-        //    using (var myrequest = new HttpRequestMessage(HttpMethod.Post, funcUrl))
-        //    {
-        //        var json = JsonConvert.SerializeObject(sendMsg);
-        //        var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-        //        myrequest.Content = httpContent;
+            //string funcUrl = _requestSettings.MyAzureSMSUrl;  //Azure url
+            string funcUrl = _requestSettings.MyLocalSMSUrl;  // For testing function locally(localhost://)
+            string statusMsg = "";
 
-        //        using (var newresponse = await httpClient
-        //            .SendAsync(myrequest)
-        //            .ConfigureAwait(false))
-        //        {
-        //            if (newresponse.IsSuccessStatusCode)
-        //            {
-        //                statusMsg = "The comment has been created. A message has been sent by SMS to the commenter.";
-        //            }
-        //            else
-        //                statusMsg = "Ooops!";
-        //        }
-        //    }
-        //    return statusMsg;
-        //}
+            using (var myrequest = new HttpRequestMessage(HttpMethod.Post, funcUrl))
+            {
+                var json = JsonConvert.SerializeObject(sendMsg);
+                var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                myrequest.Content = httpContent;
+
+                using (var newresponse = await httpClient
+                    .SendAsync(myrequest)
+                    .ConfigureAwait(false))
+                {
+                    if (newresponse.IsSuccessStatusCode)
+                    {
+                        statusMsg = "The comment has been created. A message has been sent by SMS to the commenter.";
+                    }
+                    else
+                        statusMsg = "Ooops!";
+                }
+            }
+            return statusMsg;
+        }
     }
 }

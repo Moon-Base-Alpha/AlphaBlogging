@@ -37,7 +37,7 @@ namespace AlphaBlogging.Data.Repos
         {
             var commentIntro = _db.Comments.Where(c => c.Id == commentId).Select(c => c.Body).FirstOrDefault();
 
-            return commentIntro[..introLength];
+            return commentIntro.Substring(0,introLength);
         }
 
 
