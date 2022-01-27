@@ -6,5 +6,9 @@
 
         public string MyLocalFunctionUrl { get; set; }
 
+        public string MyAzureSMSUrl { get; set; }
+
+        public string MyLocalSMSUrl { get; set; }
+
     }
 }
