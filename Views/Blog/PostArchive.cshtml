@@ -10,7 +10,7 @@
     {
         <h5 class="ml-3" >@group.Key</h5>
         <div class="">
-            @foreach (var item in group.GroupBy(m => m.Created))
+            @foreach (var item in group.GroupBy(m => m.Created.ToString("MMMM")))
             {
                 var Heading = "heading" + item.FirstOrDefault().Id.ToString();
                 var Collapse = "collapse" + item.FirstOrDefault().Id.ToString();
@@ -18,7 +18,7 @@
                     <div class="accordion-item bg-dark">
                         <h3 class="accordion-header" id="@Heading">
                             <button class="accordion-button collapsed bg-dark text-white border-top" type="button" data-bs-toggle="collapse" data-bs-target="#@Collapse" aria-expanded="false" aria-controls="@Collapse">
-                                @item.Key.ToString("MMMM").ToUpper()
+                                @item.Key.ToUpper()
                             </button>
                        </h3>
                         <div id="@Collapse" class="accordion-collapse collapse bg-light bg-opacity-25 text-white" aria-labelledby="@Heading" data-bs-parent="#accordionExample">
@@ -26,7 +26,7 @@
                             <div class="p-1">
                                 @foreach (var post in item)
                                 {
-                                <a href="~/Post/PostView/@post.Id" class="text-white p-3"> @post.Title</a>
+                                <p><a href="~/Post/PostView/@post.Id" class="text-white p-3"> @post.Title</a></p>
                                 }                                
                             </div>
                         </div>
