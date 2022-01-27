@@ -108,7 +108,7 @@ namespace AlphaBlogging.Controllers
         {
 
             // Commenting the SMS functionality below. It works but sends me a SMS for each deleted comment. Anoying!!!!
-            /*
+
             int introLength = 33;
             string userName = _commentService.GetCommentOwner(commentId);
             string commentStart = _commentService.GetFirstPartOfComment(commentId, introLength);
@@ -116,7 +116,7 @@ namespace AlphaBlogging.Controllers
 
             var sendMsg = "Dear " + userName + "\nYour comment \"" + commentStart + "\" has been erased due to infringement of the site rules!";
 
-            _smssService.SendSMS(sendMsg); */
+            _smssService.SendSMS(sendMsg);
 
 
             var entry = _db.Comments.Single(r => r.Id == commentId);
